@@ -1,0 +1,17 @@
+# Removes latex temporary files
+**.aux
+**.log
+**.nav
+**.out
+**.snm
+**.toc
+**.html
+**.swp
+
+# Remove R files
+.Rhistory
+
+# Remove final files
+introduction/introduction.pdf
+
+
