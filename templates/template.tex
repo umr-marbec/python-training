@@ -1,0 +1,87 @@
+\documentclass[pdftex,beamer,svgnames]{beamer}
+
+%\tiny, \scriptsize, \footnotesize, \small, \normalsize, \large, \Large, \LARGE, \huge, \Huge.
+
+\usepackage{pgf}
+\usepackage{amsmath,amssymb,euscript}
+\usepackage[latin1]{inputenc}
+\usepackage[procnames]{listings}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{hyperref}
+\setcounter{tocdepth}{2}
+\usepackage{tikz}
+
+\definecolor{keywords}{named}{DarkOrange}
+\definecolor{comments}{named}{Green}
+\definecolor{string}{named}{FireBrick}
+\definecolor{link}{named}{blue}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    colorlinks=true,       % false: boxed links; true: colored links
+    allcolors=.,
+    citecolor=blue,        % color of links to bibliography
+    urlcolor=blue,           % color of external links
+    anchorcolor=blue,
+    %linkcolor=white,          % color of internal links (change box color with linkbordercolor)
+    %filecolor=blue,      % color of file links
+}
+
+\lstdefinestyle{lststyle}{
+    language=python,
+    %basicstyle=\ttfamily\scriptsize, 
+    basicstyle=\ttfamily\tiny,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{comments},
+    showstringspaces=false,
+    identifierstyle=\color{black},
+    procnamekeys={def,class},
+    %otherkeywords={osmose_demo, run_osmose, read_osmose},
+    %deletekeywords={install, packages, demo, data, dir, read, file, path},
+    %frame=single,
+    frame=shadowbox,
+    frameround=ffff,
+    backgroundcolor=\color{gray!10!},
+    %fillcolor=\color{green}
+    rulesepcolor=\color{black}
+}
+
+\lstset{style=lststyle}
+
+\AtBeginSection[]
+{
+    \begin{frame}<beamer>
+        \frametitle{Table of Contents}
+        \tableofcontents[current,hideallsubsections]
+    \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+    \begin{frame}<beamer>
+        \frametitle{Table of Contents}
+                  \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+    \end{frame}
+}
+
+\titlegraphic
+{
+{\parbox[c]{1.2cm}{\includegraphics[scale=0.15]{../templates/logos/logo_ird.png}}}
+\hspace{2cm}
+{\parbox[c]{1.5cm}{\includegraphics[scale=0.2]{../templates/logos/logo-marbec.png}}}
+}
+
+
+\setbeamertemplate{caption}[numbered]
+\usetheme{AnnArbor}
+\input{../templates/beamer_setup}
+
+\beamertemplatenavigationsymbolsempty
+
+\title[Python training for beginners]{Python training for beginners}
+\author[nicolas.barrier@ird.fr]{Nicolas Barrier}
+\date[May 26, 27, 28, 2020]{May 26, 27, 28, 2020}
+\institute{IRD, UMR MARBEC}
+\usetheme{Copenhagen}
