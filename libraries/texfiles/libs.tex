@@ -1,0 +1,119 @@
+\subsection{Python libraries}
+
+\begin{frame}[fragile]
+\frametitle{Install libraries}
+To install libraries, you can either use \href{https://docs.conda.io/en/latest/}{conda}, \href{https://pip.pypa.io/en/stable/}{pip} or install from source files.
+\vspace{1em}
+
+\emph{Pip} only installs Python packages. The user needs to manually install the required external tools (compilers, C libraries, etc.).\\
+\vspace{1em}
+
+\emph{Conda} installs everything that is needed (compiler, libraries) and has the ability to create isolated environments, which may contains different versions of the packages.
+\vspace{1em}
+
+\begin{block}{Pip vs. conda}
+For further details about the difference between Pip and Conda, visit \href{https://www.anaconda.com/understanding-conda-and-pip/}{anaconda.com}.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Install from Pip}
+All the packages available on Pip are listed on the \href{https://pypi.org/}{pip} webpage. To install any of them, type on a terminal:
+\begin{lstlisting}[basicstyle=\scriptsize]
+pip install package_name
+\end{lstlisting}
+\vspace{1em}
+
+For install, to manipulate NetCDF files, 
+\begin{lstlisting}[basicstyle=\scriptsize]
+pip install netCDF4 xarray
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Install from Conda}
+All the packages available on the Conda default channel are listed on the \href{https://repo.anaconda.com/pkgs/}{Conda repository}. To install any of them, type on a terminal:
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+conda install package_name
+\end{lstlisting}
+\vspace{1em}
+
+For install, to manipulate NetCDF files, 
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+conda install netCDF4 xarray
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Conda virtual environments}
+
+To create virtual environments (for instance for maps), type in a terminal:
+
+\begin{lstlisting}[language=bash]
+# Mapping env. for Python 3
+conda create --name pyngl --channel conda-forge pynio pyngl
+source activate pyngl
+
+# Mapping env. for Python 2
+conda create --name pyngl2 --channel conda-forge pynio pyngl python=2.7
+source activate pyngl2
+\end{lstlisting}
+
+In this case, the packages are downloaded from a community channel, the \href{https://conda-forge.org/}{conda-forge}.\\
+\vspace{1em}
+
+To list all the environments, type: 
+
+\begin{lstlisting}[language=bash, basicstyle=\ttfamily\scriptsize] 
+conda env list
+\end{lstlisting}
+
+\begin{block}{Note}
+The default environment is named \verb+base+
+\end{block} 
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Install from source}
+
+    To install a package from sources, unzip the archive and type:
+    \begin{lstlisting}[language=bash, basicstyle=\ttfamily\scriptsize] 
+python setup.py install --home=/my/directory/
+    \end{lstlisting}
+
+    \begin{block}{Note}
+At the beginning, it is unlikely that you need to do that.
+    \end{block}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Loading libraries}
+    Libraries can be loaded in different ways:
+    \lstinputlisting[basicstyle=\ttfamily\scriptsize]{scripts/load_lib.py}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Loading your libraries}
+If you have built your own functions or changed the location of installed libraries, you must first add the directory to the \verb+path+:
+\begin{lstlisting}
+import sys
+sys.path.append('/add/other/directory/')
+import mylib
+\end{lstlisting}
+
+\begin{block}{Hint}
+You can create the PYTHONPATH environment variable. With Mac Os X/Linux,  edit your \verb+.bashrc+ or \verb+.cshrc+ file and add:
+\begin{verbatim}
+# bashrc
+export PYTHONPATH=${PYTHONPATH}:/add/other/directory
+# cshrc
+setenv PYTHONPATH /add/other/directory:${PYTHONPATH}
+\end{verbatim}
+\end{block}
+\end{frame}
+
+
+
