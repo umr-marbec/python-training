@@ -8,6 +8,8 @@
 **.html
 **.swp
 **.vrb
+**ipynb**
+*.DS_Store
 
 # Remove R files
 .Rhistory

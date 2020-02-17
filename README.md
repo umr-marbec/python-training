@@ -11,8 +11,11 @@ Ifremer Sète (Mont Saint-Clair meeting room)
 ## Program
 
 ### Introduction
-- Pros and cons.
-- Application examples
+- Introduction (description, applications)
+- Install (Anaconda)
+- Running Python
+- Running scripts
+- Installing libraries
 
 ### Basis
 - Install
