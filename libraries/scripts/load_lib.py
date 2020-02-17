@@ -14,3 +14,11 @@ DataFrame() # no panads.DataFrame in this case
 # UNADVISED!!!!!
 from scipy.stats import *
 randint(0, 1) # no scipy.stats.randint in this case
+
+import numpy as np
+x = np.array([1e4, 1e6])
+
+from numpy import *
+print(log10(x))
+from math import *
+print(log10(x))

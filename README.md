@@ -15,14 +15,16 @@ Ifremer Sète (Mont Saint-Clair meeting room)
 - Install (Anaconda)
 - Running Python
 - Running scripts
-- Installing libraries
 
 ### Basis
-- Install
-- Loading libraries
 - Data types
 - Loop and conditions
 - Numerical python (*numpy* and *scipy*)
+
+### Libraries
+- Installing libraries
+- Loading libraries
+- Writting libraries
 
 ### IO
 - Reading/Writting CSV (*pandas*)
