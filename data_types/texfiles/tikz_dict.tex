@@ -1,0 +1,26 @@
+    \begin{center}
+    \begin{tikzpicture}
+        \filldraw[step=1.0,black, thin, fill=red!20] (0., 0. ) grid (4, 1) rectangle(0, 0);
+        \draw (0.5, 0.5 ) node {C};
+        \draw (1.5, 0.5 ) node {D};
+        \draw (2.5, 0.5 ) node {I};
+        \draw (3.5, 0.5 ) node {T};
+        
+        \def\wpos{-0.3}
+        \def\wneg{-1}
+        \def\lab{-0.5}
+
+        \draw (0.5, \wpos ) node {key2};
+        \draw (1.5, \wpos ) node {key0};
+        \draw (2.5, \wpos ) node {key1};
+        \draw (3.5, \wpos ) node {key3};
+        \draw (\lab, \wpos ) node [anchor=east, align=right]{Keys};
+        
+%        \draw (0.5, \wneg ) node {-4};
+%        \draw (1.5, \wneg ) node {-3};
+%        \draw (2.5, \wneg ) node {-2};
+%        \draw (3.5, \wneg ) node {-1};
+%        \draw (\lab, \wneg ) node [anchor=east, align=right]{Negative indexes};
+    \end{tikzpicture}
+    \end{center}
+

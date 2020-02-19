@@ -9,5 +9,7 @@ help(x)  # help about methods
 # in a new object
 y = x.capitalize()
 
+xlist = list(x)
+
 x = 'string'
 x[0] = 1
