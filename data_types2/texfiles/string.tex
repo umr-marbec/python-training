@@ -1,58 +1,57 @@
 \begin{frame}[fragile]
-\frametitle{String manipulation}
-\begin{lstlisting}
-string1 = 'Char1 Char2 Char3'
-chars = list(string1) # returns list of char ["S", "t" ... ]
+\frametitle{String usage}
+String objects are very common in Python. They are especially usefull when reading and writting text files.\\
 
-# Replace "Char2" by "toto" on "string1"
-string2 = string1.replace('Char2', 'toto') # 'Char1 toto Char3'
+    \vspace{1em}
+    They are defined between simple quotes (\verb+'+) or double quotes (\verb+"+). 
 
-# splits the string into words given a separator
-sep = ' '
-words = string1.split(sep) # ['Char1', 'Char2', 'Char3']
+    \vspace{1em}
+    \begin{alertblock}{Caution!}
+        Opening and closing quotes must be the same
+    \end{alertblock}
+\end{frame}
+    
+\begin{frame}[fragile]
+    \frametitle{Special characters}
+    Python contains a set of predefined characters, which are listed below (source: \href{https://docs.python.org/3/reference/lexical_analysis.html}{python.org})
 
-# concatenates a list of string into one string, separated
-# by a given separator
-sep = '\t'  # tabulation
-string3 = sep.join(['toto1', 'toto2', \
-                    'toto3']) # 'toto1   toto2   toto3'
-\end{lstlisting}
+    \vspace{0.5em}
+    \begin{center}
+    \begin{tabular}{cc}
+        Character &  Definition\\
+        \hline
+        \hline
+        \verb+\a+ & ASCII Bell (BEL)\\
+        \verb+\b+ & ASCII Backspace (BS)\\
+        \verb+\f+ & ASCII Formfeed (FF)\\
+        \verb+\n+ & ASCII Linefeed (LF)\\
+        \verb+\r+ & ASCII Carriage Return (CR)\\
+        \verb+\t+ & ASCII Horizontal Tab (TAB)\\
+        \verb+\v+ & ASCII Vertical Tab (VT)\\
+    \end{tabular}
+    \end{center}
+
+    \vspace{1em}
+    In order to escape these special characters, add \verb+r+ before the 1st quote:
+    \begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+str1 = 'this is \t'
+str2 = r'this is \t'
+    \end{lstlisting}
+
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{String manipulation}
-\begin{lstlisting}
-string1 = 'Char1 Char2 Char3'
+    \begin{frame}[fragile]
+        \frametitle{String manipulation}
 
-# sets the string to lower case
-stringl = string1.lower()
-# char1 char2 char3
+        String objects have a lot of methods to manipulate them. 
+        \vspace{1em}
+        Since they 
+        are \emph{immutable}, these methods return new string objects, compared to list methods, which
+        change the list content.
 
-# sets the string to uper case
-stringu = string1.upper()
-# CHAR1 CHAR2 CHAR3
-\end{lstlisting}
-\end{frame}
+    \vspace{1em}
+    A very powerfull feature is the use of regular expressions, which allows to match strings with given patterns (\href{https://docs.python.org/3/library/re.html}{re} library).
 
-\begin{frame}[fragile]
-\frametitle{String manipulation}
-\begin{lstlisting}
-string4 = 2*'toto1' + '\t' + 'toto2' + \
-         '\n' + 'toto3 ' + str(10)
-# \n: linebreak
-#"toto1toto1      toto2
-# toto3 10"
-
-# REMEMBER: strings are viewed as a list of characters
-
-# Matlab's sprintf 
-x = 10; y = 0.5; z = 0.005
-string5 = '%04d, %.3f, %.5f\n' %(x, y, z) 
-# 0010, 0.500, 0.00500
-# 
-
-# remove the \n character (when reading a file)
-string6 = string5.strip() 
-# 0010, 0.500, 0.00500
-\end{lstlisting}
+    \vspace{1em}
+    To learn a bit more on string manipulation, open the \verb+string.py+ file in Spyder.
 \end{frame}

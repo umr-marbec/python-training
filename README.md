@@ -10,16 +10,26 @@ Ifremer Sète (Mont Saint-Clair meeting room)
 
 ## Program
 
-### Introduction
+### Introduction ([introduction.pdf](introduction/introduction.pdf))
 - Introduction (description, applications)
 - Install (Anaconda)
 - Running Python
 - Running scripts
 
-### Basis
-- Data types
-- Loop and conditions
-- Numerical python (*numpy* and *scipy*)
+### Simple data types ([data_types.pdf](data_types/data_types.pdf))
+- Variable definition
+- Numerical variables
+- List
+- Dictionaries
+
+### Conditional statements and loops ([if_loop.pdf](if_loop/if_loop.pdf))
+- Blocks
+- Conditional statements
+- Loops
+
+### Particular data types ([data_types2.pdf](data_types2/data_types2.pdf))
+- String
+- Numpy arrays and masked arrays
 
 ### Libraries
 - Installing libraries
@@ -33,5 +43,3 @@ Ifremer Sète (Mont Saint-Clair meeting room)
 ### Graphics
 - Standard library (*matplotlib*)
 - Maps (*PyNGL*)
-
-
