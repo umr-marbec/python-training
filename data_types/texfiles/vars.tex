@@ -27,31 +27,25 @@
     Python is object oriented. Therefore, each assigned variable is an object, about which informations are accessible via:
     \lstinputlisting[linerange={4-6}, basicstyle=\ttfamily\scriptsize]{scripts/vars.py}
 
-    There are of two main caterogies of objects: (source: \href{https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/}{geeksforgeeks}): \\
+    \vspace{1em}
+    Calling an object's method is done as follows:
+    \lstinputlisting[linerange={8-10}, basicstyle=\ttfamily\scriptsize]{scripts/vars.py}
+
+\end{frame}
+    
+\begin{frame}[fragile]
+    \frametitle{Object's types}
+
+    There are of \textbf{two} main caterogies of objects: (source: \href{https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/}{geeksforgeeks}): \\
     \begin{itemize}
         \item{\emph{Mutable objects}: Can't change their state and contents: \textbf{list, dict, set}}
         \item{\emph{Immutable objects}: Can change their state and contents: \textbf{int, float, bool, string, unicode, tuple and custom objects}}
     \end{itemize}
 
-%For instance, although strings are in practice close to a list, the following statement
-%    \lstinputlisting[linerange={5-6}, basicstyle=\ttfamily\scriptsize]{scripts/vars.py} 
-%    will return
-%    \begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-%Traceback (most recent call last):
-%  File "vars.py", line 6, in <module>
-%    x[0] = 1
-%TypeError: 'str' object does not support item assignment
-%    \end{lstlisting}
-\end{frame}
+    \vspace{1em}
+    For instance, the following statement will raise an error:
+    \lstinputlisting[linerange={12-13}, basicstyle=\ttfamily\scriptsize]{scripts/vars.py}
 
-%\begin{frame}[fragile]
-%    \frametitle{Mutable and immutable objects}
-%    This is important when looking at assignments for instance. The following:
-%    \lstinputlisting[linerange={8-12}, basicstyle=\ttfamily\scriptsize]{scripts/vars.py} 
-%    will return 
-%    \begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
-%x =  [0, 1, 2] y =  [0, 1, 2]
-%x =  [0, 'oups', 2] y =  [0, 'oups', 2]
-%    \end{lstlisting}
-%    The change in \verb+x+ is visible in \verb+y+. Indeed, copy assignments copy \emph{references} (i.e. memory adresses), which is not modified in that case.
-%\end{frame}
+    since string content cannot be changed.
+
+\end{frame}
