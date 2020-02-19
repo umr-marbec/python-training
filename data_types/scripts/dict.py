@@ -11,7 +11,13 @@ print(data)
 
 ########################### Getting and replacing dict. elements
 data = {'dataint':10 , 'datstr':'This is a dictionnary'}
-data['datstr'], data.get('datstr') # retrieve a value from the key
+data['datstr']
+data.get('datstr') # retrieve a value from the key
+data['toto']
+data.get('toto')  # returns None if toto is not a key
+data.get('toto', 0)  # returns 0 if toto is not a key
+
+
 data['datlist'] = [0, 1, 2] # add a new element to the dict (key=datlist)
 data['datstr'] = 'new string'  # overwrites a given value (key=datstr)
 
