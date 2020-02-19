@@ -1,0 +1,58 @@
+\begin{frame}[fragile]
+\frametitle{String manipulation}
+\begin{lstlisting}
+string1 = 'Char1 Char2 Char3'
+chars = list(string1) # returns list of char ["S", "t" ... ]
+
+# Replace "Char2" by "toto" on "string1"
+string2 = string1.replace('Char2', 'toto') # 'Char1 toto Char3'
+
+# splits the string into words given a separator
+sep = ' '
+words = string1.split(sep) # ['Char1', 'Char2', 'Char3']
+
+# concatenates a list of string into one string, separated
+# by a given separator
+sep = '\t'  # tabulation
+string3 = sep.join(['toto1', 'toto2', \
+                    'toto3']) # 'toto1   toto2   toto3'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{String manipulation}
+\begin{lstlisting}
+string1 = 'Char1 Char2 Char3'
+
+# sets the string to lower case
+stringl = string1.lower()
+# char1 char2 char3
+
+# sets the string to uper case
+stringu = string1.upper()
+# CHAR1 CHAR2 CHAR3
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{String manipulation}
+\begin{lstlisting}
+string4 = 2*'toto1' + '\t' + 'toto2' + \
+         '\n' + 'toto3 ' + str(10)
+# \n: linebreak
+#"toto1toto1      toto2
+# toto3 10"
+
+# REMEMBER: strings are viewed as a list of characters
+
+# Matlab's sprintf 
+x = 10; y = 0.5; z = 0.005
+string5 = '%04d, %.3f, %.5f\n' %(x, y, z) 
+# 0010, 0.500, 0.00500
+# 
+
+# remove the \n character (when reading a file)
+string6 = string5.strip() 
+# 0010, 0.500, 0.00500
+\end{lstlisting}
+\end{frame}

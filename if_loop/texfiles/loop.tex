@@ -1,0 +1,117 @@
+\subsection{Loops}
+\begin{frame}[fragile]
+    \frametitle{Loops: definition}
+    Loops should be used when a set of actions should be repeated a certain number of times (for instance on each element of a list).\\
+    \vspace{1em}
+
+    There is mainly two ways to perform a loop: by using a \verb+for+ statement, or by using a \verb+while+ statement.
+
+    \vspace{1em}
+    In Python, the general structure of a loop is:
+    \begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+for v in iterable:
+    action
+
+while(condition):
+    action
+    \end{lstlisting}
+
+    \vspace{1em}
+    To play with loops, open the \verb+loops.py+ file on Spyder
+
+    \begin{block}{Note}
+        You can always replace a \verb+for+ loop by a \verb+while+ loop, and conversely. 
+    \end{block}
+\end{frame}
+
+%
+%\begin{frame}[fragile]
+%\frametitle{Loops}
+%\begin{lstlisting}
+%x = range(1, 11) # array from 1 to 10
+%
+%for p in range(0, len(x)): # note the colon!
+%    print x[p] # p: index of the element
+%    # inside a loop, the indent must change!
+%# no end statement, just left indent
+%
+%for temp in x:
+%    print temp # temp: element itself
+%
+%cpt = 0 # initialisation of counter
+%while cpt < len(x):
+%    print x[cpt]
+%    cpt += 1 # iterate counter
+%\end{lstlisting}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Loops}
+%\begin{lstlisting}
+%# loop over multiple lists
+%x = range(1, 11); y = range(11, 21); z = range(21, 31)
+%zip(x,y,z) # [(1,11,21), (2,12,22) ... ]: list of x,y,z tuples
+%for xtemp, ytemp, ztemp in zip(x, y, z):
+%    print xtemp, ytemp, ztemp # 1 11 21; 2 12 22; ...
+%
+%# Loop on 2D arrays
+%x = np.empty((50, 50))
+%for i in xrange(0, x.shape[0]):
+%    for j in xrange(0, x.shape[1]):
+%        temp = x[i, j]
+%# xrange instead of range
+%# allows to avoid the creation
+%# of a list in memory (lazy eval)
+%\end{lstlisting}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Special loops (List Comprehensions)}
+%
+%Very efficient loops, which output a list:
+%
+%\begin{lstlisting}
+%combs1 = [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]
+%# [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
+%
+%# equivalent to:
+%combs2 = []
+%for x in [1, 2, 3]:
+%    for y in [3, 1, 4]:
+%        if x != y:
+%            combs2.append((x, y))
+%
+%x = range(1, 10)
+%y = [3, 5, 6]
+%# extract x values that are not in y
+%z = [temp for temp in x if temp not in y]
+%# [1, 2, 4, 7, 8, 9]
+%\end{lstlisting}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%\frametitle{Break and continue statements}
+%\begin{lstlisting}
+%for p in xrange(0, 10):
+%    
+%    print p
+%
+%    if(p > 3):
+%        # if p > 3, the loop is exited.
+%        # hence, loops stops for p=4, and not 10
+%        break
+%
+%for p in xrange(0, 10):
+%    
+%    print p
+%   
+%    if(p > 3):
+%        # if p > 3, the statements below are not
+%        # excuted.
+%        # hence, 'below' is printed for p in [0, 3]
+%        # but loop is performed until p=9
+%        continue
+%    
+%    print 'below'
+%\end{lstlisting}
+%\end{frame}
