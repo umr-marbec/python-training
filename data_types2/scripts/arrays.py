@@ -7,7 +7,10 @@ x = np.array([1, 2, 3, 4, 5]) # initialisation from list
 x = np.ones((2, 3, 8), dtype=np.int) # init with 1 integers
 x = np.zeros((2, 3, 8)) # init with 0 floats 
 x = np.empty((2, 3, 8), dtype=np.float) # init with random floats 
+x = np.full((2, 3, 8), 10.)  # fill array with 10.
+print(x)
 x = x.astype(np.int)  # conversion from floats to int
+
 type(x) 
 print(x.ndim) 
 print(x.shape)
@@ -148,13 +151,25 @@ xt2 = fin['xt2']
 x = fin['x']
 
 ######################################### maths
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([6, 7, 8, 9, 10])
+x = np.array([1, 2, 3, 4, 5]).astype(np.float)
+y = np.array([6, 7, 8, 9, 10]).astype(np.float)
 x*y
 y/x
 y//x
 y%x
 x**y
+
+x[2] = 0.
+x[3] = -1.
+
+z = y/x
+print(z)
+z = np.divide(y, x, where=(x!=0), out=np.full(x.shape, -999, dtype=x.dtype))  # no more warning message
+print(z)
+w = np.log10(x)
+print(w)
+w = np.log10(x, where=(x>0), out=np.full(x.shape, -999, dtype=x.dtype))
+print(w)
 
 x = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
              [7, 1, 3, 5, 6, 7, 8, 10, 4, 6],
@@ -165,6 +180,7 @@ np.std(x, axis=1) # compute standard deviation over second dimension
 np.sum(x, axis=0) # compute sum over first dimension
 np.cumsum(x, axis=0) # compute sum over first dimension
 np.prod(x, axis=0) # computes the prod along the first dimension
+
 
 x = np.reshape(np.arange(24), (2, 3, 4))
 xmean = np.mean(x, axis=(0, 1))  # computes mean over the 0 a
