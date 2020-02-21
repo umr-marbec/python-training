@@ -1,4 +1,21 @@
-    \begin{center}
+\documentclass[convert={outext=.png}]{standalone}
+\usepackage{tikz}
+
+
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,matrix}
+\usetikzlibrary{patterns}
+\usepackage{subcaption}
+\tikzstyle{hatch1}=[pattern=north west lines, pattern color=green]
+\tikzstyle{hatch2}=[pattern=north west lines, pattern color=orange]
+\tikzstyle{hatch3}=[pattern=north west lines, pattern color=purple]
+\tikzstyle{hatch4}=[pattern=north east lines, pattern color=blue]
+\tikzstyle{hatch5}=[pattern=north east lines, pattern color=yellow]
+\tikzstyle{hatch6}=[pattern=north east lines, pattern color=magenta]
+\usepackage[margin=1in]{geometry}
+\tikzstyle{nodeleg}=[right, midway, inner sep = 0.7cm]
+
+\begin{document}
+
     \begin{tikzpicture}
         \filldraw[step=1.0,black, thin, fill=blue!20] (0., 0. ) grid (4, 1) rectangle(0, 0);
         \draw (0.5, 0.5 ) node {L};
@@ -22,5 +39,4 @@
         \draw (3.5, \wneg ) node {-1};
         \draw (\lab, \wneg ) node [anchor=east, align=right]{Negative indexes};
     \end{tikzpicture}
-    \end{center}
-
+\end{document}
