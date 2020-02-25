@@ -8,14 +8,17 @@
 **.html
 **.swp
 **.vrb
-**ipynb**
 *.DS_Store
+**.npz
+**todo**
+**__pycache__**
+
+**outfile.txt**
 
 # Remove R files
 .Rhistory
 
-# Remove final files
-introduction/introduction.pdf
-libraries/libraries.pdf
+**.ipynb_checkpoints
 
-
+# gimp files
+**xcf
