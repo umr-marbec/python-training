@@ -12,6 +12,19 @@ May 26, 27, 28, 2020.
 
 Ifremer Sète (Mont Saint-Clair meeting room)
 
+## How to
+
+Download the class (clone the file or download the zip archive). Then, open
+any of the `.ipynb` file using the `jupyter notebook`. For instance, to open the class about object programming, type in a terminal:
+
+```
+cd oop
+jupyter notebook oop.ipynb &
+```
+
+Then annotate the file at will.
+
+
 ## Program
 
 ### Introduction
