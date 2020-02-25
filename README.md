@@ -50,8 +50,8 @@ Ifremer Sète (Mont Saint-Clair meeting room)
 ### IO
 - [Text](io/text.ipynb)
 - [CSV](io/pandas.ipynb) (*pandas*)
-<!--- [NetCDF](io/xarray.ipynb) (*xarray*) -->
+- [NetCDF](io/xarray.ipynb) (*xarray*)
 
 ### Maps
 - [Cartopy](maps/cartopy.ipynb)
-<!-- - [PyNGL](maps/pyngl.ipynb) -->
+- [PyNGL](maps/pyngl.ipynb)
