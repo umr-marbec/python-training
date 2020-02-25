@@ -58,7 +58,7 @@ Then annotate the file at will.
 - [Configutation](plots/pyplot_settings.ipynb)
 
 ### Object oriented programming
-- [Class definition](oo/oop.ipynb)
+- [Class definition](oop/oop.ipynb)
 
 ### IO
 - [Text](io/text.ipynb)
