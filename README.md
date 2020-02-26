@@ -44,6 +44,7 @@ Then annotate the file at will.
 - [Blocks](blocks/blocks.pynnb)
 - [Conditional statements](blocks/ifsta.ipynb)
 - [Loops](blocks/loops.ipynb)
+- [Functions](blocks/functions.ipynb)
 
 ### Graphics ([Matplotlib](https://matplotlib.org/))
 
