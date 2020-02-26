@@ -40,8 +40,7 @@ Then annotate the file at will.
 - [String](data_types/string.ipynb)
 - [Numpy arrays](data_types/numpy.ipynb) (Scipy, Numpy libraries)
 
-### Conditional statements and loops
-- [Blocks](blocks/blocks.pynnb)
+### Conditional statements, loops, functions (blocks)
 - [Conditional statements](blocks/ifsta.ipynb)
 - [Loops](blocks/loops.ipynb)
 - [Functions](blocks/functions.ipynb)
