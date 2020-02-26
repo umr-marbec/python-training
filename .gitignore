@@ -25,4 +25,4 @@
 # gimp files
 **xcf
 
-maps/figs
+maps/figs/**png
