@@ -29,7 +29,7 @@ Then annotate the file at will.
 
 ### Introduction
 - [Introduction](introduction/intro.ipynb) (description, applications)
-- [Getting started](introduction/intro.ipynb) (install, running)
+- [Getting started](introduction/start.ipynb) (install, running)
 - [Installing libraries](introduction/libinstall.ipynb)
 
 ### Data types
