@@ -14,9 +14,9 @@ Ifremer Sète (Mont Saint-Clair meeting room)
 
 ## How to
 
-Download and install [Anaconda](https://www.anaconda.com/products/individual) for *Python 3.7*.
+Download and install [Anaconda](https://www.anaconda.com/products/individual) for **Python 3.7**.
 
-Download the class (clone the file or download the zip archive). Then, open
+Download the Notebooks (clone the file or download the zip archive). Then, open
 any of the `.ipynb` file using the `jupyter notebook`. For instance, to open the class about object programming, type in a terminal:
 
 ```
