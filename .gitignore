@@ -1,4 +1,5 @@
 # Removes latex temporary files
+**/*.ipynb
 **.aux
 **.log
 **.nav
