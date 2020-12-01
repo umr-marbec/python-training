@@ -12,9 +12,19 @@ May 26, 27, 28, 2020.
 
 Ifremer Sète (Mont Saint-Clair meeting room)
 
-## How to
+## How to use class materials
+
+### With notebooks
 
 Download and install [Anaconda](https://www.anaconda.com/products/individual) for **Python 3.7**.
+
+When done, open a Terminal and type: 
+
+```
+conda install jupytext
+```
+
+**Be sure that the `conda` exectuable is visible by your Shell!**
 
 Download the Notebooks (clone the file or download the zip archive). Then, open
 any of the `.py` file using the `jupyter notebook`. For instance, to open the class about object programming, type in a terminal:
@@ -26,6 +36,9 @@ jupyter notebook oop.py &
 
 Then annotate the file at will.
 
+### With Spyder
+
+Launch `Spyder` and open any of the `.py` file. Then run code selections or the entire code.
 
 ## Program
 
