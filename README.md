@@ -4,14 +4,6 @@
 
 Nicolas Barrier, IRD, UMR Marbec ([www.nicolasbarrier.fr/](https://www.nicolasbarrier.fr/))
 
-## Dates
-
-May 26, 27, 28, 2020.
-
-## Localisation
-
-Ifremer Sète (Mont Saint-Clair meeting room)
-
 ## How to use class materials
 
 ### With notebooks
