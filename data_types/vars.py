@@ -110,7 +110,7 @@ print(isinstance(x, (list, tuple)))
 # ## Object's types: mutable and immutable
 #
 # There are of **two** main caterogies of objects: (source: [geeksforgeeks](https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/)): 
-# - *Mutable objects*: Can change their state and contents: **list, dict, set and custom objects** (numpy.arrays for instance)}}
+# - *Mutable objects*: Can change their state and contents: **list, dict, set and custom objects** (*numpy.arrays* for instance)
 # - *Immutable objects*: Can't change their state and contents: **int, float, bool, string, unicode, tuple**}
 #
 # For instance, the following statement will raise an error:
