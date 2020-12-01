@@ -17,7 +17,7 @@
 #
 # ### Variable assignments
 #
-# Python is a dynamical binding and typing language, contrary to C/C++, Java and Fortran (source: [pythonconquerstheuniverse](https://pythonconquerstheuniverse.wordpress.com/2009/10/03/static-vs-dynamic-typing-of-programming-languages/))
+# Python is a *dynamical binding* and typing language, contrary to C/C++, Java and Fortran, who are *static binding* (source: [pythonconquerstheuniverse](https://pythonconquerstheuniverse.wordpress.com/2009/10/03/static-vs-dynamic-typing-of-programming-languages/))
 #
 # <br>
 # <figure>
@@ -35,9 +35,11 @@
 # Therefore, one variable name can be reused for different objects. Variable assignment is done with the ```=``` sign:
 
 x = 1  # int
+print(type(x))
 x = 2.3  # float
+print(type(x))
 x = 'string'  # string
-x
+print(type(x))
 
 # ### Variables as objects
 #
