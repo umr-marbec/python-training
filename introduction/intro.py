@@ -28,13 +28,13 @@
 #
 # The main advantages of using Python are:
 #
-# - Presence of third-party modules (Python Package Index)
+# - Presence of third-party modules ([Python Package Index](https://pypi.org/))
 # - Extensive support libraries (NumPy for numerical calculations, Pandas for data analytics)
 # - Open source and community development
 # - Easy to learn
-# - User-friendly data structures
+# - User-friendly data structures (lists, dictionaries, etc.)
 # - Portable and Interactive
-# - Portable across Operating systems
+# - Portable across Operating Systems
 #
 # Source: [geeksforgeeks.org](https://www.geeksforgeeks.org/python-language-advantages-applications/).
 #
