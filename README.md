@@ -70,7 +70,7 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 ### IO
 - [Text](io/text.py)
 - [CSV](io/pandas.py) (*pandas*)
-- [NetCDF](io/xarray.py) (*xarray*)
+- [NetCDF](io/xar.py) (*xarray*)
 
 ### Maps
 - [Cartopy](maps/cartopy.py)
