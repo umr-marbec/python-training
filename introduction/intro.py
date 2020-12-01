@@ -45,7 +45,7 @@
 # - Web Development: creation of web frameworks ([Django](https://www.djangoproject.com/), [Flask](https://www.palletsprojects.com/p/flask/))
 # - Machine learning ([scikit-learn](https://scikit-learn.org/), [TensorFlow](https://www.tensorflow.org/))
 # - Data analysis ([scipy](https://www.scipy.org/), [pandas](https://pandas.pydata.org/), [xarray](http://xarray.pydata.org/en/stable/))
-# - Data visualization ([matplotlib](https://matplotlib.org/), [basemap](https://matplotlib.org/basemap/), [PyNgl](https://www.pyngl.ucar.edu/))
+# - Data visualization ([matplotlib](https://matplotlib.org/), [basemap](https://matplotlib.org/basemap/), [PyNgl](https://www.pyngl.ucar.edu/), [cartopy](https://scitools.org.uk/cartopy/docs/latest/))
 # - Documentation ([Sphinx](https://www.sphinx-doc.org/en/master/), [Read the Docs](https://readthedocs.org/))
 # - Data download ([cdsapi](https://pypi.org/project/cdsapi/) for *Climate Data Store*, [motuclient](https://pypi.org/project/motuclient/) for *Copernicus Marine Products*)
 #
@@ -58,7 +58,7 @@
 # - Dropbox: desktop client
 # - Instragram: website
 # - Netflix, Spotify: analytics for suggestions
-# - Facebook: 21\% of the codebase
+# - Facebook: 21% of the codebase
 # - Google: *Python where we can, C++ where we must*
 #
 # Source: [netguru.com](https://www.netguru.com/blog/8-top-companies-that-use-python-for-their-apps-examples-of-top-notch-python-applications)
