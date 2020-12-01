@@ -22,7 +22,7 @@
 # - *interpreted*: no compilation (contrary to Java, C/C++, Fortran)
 # - *object-oriented*: based on the concept of objects, associated with attributes (object's data) and methods (object's procedures).
 # - *high-level*: close to human languages (contrary to C, which is a middle-level language)
-# - dynamic semantics]: no variable declaration, possibility to mix-up data types.
+# - *dynamic semantics*: no variable declaration, possibility to mix-up data types.
 #
 # ## Why use Python?
 #
