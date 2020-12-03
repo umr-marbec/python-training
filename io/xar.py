@@ -186,6 +186,7 @@ print(data_s)
 
 # +
 import matplotlib.pyplot as plt
+plt.rcParams['text.usetex'] = False
 
 data = xr.open_dataset('data/UV500storm.nc')
 data = data.isel(timestep=0)  # extract first time step

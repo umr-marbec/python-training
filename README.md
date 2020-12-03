@@ -45,7 +45,7 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 - [List](data_types/list.py)
 - [Dictionaries](data_types/dict.py)
 - [String](data_types/string.py)
-- [Numpy arrays](data_types/numpy.py) (Scipy, Numpy libraries)
+- [Numpy arrays](data_types/nmp.py) (Scipy, Numpy libraries)
 
 ### Conditional statements, loops, functions (blocks)
 - [Conditional statements](blocks/ifsta.py)
