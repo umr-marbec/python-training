@@ -109,7 +109,6 @@ print(type(array))
 # +
 import matplotlib.pyplot as plt
 
-fig = plt.figure()
 data.loc[:, ['JAN', 'FEB']].plot()
 plt.show()
 # -
