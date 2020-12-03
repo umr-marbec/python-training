@@ -80,7 +80,7 @@ print(dataex)
 
 # ### Using indexes
 #
-# Extracting data using column and row names is done by using the [iloc] https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html#pandas-dataframe-iloc method.
+# Extracting data using column and row names is done by using the [iloc](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html#pandas-dataframe-iloc) method.
 
 # Extracting one column
 dataex = data.iloc[:, 0]
