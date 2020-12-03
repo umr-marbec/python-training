@@ -48,6 +48,7 @@ ax = plt.gca()
 plt.plot(x, y)
 # text in figure coordinates (ranging from 0 to 1)
 
+from matplotlib.font_manager import FontProperties
 myfont = FontProperties()
 myfont.set_family('monospace')
 
