@@ -186,7 +186,6 @@ print(data_s)
 
 # +
 import matplotlib.pyplot as plt
-plt.rcParams['text.usetex'] = False
 
 data = xr.open_dataset('data/UV500storm.nc')
 data = data.isel(timestep=0)  # extract first time step
@@ -238,6 +237,8 @@ depth_bins = np.arange(0, 1000 + 250, 250)
 zmean = data.groupby_bins('depth', depth_bins).mean(dim='depth')
 print(zmean)
 bins = zmean['depth_bins'].values
+zmean = zmean.rename({'depth_bins' : 'zmean'})
+print(zmean)
 
 plt.figure()
 zmean['TEMP'].plot()
