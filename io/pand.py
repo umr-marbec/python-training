@@ -27,9 +27,11 @@ import pandas as pd
 data = pd.read_csv('./data/nina34.csv', 
                    delim_whitespace=True,  # use spaces as delimiter
                    skipfooter=2,   # skips the last 2 lines
-                   na_values=-99.99,  # sets missing values
+                   na_values=-99.99,  # sets missing values  
                    engine='python'  # sets engine to Python (default C does not support skip footer)
                    )
+
+print(data)
 # -
 
 # It returns a [pandas.DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html) object.
