@@ -73,5 +73,5 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 - [NetCDF](io/xar.py) (*xarray*)
 
 ### Maps
-- [Cartopy](maps/cartopy.py)
+- [Cartopy](maps/carto.py)
 - [PyNGL](maps/pyngl.py)
