@@ -68,11 +68,12 @@ print(x.shape)
 #
 # To call an object's method, the general syntax is `object.method(arg1, arg2, ...)`. For instance, to compute the mean of the `numpy.array` defined in the above:
 
-# stores the output of the cap. method
-# in a new object
+# stores the output of the mean and std methods
+# in new objects
 m = x.mean()
 s = x.std()
 print(m)
+print(s)
 
 # To get some help about a method, use the `help` function:
 
