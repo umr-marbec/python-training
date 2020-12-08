@@ -24,7 +24,7 @@
 # | ```not(a)```      | not a
 # | ```a == b```      | a equal b 
 # | ```a != b```      | a not equal b
-# | ```a \| b```      | a and b
+# | ```a & b```      | a and b
 # | ```a \| b```      | a or b
 # | ```a >= b```      | a greater equal b
 # | ```a > b```       | a greater b
