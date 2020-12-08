@@ -45,7 +45,7 @@
 # | ```x % y```                    |remainder of x / y
 # | ```-x```                       | x negated
 # | ```abs(x)```                   | absolute value or magnitude of x
-# | ```complex(re, im)```          | a complex $math re + i\times im$
+# | ```complex(re, im)```          | a complex $re + i\times im$
 # | ```c.conjugate()```            | conjugate of the complex number c
 # | ```divmod(x, y)```             | the pair ```(x // y, x % y)```
 # | ```pow(x, y)```                | x to the power y
