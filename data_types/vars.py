@@ -88,7 +88,7 @@ m2 = np.mean(x)  # using the numpy.mean function
 print(m1, m2)
 
 # <div class='alert alert-info'>
-#     <strong>Note: </strong> In this case, the numpy function simply calls the object's attribute.
+#     <strong>Note: </strong> In this case, the numpy function simply calls the object's method.
 #  </div>
 
 # ### Transtyping
