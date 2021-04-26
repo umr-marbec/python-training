@@ -73,9 +73,9 @@
 # To change environment, type
 #
 # ```
-# source activate pyngl2  # switch env. to pygnl2
-# source activate pyngl3  # switch env. to pygnl3
-# source activate base    # go back to default env.
+# conda activate pyngl2  # switch env. to pygnl2
+# conda activate pyngl3  # switch env. to pygnl3
+# conda activate base    # go back to default env.
 # ```
 #
 # To list all the environments, type: 

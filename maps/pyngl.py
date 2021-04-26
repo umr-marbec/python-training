@@ -29,12 +29,13 @@
 # To use Jupyter Notebook with this environment, type in a terminal:
 #
 # `
-# source activate pyngl
+# conda activate pyngl
 # conda install ipython ipykernel
 # ipython kernel install --name "pyngl" --user
 # jupyter notebook &
 # `
 #
+# (source: [Medium.com](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084))
 #
 # ## General concepts
 #
