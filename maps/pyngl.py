@@ -1,16 +1,16 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: py
+#     formats: py:light
 #     text_representation:
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
 #       jupytext_version: 1.7.1
 #   kernelspec:
-#     display_name: pyngl
+#     display_name: Python 3
 #     language: python
-#     name: pyngl
+#     name: python3
 # ---
 
 # # PyNGL
@@ -439,4 +439,4 @@ Ngl.end()
 
 # # More examples
 #
-# To have some examples, don't hesitate to navigate through the [PyNGL](https://www.pyngl.ucar.edu/Examples/gallery.shtml]) and [NCL](https://www.ncl.ucar.edu/gallery.shtml) galleries. Some examples are also available [here](http://www.nicolasbarrier.fr/gallery.html).
+# To have some examples, don't hesitate to navigate through the [PyNGL](https://www.pyngl.ucar.edu/Examples/gallery.shtml]) and [NCL](https://www.ncl.ucar.edu/gallery.shtml) galleries. Some examples are also available [here](http://www.nicolasbarrier.fr/gallery).
