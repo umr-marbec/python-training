@@ -8,9 +8,9 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.7.1
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: PyNGL
 #     language: python
-#     name: python3
+#     name: pyngl
 # ---
 
 # # PyNGL
