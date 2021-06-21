@@ -1,12 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: py
+#     formats: py:light
 #     text_representation:
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.7.1
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -47,7 +47,7 @@ print(data)
 #     <strong>Warning!</strong> This actually works only if the decomposition into subregions is regular, and if subfiles contain coordinates
 # </div>
 
-data = xr.open_mfdataset("data/GYRE_OOPE*", combine='by_coords')
+data = xr.open_mfdataset("data/GYRE_OOPE*", combine='by_coords', engine='netcdf4')
 print(data)
 
 # ### Accessing dimensions, variables, attributes
@@ -251,7 +251,7 @@ plt.show()
 
 # +
 import numpy as np
-from cftime import utime
+import cftime
 
 nx = 10
 ny = 20
@@ -264,7 +264,7 @@ data = np.ma.masked_where(data < 0, data)
 
 # converts time into date
 time = np.arange(ntime)
-date = utime('days since 1900-01-01 00:00:00').num2date(time)
+date = cftime.num2date(time, 'days since 1900-01-01 00:00:00')
 # -
 
 # First, init an empty `Dataset` object by calling the [xarray.Dataset](http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html)method.
