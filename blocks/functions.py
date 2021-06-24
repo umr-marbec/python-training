@@ -1,12 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: py
+#     formats: py:light
 #     text_representation:
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.7.1
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -163,6 +163,7 @@ def function2(x, y, *args):
     # return a tuple
     print('x = ', x)
     print('y = ', y)
+    print('args = ', args)
     if len(args) > 0:
         for v in args:
             print('other ', v)
@@ -188,6 +189,7 @@ function2(3, 'toto', 5.4, 'z', [0, 3, 4])
 
 import numpy as np
 def stand(x, **kwargs):
+    print('kwargs = ', kwargs)
     m = np.mean(x, **kwargs)
     s = np.std(x)
     print(m.shape)
@@ -222,6 +224,24 @@ out = stand(x, argsmean=args_mean)  # mean computed over 1st dimensions
 out = stand(x, argsstd=args_std)  # std computed over 1st dimension, removes one dof
 out = stand(x, argsmean=args_mean, argsstd=args_std)
 # out = stand(x, argsmean=args_std, argsstd=args_mean) # crashes since ddof is no argument for std
+# -
+
+# ## Functions: defining input and output types
+#
+# To manage input and output types, see https://docs.python.org/3/library/typing.html. This is done by using `:` after the argument name. 
+#
+# **The function will work without any problems, but the linters (VSCode or other) will show that there is a typing issue.**
+
+# +
+import numpy as np
+def function(x : np.ndarray) -> list:
+    output = 2 * x
+    return output
+
+function(5)
+function(np.array(5))
+
+
 # -
 
 # ## Lambda functions
