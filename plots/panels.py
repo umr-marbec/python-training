@@ -1,12 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: py
+#     formats: py:light
 #     text_representation:
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.7.1
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -128,3 +128,71 @@ cs = plt.pcolormesh(zz)
 cax = plt.axes([0.25, 0.05, 0.5, 0.1])  # define the position of the colorbar
 plt.colorbar(cs, cax, orientation='horizontal')
 plt.show()
+# -
+
+# ## Displaying plots on identical axes
+#
+# For aligning several plots, the `ImageGrid` function can be used. For contour plots with individual colorbars:
+
+# +
+from mpl_toolkits.axes_grid1 import AxesGrid, ImageGrid
+
+fig = plt.figure(figsize=(12, 8))
+axgr = ImageGrid(fig, 111,  nrows_ncols=(2, 2), 
+                 label_mode='L', aspect=False, share_all=True, axes_pad=[1, 0.5],
+                 cbar_mode='each', cbar_size="5%", cbar_pad='5%')
+
+# recover the list of cbar axes
+cbar_axes = axgr.cbar_axes
+
+# Loop over all the axes within the image grid
+for i, ax in enumerate(axgr):
+    print(i, ax)
+    cs = ax.pcolormesh(zz * (i + 1))
+    cb = cbar_axes[i].colorbar(cs)
+    cb.set_label_text('label')
+# -
+
+# Note that `xticklabels` appear only on the bottom panels, while `yticklabels` only appear on the left panels.
+#
+# For plots with a single colorbar, set `cbar_mode=single`
+
+# +
+fig = plt.figure(figsize=(12, 8))
+axgr = ImageGrid(fig, 111,  nrows_ncols=(2, 2), 
+                 label_mode='L', aspect=False, share_all=True, axes_pad=[1, 0.5],
+                 cbar_mode='single', cbar_size="5%", cbar_pad='5%')
+
+# recover the list of cbar axes
+cbar_axes = axgr.cbar_axes
+
+# Loop over all the axes within the image grid
+for i, ax in enumerate(axgr):
+    cs = ax.pcolormesh(zz)
+    cb = cbar_axes[i].colorbar(cs)
+    cb.set_label_text('label')
+# -
+
+# Same thing for time series:
+
+# +
+fig = plt.figure(figsize=(12, 8))
+axgr = ImageGrid(fig, 111,  nrows_ncols=(2, 1), 
+                 label_mode='L', aspect=False, share_all=True, axes_pad=[1, 0.5])
+
+x = np.linspace(0, 4*np.pi, 1000)
+y0 = np.cos(x)
+y1 = np.sin(x)
+y = [y0, y1]
+label = ['cos', 'sin']
+
+# Loop over all the axes within the image grid
+for i, ax in enumerate(axgr):
+    cs = ax.plot(x, y[i])
+    ax.set_title(label[0])
+    ax.set_xticks(np.arange(0, 4*np.pi, np.pi))
+    ax.set_xticklabels(['0', r'$\pi$', r'$2\pi$', r'$3\pi$', ])
+    ax.grid(True)
+# -
+
+
