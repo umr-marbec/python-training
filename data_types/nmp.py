@@ -1,12 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: py
+#     formats: py:light
 #     text_representation:
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.7.1
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -211,6 +211,14 @@ for k in range(4):
             xresf_t[i, j, k] = temp[cpt]
             cpt += 1
 print(np.all(xresf_t == xresf))
+
+# To reshape the array from ND to 2D, by keeping one dimension unchanged:
+
+import numpy as np
+x = np.reshape(np.arange(2 * 3 * 4), (2, 3, 4))
+xshape = x.shape
+xtest = np.reshape(x, (2, -1))  # keeps 2 but transforms (3, 4) in 12
+print(xtest.shape)
 
 # ### Copy along given dimensions
 
