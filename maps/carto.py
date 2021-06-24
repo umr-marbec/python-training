@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.7.1
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -175,6 +175,82 @@ cb.set_ticks(np.arange(0, 60, 10))
 ax.coastlines()  # add coastlines
 ax.add_feature(cfeature.LAND)
 plt.show()
+# -
+
+# ## Labeling
+#
+# Informations about how to add grid labels are provided here: https://scitools.org.uk/cartopy/docs/v0.13/matplotlib/gridliner.html
+#
+# Here is a small example on how to do it.
+
+# +
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+import matplotlib.ticker as mticker
+
+# definition of grid params
+gridparams = {'crs': ccrs.PlateCarree(central_longitude=0), 
+              'draw_labels':True, 'linewidth':0.5, 
+              'color':'gray', 'alpha':0.5, 'linestyle':'--'}
+
+fig = plt.figure()
+ax = plt.gca(projection=ccrs.PlateCarree())
+ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.COASTLINE)
+gl = ax.gridlines(**gridparams)
+gl.xlabels_top = False
+gl.ylabels_right = False
+gl.xformatter = LONGITUDE_FORMATTER
+gl.yformatter = LATITUDE_FORMATTER
+gl.xlocator = mticker.FixedLocator(np.arange(-180, 180 + 40, 40))
+gl.ylocator = mticker.FixedLocator(np.arange(-90, 90 + 20, 20))
+# -
+
+# ## Paneling
+#
+# Proper paneling can be obtained by using the `ImageGrid` Matplotlib function in combination with the `GeoAxes` method (cf. https://scitools.org.uk/cartopy/docs/v0.16/gallery/axes_grid_basic.html)
+
+# +
+from mpl_toolkits.axes_grid1 import ImageGrid
+from cartopy.mpl.geoaxes import GeoAxes
+import cartopy.feature as cfeature
+
+def add_labels(ax, projout):
+    gridparams = {'crs': projout, 
+              'draw_labels':True, 'linewidth':0.5, 
+              'color':'gray', 'alpha':0.5, 'linestyle':'--'}
+    gl = ax.gridlines(**gridparams)
+    gl.xlabels_top = False
+    gl.ylabels_right = False
+    gl.xformatter = LONGITUDE_FORMATTER
+    gl.yformatter = LATITUDE_FORMATTER
+    gl.xlocator = mticker.FixedLocator(np.arange(-180, 180 + 40, 40))
+    gl.ylocator = mticker.FixedLocator(np.arange(-90, 90 + 20, 20))
+
+projout = ccrs.PlateCarree(central_longitude=180)
+projin = ccrs.PlateCarree()
+
+fig = plt.figure(figsize=(12, 8))
+axes_class = (GeoAxes, dict(map_projection=projout))
+
+axgr = ImageGrid(fig, 111,  axes_class=axes_class, nrows_ncols=(3, 1), axes_pad=(0.7, 0.5), label_mode='', 
+                cbar_mode='each', cbar_size=0.1, cbar_pad=0.3, cbar_location="bottom", share_all=True)
+axcbar = axgr.cbar_axes
+
+for i, ax in enumerate(axgr):
+    if i == 0:
+        cs = ax.contourf(lon, lat, u, transform=projin)
+        ax.set_title('U')
+        axcbar[i].colorbar(cs)
+    elif i == 1:
+        cs = ax.contourf(lon, lat, v, transform=projin)
+        axcbar[i].colorbar(cs)
+        ax.set_title('V')
+    else:
+        cs = ax.quiver(lon, lat, u, v, vel, cmap=plt.cm.jet, transform=projin)
+        cb = axcbar[i].colorbar(cs)
+    ax.add_feature(cfeature.LAND)  # add coastlines
+    ax.add_feature(cfeature.COASTLINE)  # add coastlines
+    add_labels(ax, projout)
 # -
 
 # ## Geodesic calculations
