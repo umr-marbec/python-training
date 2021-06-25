@@ -1,16 +1,14 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: My sample book
-author: The Jupyter Book Community
+title: Introduction to Python
+author: Nicolas Barrier
 logo: logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
-  exclude_patterns:
-    - 'README.md'
 
 # Define the name of the latex output file for PDF builds
 latex:
