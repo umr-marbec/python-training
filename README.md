@@ -35,43 +35,43 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 ## Program
 
 ### Introduction
-- [Introduction](introduction/intro.py) (description, applications)
-- [Getting started](introduction/start.py) (install, running)
-- [Installing libraries](introduction/libinstall.py)
+- Introduction (introduction/intro.py) (description, applications)
+- Getting started (introduction/start.py) (install, running)
+- Installing libraries (introduction/libinstall.py)
 
 ### Data types
-- [Variable definition](data_types/vars.py)
-- [Numerical variables](data_types/numerics.py)
-- [List](data_types/list.py)
-- [Dictionaries](data_types/dict.py)
-- [String](data_types/string.py)
-- [Numpy arrays](data_types/nmp.py) (Scipy, Numpy libraries)
+- Variable definition (data_types/vars.py)
+- Numerical variables (data_types/numerics.py)
+- List (data_types/list.py)
+- Dictionaries (data_types/dict.py)
+- String (data_types/string.py)
+- Numpy arrays (data_types/nmp.py) (Scipy, Numpy libraries)
 
-### Conditional statements, loops, functions (blocks)
-- [Conditional statements](blocks/ifsta.py)
-- [Loops](blocks/loops.py)
-- [Functions](blocks/functions.py)
+### Conditional statements, loops, functions  (blocks)
+- Conditional statements (blocks/ifsta.py)
+- Loops (blocks/loops.py)
+- Functions (blocks/functions.py)
 
-### Graphics ([Matplotlib](https://matplotlib.org/))
+### Graphics  (Matplotlib(https://matplotlib.org/))
 
-- [XY](plots/xy.py)
-- [Contours](plots/contours.py)
-- [Geometrical shapes](plots/geometrical_shapes.py)
-- [Panels](plots/panels.py)
-- [Quivers](plots/quivers.py)
-- [Scatter plots](plots/scatters.py)
-- [Text and maths](plots/text.py)
-- [Axes management](plots/axes.py)
-- [Configutation](plots/pyplot_settings.py)
+- XY (plots/xy.py)
+- Contours (plots/contours.py)
+- Geometrical shapes (plots/geometrical_shapes.py)
+- Panels (plots/panels.py)
+- Quivers (plots/quivers.py)
+- Scatter plots (plots/scatters.py)
+- Text and maths (plots/text.py)
+- Axes management (plots/axes.py)
+- Configutation (plots/pyplot_settings.py)
 
 ### Object oriented programming
-- [Class definition](oop/oop.py)
+- Class definition (oop/oop.py)
 
 ### IO
-- [Text](io/text.py)
-- [CSV](io/pand.py) (*pandas*)
-- [NetCDF](io/xar.py) (*xarray*)
+- Text (io/text.py)
+- CSV (io/pand.py) (*pandas*)
+- NetCDF (io/xar.py) (*xarray*)
 
 ### Maps
-- [Cartopy](maps/carto.py)
-- [PyNGL](maps/pyngl.py)
+- Cartopy (maps/carto.py)
+- PyNGL (maps/pyngl.py)
