@@ -25,4 +25,4 @@ for i in range(0, nx):
         plt.text(x[i], y[j], cpt, ha='center', va='center')
         cpt += 1
 
-plt.savefig('corder.svg', bbox_inches='tight')
+plt.savefig('corder.png', bbox_inches='tight')

@@ -34,20 +34,14 @@
 # - Row-major order: C/C++, Python
 # - Column-major order: Fortran, Matlab, R, Julia
 #
-# <div>
-# <figure>
-#     <center>
-#     <img src="figs/corder.svg" alt="Dictionaries" text-align=center width=200>
-#      <figcaption text-align=center><i>Row-major order</i></figcaption>
-# </figure>
-# <br>
-# <br>    
-# <figure>
-#     <center>
-#     <img src="figs/forder.svg" alt="Dictionaries" text-align=center width=200>
-#      <figcaption text-align=center><i>Column-major order</i></figcaption>
-# </figure>
-# </div>
+# **Row-major order:**
+#
+# <img src="figs/corder.svg" alt="Dictionaries" text-align=center width=200>
+#  
+# **Column-major order:** 
+#
+# <img src="figs/forder.svg" alt="Dictionaries" text-align=center width=200>
+#
 #
 # ## Consequences for loops
 #

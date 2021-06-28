@@ -19,9 +19,13 @@
 #
 # Python is a *dynamical binding* and typing language, contrary to C/C++, Java and Fortran, who are *static binding* (source: [pythonconquerstheuniverse](https://pythonconquerstheuniverse.wordpress.com/2009/10/03/static-vs-dynamic-typing-of-programming-languages/))
 #
-#     <img src="figs/static_typing.png" alt="Static typing" text-align=center>
+# **Static typing:**
 #
-#     <img src="figs/dynamic_typing.png" alt="Dynamic typing">
+# <img src="figs/static_typing.png" alt="Static typing" text-align=center>
+#
+# **Dynamic typing:**
+#
+# <img src="figs/dynamic_typing.png" alt="Dynamic typing">
 #
 # Therefore, one variable name can be reused for different objects. Variable assignment is done with the ```=``` sign:
 

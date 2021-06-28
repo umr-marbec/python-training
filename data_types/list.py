@@ -19,12 +19,7 @@
 #
 # A list is an *ordered* sequence of elements, which are *not necessarily of the same type* and are accessible via a unique *index* (integer), which is the element's position within the list.
 #
-# <figure>
-#     <center>
-#     <img src="figs/tikz_list.svg" alt="Static typing" text-align=center width=400>
-#      <figcaption text-align=center><i>Liste</i></figcaption>
-# </figure>
-#
+# <img src="figs/tikz_list.png" alt="Static typing" text-align=center width=400>
 #
 # <div class='alert alert-info'>
 #     <strong>Note. </strong> Python <i>tuple</i> can be viewed as immutable list. []  are replaced by ()

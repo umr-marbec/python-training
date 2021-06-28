@@ -132,16 +132,10 @@
 #
 # Then, click on the **Run file** button to run all the program or the **Run selection** button to run the current line 
 #
-# <br>  
-# <figure>
-#     <center>
-#     <img src="figs/run_file.png" width="50" text-align=center>
-#     <figcaption text-align=center><i>Run file button</i></figcaption>
-# </figure>
+# **Run file button:**
 #
-# <br>    
-# <figure>
-#     <center>
+# <img src="figs/run_file.png" width="50" text-align=center>
+#
+# **Run selection button:**
+#
 # <img src="figs/run_sel.png" width="50">
-#         <figcaption text-align=center><i>Run selection button</i></figcaption>
-# </figure>

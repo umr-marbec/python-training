@@ -25,5 +25,5 @@ for j in range(ny):
         plt.text(x[i], y[j], cpt, ha='center', va='center')
         cpt += 1
 
-plt.savefig('forder.svg', bbox_inches='tight')
+plt.savefig('forder.png', bbox_inches='tight')
 

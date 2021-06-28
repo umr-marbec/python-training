@@ -19,11 +19,7 @@
 #
 # A dictionary can be viewed as an *unordered* list of elements (called *values*),  which are *not necessarily of the same type* and are accessible via a unique label, which must be an immutable object (called *keys*).
 #
-# <figure>
-#     <center>
-#     <img src="figs/tikz_dict.svg" alt="Dictionaries" text-align=center width=400>
-#      <figcaption text-align=center><i>Dictionary</i></figcaption>
-# </figure>
+# <img src="figs/tikz_dict.png" alt="Dictionaries" text-align=center width=400>
 #
 # ### Usage
 #
