@@ -32,13 +32,15 @@ lon = data['glamt'].values
 lat = data['gphit'].values
 mask = data['tmask'].values
 
+lon[lon < 0] += 360
+
 # mask latitudes greater than 30
-ilat = np.abs(lat) > 30
-mask[ilat] = 0
+ilat = (lat <= 60) & (lat >= -20)
+mask[~ilat] = 0
 
 # mask domain outside of Pacific (120E/80W)
 # done in two ways because of dateline
-ilon = (lon >= 120 )| (lon <= -80)
+ilon = (lon >= 117 ) & (lon <= 260)
 mask[~ilon] = 0
 
 plt.figure()
