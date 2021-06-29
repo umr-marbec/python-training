@@ -32,14 +32,14 @@ lon = data['glamt'].values
 lat = data['gphit'].values
 mask = data['tmask'].values
 
+# converts lon from Atl to Pac.
 lon[lon < 0] += 360
 
-# mask latitudes greater than 30
+# mask based on latitudes
 ilat = (lat <= 60) & (lat >= -20)
 mask[~ilat] = 0
 
-# mask domain outside of Pacific (120E/80W)
-# done in two ways because of dateline
+# mask based on longitudes
 ilon = (lon >= 117 ) & (lon <= 260)
 mask[~ilon] = 0
 
@@ -47,8 +47,6 @@ plt.figure()
 cs = plt.imshow(mask, interpolation='none')
 cb = plt.colorbar(cs)
 # -
-
-# We see that the mask contains some points in the Atlantic. One way to remove them is to save the mask in a `.png` file. 
 
 # ## Computation of seasonal anomalies
 #
@@ -73,7 +71,9 @@ import scipy.signal as sig
 import time
 
 anoms_data = anoms.data
-anoms_data[np.isnan(anoms_data)] = 0
+
+# replace NaNs by 0 to avoid errors in detrend
+anoms_data[np.isnan(anoms_data)] = 0 
 anoms_detrend = sig.detrend(anoms_data, axis=0)
 # -
 
@@ -81,12 +81,14 @@ anoms_detrend = sig.detrend(anoms_data, axis=0)
 #
 # Now, the next step is to extract the weights for the EOFs, based on the cell surface and mask.
 
+mesh = xr.open_dataset('data/mesh_mask_eORCA1_v2.2.nc')
 surf = mesh['e1t'] * mesh['e2t']
 surf = surf[0].values * mask
 weights = surf / np.sum(surf)
 
-plt.figure()
-plt.plot(anoms_detrend[:, 160, 100])
+# Since EOF are based on covariance, the root-square of the weights must be used.
+
+weights = np.sqrt(weights)
 
 # ## Computation of EOFS
 #
@@ -97,7 +99,7 @@ import eofs
 from eofs.standard import Eof
 
 ilat, ilon = np.nonzero(mask == 1)
-solver = Eof(anoms_detrend[:, ilat, ilon], weights=weights[ilat, ilon])
+solver = Eof(anoms_detrend[:, :, :], weights=weights)
 # -
 
 # Now, EOF components can be extracted. First, we recover the covariance maps:
@@ -105,9 +107,7 @@ solver = Eof(anoms_detrend[:, ilat, ilon], weights=weights[ilat, ilon])
 # +
 neofs = 2
 nlat, nlon = surf.shape
-covmaps = np.zeros((neofs, nlat, nlon))
-covmaps[:, ilat, ilon] = solver.eofsAsCovariance(neofs=neofs)
-covmaps = np.ma.masked_where(covmaps == 0, covmaps)
+covmaps = solver.eofsAsCovariance(neofs=neofs)
 
 plt.figure()
 plt.subplot(211)
