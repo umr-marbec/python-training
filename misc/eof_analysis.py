@@ -50,28 +50,6 @@ cb = plt.colorbar(cs)
 
 # We see that the mask contains some points in the Atlantic. One way to remove them is to save the mask in a `.png` file. 
 
-plt.imsave('temp_mask.png', mask)
-
-# When done, edit the mask and rename it, for instance in `corrected-temp_mask.png`. Now, read the corrected image and store the output in a `NetCDF`.
-
-# +
-mask = plt.imread('corrected-temp_mask.png')
-
-# Since mask is a 4D array (R, G, B, Alpha)
-# we convert it into 2D
-mask = np.sum(mask[..., :3], axis=-1)
-mask[mask < 1] = 0
-mask[mask > 1] = 1
-
-plt.figure()
-cs = plt.imshow(mask)
-plt.show
-
-dsout = xr.Dataset()
-dsout['pacific'] = (['y', 'x'], mask)
-dsout.to_netcdf('pacific_mask.nc')
-# -
-
 # ## Computation of seasonal anomalies
 #
 # Now, we need to compute the seasonal anomalies of SST fields. First, we read the SST values.
@@ -103,8 +81,6 @@ anoms_detrend = sig.detrend(anoms_data, axis=0)
 #
 # Now, the next step is to extract the weights for the EOFs, based on the cell surface and mask.
 
-mask = xr.open_dataset('pacific_mask.nc')['pacific'].values
-mesh = xr.open_dataset('data/mesh_mask_eORCA1_v2.2.nc')
 surf = mesh['e1t'] * mesh['e2t']
 surf = surf[0].values * mask
 weights = surf / np.sum(surf)
@@ -159,3 +135,5 @@ plt.plot(pcs[1], label='pc2')
 plt.legend()
 
 plt.show()
+
+
