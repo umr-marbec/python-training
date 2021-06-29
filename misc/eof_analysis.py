@@ -129,20 +129,31 @@ neofs = 2
 nlat, nlon = surf.shape
 covmaps = np.zeros((neofs, nlat, nlon))
 covmaps[:, ilat, ilon] = solver.eofsAsCovariance(neofs=neofs)
-print(covmaps.min(), covmaps.max())
+covmaps = np.ma.masked_where(covmaps == 0, covmaps)
 
 plt.figure()
+plt.subplot(211)
 cs = plt.imshow(covmaps[0], cmap=plt.cm.RdBu_r)
+cs.set_clim(-1, 1)
+plt.colorbar(cs)
+plt.subplot(212)
+cs = plt.imshow(covmaps[1], cmap=plt.cm.RdBu_r)
 cs.set_clim(-1, 1)
 plt.colorbar(cs)
 # -
 
 # Then, we can recover the explained variance:
 
-eofvar = solver.varianceFraction(neigs=neofs)
+eofvar = solver.varianceFraction(neigs=neofs) * 100
+print(eofvar)
 
 # Finally, we can obtain the principal components
 
-print(np.sum(weights[ilat, ilon]))
+pcs = solver.pcs(pcscaling=1, npcs=neofs).T
+print(pcs.shape)
+plt.figure()
+plt.plot(pcs[0], label='pc1')
+plt.plot(pcs[1], label='pc2')
+plt.legend()
 
 plt.show()
