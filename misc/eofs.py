@@ -44,7 +44,6 @@ mask[~ilon] = 0
 plt.figure()
 cs = plt.imshow(mask, interpolation='none')
 cb = plt.colorbar(cs)
-plt.show()
 # -
 
 # We see that the mask contains some points in the Atlantic. One way to remove them is to save the mask in a `.png` file. 
@@ -85,42 +84,40 @@ data = data['thetao']
 clim = data.groupby('time_counter.month').mean()
 anoms = data.groupby('time_counter.month') - clim
 
-# ## Using loops
+# ## Detrending the time-series
 #
-# Another method consists of doing it manually using two loops: one for the computation of climatology, one for the computation of the anomalies.
+# Now that the anomalies have been computed, we need to remove the linear trend.
 
 # +
-start_time = time.time()
-nyears = ntime // 12
+import scipy.signal as sig
+import time
 
-index = np.arange(12)
-for i in range(nyears):
-    if(i == 0):
-        clim = data.isel(time_counter=index).data
-    else:
-        clim += data.isel(time_counter=index).data
-    index += 12
-clim /= nyears
-
-anoms_2 = np.zeros(data.shape)
-index = np.arange(12)
-for i in range(nyears):
-    anoms_2[index, ...] = data.isel(time_counter=index).values - clim
-    index += 12
-
-# replace NaNs by 0
-anoms_2[np.isnan(anoms_2)] = 0
-
-end_time = time.time()
-dt = (end_time - start_time)
-print('Execution time method 2: %f seconds' %dt)
+anoms_data = anoms.data
+anoms_data[np.isnan(anoms_data)] = 0
+anoms_detrend = sig.detrend(anoms_data, axis=0)
 # -
 
-# We see that the latter method is a bit faster than the first one. This is because 
+# ## Extracting the weights
+#
+# Now, the next step is to extract the weights for the EOFs, based on the cell surface and mask.
 
-print(np.all(anoms_2 == anoms_1))
+mask = xr.open_dataset('pacific_mask.nc')['pacific'].values
+mesh = xr.open_dataset('data/mesh_mask_eORCA1_v2.2.nc')
+surf = mesh['e1t'] * mesh['e2t']
+surf = surf[0].values * mask
+weights = surf / np.sum(surf)
 
+# ## Computation of EOFS
+#
+# The EOFS can now be computed. First, an EOF solver must be initialized:
 
+# +
+import eofs
+from eofs.standard import Eof
 
+solver = Eof(anoms_detrend, weights=weights)
+# -
 
+# Now, EOF components can be extracted. First, we recover the covariance maps:
 
+maps = solver.
