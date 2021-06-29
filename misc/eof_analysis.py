@@ -107,6 +107,9 @@ surf = mesh['e1t'] * mesh['e2t']
 surf = surf[0].values * mask
 weights = surf / np.sum(surf)
 
+plt.figure()
+plt.plot(anoms_detrend[:, 160, 100])
+
 # ## Computation of EOFS
 #
 # The EOFS can now be computed. First, an EOF solver must be initialized:
@@ -115,9 +118,31 @@ weights = surf / np.sum(surf)
 import eofs
 from eofs.standard import Eof
 
-solver = Eof(anoms_detrend, weights=weights)
+ilat, ilon = np.nonzero(mask == 1)
+solver = Eof(anoms_detrend[:, ilat, ilon], weights=weights[ilat, ilon])
 # -
 
 # Now, EOF components can be extracted. First, we recover the covariance maps:
 
-maps = solver.
+# +
+neofs = 2
+nlat, nlon = surf.shape
+covmaps = np.zeros((neofs, nlat, nlon))
+covmaps[:, ilat, ilon] = solver.eofsAsCovariance(neofs=neofs)
+print(covmaps.min(), covmaps.max())
+
+plt.figure()
+cs = plt.imshow(covmaps[0], cmap=plt.cm.RdBu_r)
+cs.set_clim(-1, 1)
+plt.colorbar(cs)
+# -
+
+# Then, we can recover the explained variance:
+
+eofvar = solver.varianceFraction(neigs=neofs)
+
+# Finally, we can obtain the principal components
+
+print(np.sum(weights[ilat, ilon]))
+
+plt.show()
