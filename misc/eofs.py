@@ -73,39 +73,17 @@ dsout.to_netcdf('pacific_mask.nc')
 
 # ## Computation of seasonal anomalies
 #
-# Now, we need to compute the seasonal anomalies of SST fields. Here, two ways to do that. We will monitor the execution time for each method, and check that they return the same values.
-#
-# First, we read the SST values.
-
-# +
-# import time for cpu time check
-import time
+# Now, we need to compute the seasonal anomalies of SST fields. First, we read the SST values.
 
 data = xr.open_dataset("data/surface_thetao.nc")
 data = data.isel(olevel=0)
 ntime = data.dims['time_counter']
 data = data['thetao']
-# -
 
-#
-# ### Xarray native methods
-#
-# The first way to do it is to use the native `xarray` methods, especially the `groupby` method.
-
-# +
-start_time = time.time()
+# Now, we compute the anomalies using the `groupy` methods:
 
 clim = data.groupby('time_counter.month').mean()
 anoms = data.groupby('time_counter.month') - clim
-
-# extract the np array and remove NaN (replaced by 0)
-anoms_1 = anoms.data
-anoms_1[np.isnan(anoms_1)] = 0
-
-end_time = time.time()
-dt = (end_time - start_time)
-print('Execution time method 1: %f seconds' %dt)
-# -
 
 # ## Using loops
 #
@@ -138,7 +116,7 @@ dt = (end_time - start_time)
 print('Execution time method 2: %f seconds' %dt)
 # -
 
-# We see that the latter method is a bit faster than
+# We see that the latter method is a bit faster than the first one. This is because 
 
 print(np.all(anoms_2 == anoms_1))
 
