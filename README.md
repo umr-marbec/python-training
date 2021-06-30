@@ -54,6 +54,7 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 
 ### Graphics  (Matplotlib(https://matplotlib.org/))
 
+- Axes (plots/axes.py)
 - XY (plots/xy.py)
 - Contours (plots/contours.py)
 - Geometrical shapes (plots/geometrical_shapes.py)
