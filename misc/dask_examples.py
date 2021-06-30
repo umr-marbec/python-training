@@ -55,10 +55,16 @@ datamean2 = data.mean(dim='time_counter')
 dask_obj = datamean2.data
 dask_obj.visualize()
 
+# In the above graph, it can be seen that each chunk has it's own `(y, x)` map. 
+#
+# If now the mean over all dimensions is computed: 
+
 datamean3 = data.mean()
 dask_obj = datamean3.data
 dask_obj.visualize()
 
+# In this case, the mean maps are first computed for each chunk. Then the mean maps for some chunks are recombined together. The last 4 objects are finally aggregated together to give the final output.
+#
 # Many functions are implemented in `xarray` and which will work with `dask` (cf [the list of available functions](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs)). 
 #
 # However, if the function that you want to use is missing, user-defined `ufunc` can be created.
