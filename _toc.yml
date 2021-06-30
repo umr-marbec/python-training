@@ -49,3 +49,9 @@
   sections:
     - file: maps/carto.ipynb
     - file: maps/pyngl.ipynb
+
+- file: misc.md
+  suections:
+    - file: misc/nemo.ipynb
+    - file: misc/eof_analysis.ipynb
+    - file: misc/dask_examples.ipynb
