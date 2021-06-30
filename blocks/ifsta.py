@@ -17,15 +17,17 @@
 #
 # In Python, **conditional statements, functions and loops** are defined within **code blocks**, which have in common:
 #
-# - The block definition must end with ```:```
-# - The code inside the block must be indented to the right
-# - When leaving the block, the code  must be indented to the left
+# - The block definition must end with `:`
+# - The code inside the block must be *indented to the right*
+# - When leaving the block, the code  *must be indented to the left*
 # - Variables defined within a block are visible only within the block
+#
+# **There is no begin/end statements, everything is handled by the indent**
 #
 # <div class="alert alert-danger">
 #     <b>Common errors</b>
 #     <br>
-#     Indent issues occur often, be carefull
+#     Indent issues are very common at the beginning, be carefull
 # </div>
 #
 #
@@ -69,12 +71,14 @@ elif((x >= y) & (y >= z)):
     print('Decreasing order')
 else:
     print('No order')
+# -
+
+# The use of brackets in not always necessary:
 
 # +
 x = ['a', 'b', 'c']
 
-## Use of brackets in not always necessary, but
-# I would advise to use them
+
 if 'a' in x:
     print('a in list')
 else:
@@ -86,12 +90,17 @@ else:
     print('z not in list')
 # -
 
+# There is the possibility to write conditional statements in one line: 
+
 # possibility to write if statements in one line
 print('a in list') if 'a' in x else print('a not in list')
 print('z in list') if 'z' in x else print('z not in list')
 if('a' in x): print('match')
 
-# Warning if you define some variables inside a block and not in another block
+# As reminded in the above, a variable defined within a block is only visible within the block:
+
+# +
+
 x = 10
 y = 20
 if(x == y): 
@@ -100,9 +109,10 @@ else:
     w = 10
 # print(z) # would crash if x != y
 # print(w) # would crash if x == y
+# -
 
-# Imbricated if statements
-# Again, take care of the indentation
+# For imbricated conditions, the code need to be indented one extra time. **Again, carefull with the indent.**
+
 x = y = -10
 x = 10
 y = -12
