@@ -14,6 +14,8 @@
 # ---
 
 # # Managing axis
+#
+# In this section, some features about axes manipulation will be shown. First, let's create some data.
 
 # +
 import matplotlib.pyplot as plt
@@ -38,6 +40,8 @@ plt.show()
 # -
 
 # ## Changing the ticks and tick labels
+#
+# Changing the tick locations and tick labels are achieved by using the `set_xticks` and `set_xticklabels` methods.
 
 # +
 # Tick handling
@@ -55,6 +59,9 @@ ax.set_xticks(xticks)
 ax.set_xticklabels(xticklabels, rotation=45, ha='center', fontsize=20)
 
 plt.show()
+# -
+
+# Same thing can be done for the `y-axis`
 
 # +
 fig = plt.figure() 
@@ -88,10 +95,13 @@ x = 3 * np.cos(an)
 y = 3 * np.sin(an)
 # -
 
-# Here, figure appears as an ellipse.
+# The figure display will show the data as an ellipse instead of a circle:
+
 fig = plt.figure()
 plt.plot(x, y)
 plt.show()
+
+# This can be corrected by using the `ax.axis` method:
 
 fig = plt.figure()
 ax = plt.gca()
@@ -101,11 +111,17 @@ ax.set_xlim(-3, 3)
 ax.set_ylim(-3, 3)
 plt.show()
 
+# It can be also be achieved by using the `set_aspect` function, which allows to control whether the axes limits or the axes shape should be modified to insure a proper aspect.  
+#
+# Modifying the data limits:
+
 fig = plt.figure()
 ax = plt.gca()
 plt.plot(x, y)
 ax.set_aspect('equal', 'datalim') # changes the axis limits to have the good aspect
 plt.show()
+
+# Modifying the axis shape:
 
 fig = plt.figure()
 ax = plt.gca()
@@ -120,6 +136,7 @@ plt.show()
 fig = plt.figure()
 ax = plt.gca()
 ax.plot(x, y)
+ax.axis('equal')
 ax.get_xaxis().set_visible(False)  # removes xlabels
 ax.get_yaxis().set_visible(False)  # removes xlabels
 plt.show()
