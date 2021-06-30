@@ -15,7 +15,7 @@
 
 # # NetCDF
 #
-# A very efficient way to read and write NetCDF files is to use the [xarray](http://xarray.pydata.org/en/stable/) Python library, which can be viewed as a ND counterpart of the [pandas](http://pandas.pydata.org).
+# A very efficient way to read, analyze and write NetCDF files is to use the [xarray](http://xarray.pydata.org/en/stable/) Python library, which can be viewed as a ND counterpart of the [pandas](http://pandas.pydata.org). 
 #
 # ## Reading NetCDF
 #
@@ -50,6 +50,8 @@ print(data)
 data = xr.open_mfdataset("data/GYRE_OOPE*", combine='by_coords', engine='netcdf4')
 print(data)
 
+# In the 2 previous examples, `chunksize` variable attribute appeared. This is due to the fact that opening multiple datasets automatically generates `dask` arrays, which are ready for parallel computing. These are discussed in a specific section
+
 # ### Accessing dimensions, variables, attributes
 
 data = xr.open_dataset("data/UV500storm.nc")
@@ -59,10 +61,13 @@ print(data)
 #
 # Recovering dimensions is dony by accessing the `dims` attribute of the dataset, which returns a `dictionary`, the `keys` of which are the dataset dimension names.
 
+# +
 # Recovering the number of values along a dimension
 for k, v in data.dims.items():
     print('dim', k, 'n=', v)
-print(data.dims['lat'])
+    
+data.dims['lat']
+# -
 
 # #### Variables
 #
@@ -73,12 +78,12 @@ var = data.data_vars
 for k, v in var.items():
     print('var', k, 'shape', v.shape)   
 
-u = data.data_vars['u']
+data.data_vars['u']
 # -
 
 # Note that data variables can also be accessed by using variable name as the key to the dataset object as follows:
 
-v = data['v']
+data['v']
 
 # In this case, the `data_vars` attribute is not used. 
 #
@@ -87,39 +92,32 @@ v = data['v']
 
 # To recover the variable as a `numpy` array, the `values` attribute can be used. In this case, missing values are set to `NaN`.
 
-# +
 v = data['v']
-print(type(v))
 v = v.values
-print(type(v))
-
 v.mean()
-# -
 
 # In order to obtain a masked array instead, use the `to_masked_array()` method:
 
-# +
 v = data['v']
-print(type(v))
 v = v.to_masked_array()
-print(type(v))
-
 v.mean()
-# -
 
 # #### Time management
 #
 # By default, the time variable is detected by `xarray` by using the NetCDF attributes, and is converted into a human time. This is done by xarray by using the [cftime](https://pypi.org/project/cftime/) module
 
 data = xr.open_mfdataset("data/*ISAS*", combine='by_coords')
-print(data['time'].values)
+data['time']
 
 # Then, the user can access the `year`, `month`, `day`, `hour`, `minute`, `second`, `microsecond`, `nanosecond`, `date`, `time`, `dayofyear`, `weekofyear`, `dayofweek`, `quarter` as follows:
 
-print(data['time.year'].values)
-print(data['time.month'].values)
-print(data['time.day'].values)
-print(data['time.dayofyear'].values)
+data['time.year']
+
+data['time.month']
+
+data['time.day']
+
+data['time.dayofyear']
 
 # <div class="alert alert-info">
 #     <strong>Warning</strong> Replace <i>time</i> by the name of your time variable (<i>time_counter</i> in NEMO for instance)
@@ -128,23 +126,27 @@ print(data['time.dayofyear'].values)
 # If the user does not want `xarray` to convert time into a human date, set the `decode_times` argument to False.
 
 data = xr.open_mfdataset("data/*ISAS*", combine='by_coords', decode_times=False)
-print(data['time'].values)
-# print(data['time.year'].values)  #  crashes because time is a float, not a date
+data['time']
 
 # #### Attributes
 #
 # To get variable attributes, use the `attrs` attribute, which exists for DataSet and DataArray objects. It returns a `dictionaray` containing the attribute names and values.
 
+# +
 # Recovering global (file) attributes
 for k, v in data.attrs.items():
     print('attr', k, 'val', v)
-print(data.attrs['history'])
+    
+data.attrs['history']
 
+# +
 time = data['time']
 # Recovering variable attributes
 for k, v in time.attrs.items():
     print('attr', k, 'val', v)
-print(time.attrs['units'])
+
+time.attrs['units']
+# -
 
 # ## Indexing
 #
@@ -161,13 +163,9 @@ print(data['depth'])
 #     <strong>Note</strong> It is the xarray counterpart of the Pandas iloc method
 # </div>        
 
-# +
-data_s = data.isel(time=slice(0, 2), depth=range(0, 10))
-print(data_s)
+data.isel(time=slice(0, 2), depth=range(0, 10))
 
-temp = data['TEMP'].isel(time=slice(0, 2), depth=range(0, 10))
-print(temp)
-# -
+data['TEMP'].isel(time=slice(0, 2), depth=range(0, 10))
 
 # ### Extracting using values
 #
@@ -177,8 +175,7 @@ print(temp)
 #     <strong>Note</strong> It is the xarray counterpart of the Pandas loc method
 # </div>     
 
-data_s = data.sel(time=slice('2012-01-15', '2012-02-15'), depth=slice(100, 500))
-print(data_s)
+data.sel(time=slice('2012-01-15', '2012-02-15'), depth=slice(100, 500))
 
 # ### Plotting
 #
@@ -192,7 +189,6 @@ data = data.isel(timestep=0)  # extract first time step
 
 plt.figure()
 data['u'].plot()  # draws map
-plt.show()
 
 data = data.sel(lon=-100)  # extracts lon=-100
 plt.figure()
@@ -204,30 +200,38 @@ plt.show()
 #
 # As for `pandas`, `xarray` comes with mathematical operations.
 
-# +
 data = xr.open_mfdataset('data/*ISAS*', combine='by_coords')
+data.mean()
 
-print('------------- full mean')
-print(data.mean())
-print(data.mean(dim=('time', 'depth')))
-print('------------- time mean')
-print(data.mean(dim='time'))
-print('------------- depth mean')
-print(data.mean(dim='depth'))
-# -
+data.mean(dim=('time', 'depth'))
+
+data.mean(dim='time')
+
+data.mean(dim='depth')
+
+# **Contrary to `numpy` eager evaluations, `xarray` performs lazy operations.** As indicated on the `xarray` website:
+#
+# ```
+# Operations queue up a series of tasks mapped over blocks, and no computation is performed until you actually ask values to be computed (e.g., to print results to your screen or write to disk)
+# ```
+#
+# To force the computation, the `compute` and/or `load` methods must be used. Let's compare the outputs below:
+
+data.mean(dim='time')
+
+data.mean(dim='time').load()
+
+# In the first output, no values are displayed in the `TEMP` variable. The `mean` has not been computed yet. In the second output, the effective mean values are shown because computation has been forced using `compute`.
 
 # ## Group-by operations
 #
 # The [groupby](http://xarray.pydata.org/en/stable/groupby.html) methods allows to easily perform operations on indepedent groups. For instance, to compute temporal (yearly, monthly, seasonal) means:
 
-monthlymean = data.groupby('time.month').mean(dim='time')
-print(monthlymean)
+data.groupby('time.month').mean(dim='time')
 
-yearlymean = data.groupby('time.year').mean(dim='time')
-print(yearlymean)
+data.groupby('time.year').mean(dim='time')
 
-seasonmean = data.groupby('time.season').mean(dim='time')
-print(seasonmean)
+data.groupby('time.season').mean(dim='time')
 
 # Defining discrete binning (for depth intervals for instance) is done by using the 
 # [groupby_bins](http://xarray.pydata.org/en/stable/generated/xarray.Dataset.groupby_bins.html#xarray.Dataset.groupby_bins) method.
@@ -275,15 +279,11 @@ ds = xr.Dataset()
 # - A list of dimension names
 # - The numpy array
 
-# +
-print(time.shape)
-print(data.shape)
-
 ds['data'] = (['time', 'y', 'x'], data)
 ds['x'] = (['x'], x)
 ds['y'] = (['y'], y)
 ds['time'] = (['time'], date)
-# -
+ds
 
 # Then, add the dataset and variable attributes as follows:
 
