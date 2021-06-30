@@ -49,8 +49,16 @@ datamean2 = data.mean(dim='time_counter')
 datamean2 = datamean2.compute()
 datamean2.min()
 
-# The computation time is much better using the chunked data array. And the use of memory is reduced. 
-#
+# The computation time is much better using the chunked data array. And the use of memory is reduced. To see how dask manages the computation, you can use the `dask.visualize` method. It first requires that the `dask` object is extracted from the `xarray` object.
+
+datamean2 = data.mean(dim='time_counter')
+dask_obj = datamean2.data
+dask_obj.visualize()
+
+datamean3 = data.mean()
+dask_obj = datamean3.data
+dask_obj.visualize()
+
 # Many functions are implemented in `xarray` and which will work with `dask` (cf [the list of available functions](https://numpy.org/doc/stable/reference/ufuncs.html#available-ufuncs)). 
 #
 # However, if the function that you want to use is missing, user-defined `ufunc` can be created.
@@ -94,20 +102,23 @@ data = data['thetao']
 data = data.isel(olevel=0)
 data
 
-# %time calc = xarray_detrend(data, dim='time_counter').compute()
+# %%time 
+calc = xarray_detrend(data, dim='time_counter').compute()
 
 # Note that you can call the `compute` method in association with a progress bar as follows:
 
 from dask.diagnostics import ProgressBar
 with ProgressBar():
-    # %time calc = xarray_detrend(data, dim='time_counter').compute()
+    calc = xarray_detrend(data, dim='time_counter').compute()
 calc
 
 # ## Use on HPCs
 #
-# It is theoretically possible to parallel Dask operations on HPCs, such as Datarmor. This is achieved by using the [dask-jobqueue](https://jobqueue.dask.org) module. For instance, to run a computation on a `PBS` cluster such as Datarmor, the `PBSCluster` method should be used.
+# It is theoretically possible to parallel Dask operations on HPCs, such as Datarmor. This is achieved by using the [dask-jobqueue](https://jobqueue.dask.org) in association with the `dask.distributed` module. For instance, to run a computation on a `PBS` cluster such as Datarmor, the `PBSCluster` method should be used.
 #
-# The first step is to create a `jobqueue.yaml` file in the `~/.config/dask` directory. This file contains all the settings for the cluster you are working on (cf. [here](https://jobqueue.dask.org/en/latest/configurations.html#ifremer-datarmor) for the Datarmor configuration). **These are the settings for a single job.**
+# The first step is to create a `jobqueue.yaml` file in the `~/.config/dask` directory. This file contains all the PBS settings for the cluster you are working on (cf. [here](https://jobqueue.dask.org/en/latest/configurations.html#ifremer-datarmor) for the Datarmor configuration). **These are the settings for a single job.**. 
+#
+# There must be also a `distributed.yaml` configuration file, which contains the settings for the HPC server. An example is available [here](https://github.com/apatlpo/lops-array/blob/master/datarmor/distributed.yaml).
 #
 # When done, create your Python script as shown below (taken from [dask example page](https://jobqueue.dask.org/en/latest/index.html?highlight=client#example)).
 #
@@ -138,3 +149,8 @@ calc
 # ```
 #
 # **This is not even clear for me, so use with caution!!!**
+#
+# For more informations:
+# - https://docs.dask.org/en/latest/
+# - [presentation-dask.pdf](http://osr-cesbio.ups-tlse.fr/gitlab_cesbio/activites-ia/ds-cb/raw/22e64eeed3cd6fa5643381b3ae928e7d73b3d15e/Julien_Dask/presentation-dask.pdf)
+# - [lops-array](https://github.com/apatlpo/lops-array/) for some examples.
