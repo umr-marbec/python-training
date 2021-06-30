@@ -21,7 +21,7 @@
 #
 # Instead, the [Numpy](https://numpy.org/) (Numerical Python) library should be used. It allows to:
 #
-# - Create multi-dimensional arrays}
+# - Create multi-dimensional arrays
 # - Access array attributes (shape, number of dimensions, data types)
 # - Manipulate arrays (changing shape, tiling)
 # - Manipulate missing values
@@ -31,7 +31,7 @@
 #
 # Computer memory is inherently linear, i.e. multi-dimensional arrays are stored in memory as one-dimensional arrays. This can be done in two ways:
 #
-# - Row-major order: C/C++, Python
+# - Row-major order: C/C++, *Python*
 # - Column-major order: Fortran, Matlab, R, Julia
 #
 # **Row-major order:**
@@ -70,10 +70,49 @@
 #
 # Sources: [Wikipedia](https://en.wikipedia.org/wiki/Row-_and_column-major_order),  [thegreenplace](https://eli.thegreenplace.net/2015/memory-layout-of-multi-dimensional-arrays/)
 #
-# ## Array manipulation
-#
+# Let's see with a quick example, using the following array
 
+# +
 import numpy as np
+
+shape = (50, 60, 70, 40)
+N = np.prod(shape)
+x = np.reshape(np.arange(N), shape).astype(float)
+x.shape
+# -
+
+# %%time
+total = 0
+for i in range(shape[0] - 1):
+    for j in range(shape[1] - 1):
+        for k in range(shape[2] - 1):
+            for l in range(shape[3] - 1):
+                total += 0.5 * (x[i, j, k, l] + x[i+1, j+1, k+1, l+1])
+total /= N
+print(total)
+
+# %%time
+total = 0
+for l in range(shape[3]-1):
+    for k in range(shape[2]-1):
+        for j in range(shape[1]-1):
+            for i in range(shape[0]-1):
+                total += 0.5 * (x[i, j, k, l] + x[i+1, j+1, k+1, l+1])
+total /= N
+print(total)
+
+# The last loop is slower than the first one because the loop order is not consistent with the C-order used in Python.
+#
+# Note: The `ndenumerate` method alows to loop in an array without risk.
+
+cpt = 0
+for k, v in np.ndenumerate(x):
+    if(cpt == 15):
+        break
+    print(k, x[k])
+    cpt += 1
+
+# ## Array manipulation
 
 # ### Array initialisation
 
@@ -100,7 +139,7 @@ print(x)
 
 # ### Changing data type
 
-x = x.astype(np.int)  # conversion from floats to int
+x = x.astype(int)  # conversion from floats to int
 print(x)
 
 # ### Getting attributes
@@ -119,6 +158,32 @@ x = np.ones((2, 3, 8), dtype=np.float)
 print(x[:, :, 0].shape)
 print(x[:, -1, ::2].shape) # (2,3) (2,4) array subspans
 # -
+
+# Using `...`, you can also access an array without fully knowing it's shape:
+
+x[..., 0].shape
+
+x[-1, ...].shape
+
+# `list` `numpy.array` can be used to index `numpy.array`, but prefer using `slice` instead. Indeed, using the former may be error prone. Indeed, for extracting a subspan of an array, you might want to use:
+
+x = np.reshape(np.arange(20 * 10), (20, 10))
+i = [0, 1, 2, 3]
+j = [5, 6, 7, 8]
+x[i, j]
+
+# This is equivalent to:
+
+for tmpi, tmpj in zip(i, j):
+    print(x[tmpi, tmpj])
+
+# Beside, this will fail if `i` and `j` have different sizes. The proper syntaxt would be:
+
+i = slice(0, 4)
+j = slice(5, 9)
+x[i, j]
+
+# The values obtained in the in the first try are the elements in the diagonal of the subspan.
 
 # ### Copy
 
@@ -211,10 +276,12 @@ print(np.all(xresf_t == xresf))
 import numpy as np
 x = np.reshape(np.arange(2 * 3 * 4), (2, 3, 4))
 xshape = x.shape
-xtest = np.reshape(x, (2, -1))  # keeps 2 but transforms (3, 4) in 12
+xtest = np.reshape(x, (2, -1))  # keeps first dim but transforms (3, 4) in 12
 print(xtest.shape)
+xtest2 = np.reshape(x, (-1, 4))  # keeps last dim but transforms (2, 3) in 6
+print(xtest2.shape)
 
-# ### Copy along given dimensions
+# ### Repeating along a given dimensions
 
 # repeating an array along given dimensions
 # Carefull: the virtual dimensions (1) should be placed in the last positions!
@@ -223,6 +290,8 @@ xtile = np.tile(x, (2, 1)) # (2 ,10) equivalent to repmat
 xtile2 = np.tile(x, (1, 2)) # (1, 20)
 print(xtile.shape, xtile)
 print(xtile2.shape, xtile2)
+
+# Note the difference. When using `tile`, the tiling dimensions must be put first. It sometimes requires the use of `transpose` to have the right size.
 
 # ### Changing dimension order
 
@@ -285,10 +354,10 @@ x[3] = -1.
 
 z = y/x
 print(z)
-z = np.divide(y, x, where=(x!=0), out=np.full(x.shape, -999, dtype=x.dtype))  # no more warning message
+z = np.divide(y, x, where=(x!=0), out=np.full(x.shape, np.nan, dtype=x.dtype))  # no more warning message
+print(z)
 # -
 
-print(z)
 w = np.log10(x)
 print(w)
 w = np.log10(x, where=(x>0), out=np.full(x.shape, -999, dtype=x.dtype))
@@ -318,12 +387,12 @@ out = np.prod(x, axis=0) # computes the prod along the first dimension
 print(out)
 
 x = np.reshape(np.arange(24), (2, 3, 4))
-xmean = np.mean(x, axis=(0, 1))  # computes mean over the 0 a
+xmean = np.mean(x, axis=(0, 1))  # computes mean over the 1st and 2nd dims
 print(xmean.shape)
 
 # ## Broadcasting
 #
-# In order to avoid loops, it is strongly advised to use broadcasting rules (cf. [docs.scipy](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
+# In order to avoid loops, it is strongly advised to use broadcasting rules (cf. [docs.scipy](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html))
 
 # broadcasting (https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
 x = np.reshape(np.arange(24), (2, 3, 4))
@@ -331,27 +400,35 @@ x = np.reshape(np.arange(24), (2, 3, 4))
 xmean = np.mean(x, axis=0)  # mean over the first dimension
 print(xmean.shape, x.shape)
 anom = x - xmean    
-# works because trailing dimensions (i.e. the last dimensions) are the same
+
+# The code above works because the last (i.e. trailing) two dimensions are the same.
 
 xmean = np.mean(x, axis=-1)
 print(xmean.shape, x.shape)
-# anom = x - xmean  # doen't work because trailing dimensions are not the same
+# anom = x - xmean  # 
+
+# In the above, the computation of anomalies because the *first* (i.e leading) dimensions are the same, which does not allow broadcasting. This can be fixed by using the `keepdims` argument. It will keep a virtual dimension on the mean output.
 
 xmean = np.mean(x, axis=-1, keepdims=True)
 print(xmean.shape, x.shape)
 anom = x - xmean    
 # work because virtual dimensions (1) can be broadcasted
 
-# if you are lazy to remember the broadcasting rules, use the numpy.newaxis method.
+# If you are lazy to remember the broadcasting rules, you can use the `numpy.newaxis` method to add virtual dimensions.
+
 y = np.zeros((5, 2, 7, 3, 10, 4))
+print(y.shape)
+print(x.shape)
 xnd = x[np.newaxis, :, np.newaxis, :, np.newaxis, :]
 print(xnd.shape)
-print(y.shape)
 z = y * xnd
 print(z.shape)
 
+# In the above, the `x` array dimensions are consistent with the 2nd, 4th and 6th dimension of `y`. Therefore, a virtual dimension has been added at the 1st, 3rd and 5th location.
+
 # ## Managing filled values
 #
+# Filled values are generally defined as `numpy.nan` values.
 
 # numpy nans
 x = np.arange(1, 10).astype(np.float)
@@ -359,17 +436,17 @@ print(x)
 x[0] = np.nan
 print(x)
 
-i = np.nonzero(np.isnan(x))
-print(i) 
-i = np.nonzero(x != x) # Mathematical definition of NaN
+# Checking whether values are `NaN` is achieved by using the `np.isnan` method
 
-# Use special functions to handle NaNs
-print(np.nanmean(x))
-print(np.nansum(x))
-print(np.nanstd(x))
+np.nonzero(np.isnan(x))
+
+# An equivalent to the `np.isnan` method is to use the mathematical definition of `NaNs`.
+
+np.nonzero(x != x) # Mathematical definition of NaN
+
+# **Warning: `NaNs` can only be used with Float arrays (not integer arrays)**
 
 # +
-# warning: NaNs can only be used with Float arrays (not integer arrays)
 x = np.arange(1, 10).astype(np.double)
 x[0] = np.nan
 print(x)
@@ -378,11 +455,26 @@ x = np.arange(1, 10).astype(np.int)
 #x[0] = np.nan
 # -
 
+# ### Operations on filled values
+#
+# To perform operations on data containing `NaNs` requires the use of special functions:
+
+# Use special functions to handle NaNs
+print(np.nanmean(x))
+print(np.nansum(x))
+print(np.nanstd(x))
+
+# Since this can be a bit annoying, `numpy.array` objects can be converted into `masked_array` objects
+#
+# ### Masked array
+
 # numpy.ma (masked arrays)
 x = np.arange(1, 10).astype(np.int)
 print(type(x))
 
-x = np.ma.masked_where(x==0, x) # mask data where nan
+# To convert an array into a masked array, the following methods can be used:
+
+x = np.ma.masked_where(x==0, x) # mask data where 0
 x = np.ma.masked_equal(x, 5)    # mask x when equal to 5
 x = np.ma.masked_greater(x, 7)  # mask x when greater than 7
 x = np.ma.masked_less(x, 3)     # mask x when less than 3
@@ -390,20 +482,29 @@ x[2] = np.ma.masked  # mask second elements
 print(type(x))
 print(x)
 
+# This new object has additional attributes and method. Especially for assessing where the filled values are located.
+
 print(x.mask)    # new attribute as appeared
-print(np.ma.getmask(x))  # equivalent to x.mask
+print(np.ma.getmask(x))  # equivalent to x.mask but works also on unmasked arrays
 print(np.mean(x))  # no more need to do a NaN mean
 print(np.sum(x))
 print(np.std(x))
-print(np.cumsum(x)) 
+
+# It is strongly advised to use the `np.ma.getmask` method rather than using the `mask` attribute. Indeed, the latter will return a `bool` instead of an array of `bool` if no data is missing. 
 
 # warning for masked_arrays
 x = np.arange(10, 15).astype(np.float)
 x = np.ma.masked_where(np.isnan(x), x)
 print(x)
 print(x.mask)
+
+
+# Therefore, extracting all non missing values from an array is not safe using `mask`:
+
 iok = np.nonzero(x.mask == False)  #  for unmasked values
 print(x[iok])  # returns only first value
+
+# However, it works perfectly using the method:
 
 # to get a mask array of the same size as x, use the getmaskarray method
 print(np.ma.getmaskarray(x))
