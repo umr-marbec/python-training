@@ -15,13 +15,13 @@
 
 # # Object oriented programming
 #
-# *Object-oriented Programming (OOP) is a programming paradigm which provides a means of structuring programs so that properties and behaviors are bundled into individual objects.* ([realpython](https://realpython.com/python3-object-oriented-programming/#what-is-object-oriented-programming-oop))
+# *Object-oriented Programming (OOP) is a programming paradigm which provides a mean of structuring programs so that properties and behaviors are bundled into individual objects.* ([realpython](https://realpython.com/python3-object-oriented-programming/#what-is-object-oriented-programming-oop))
 #
 # *Object-oriented programming is a programming paradigm based on the concept of objects, which may contain data, in the form of fields (often known as **attributes**), and code, in the form of procedures (often known as **methods**).* ([wikipedia](https://en.wikipedia.org/wiki/Object-oriented_programming))
 #
 # It is a very powerfull feature of Python, which is very well adapted to individual-based models for instance.
 #
-# Imagine that you want to make a Python program that manages the displacement of vehicles. A vechicle will be at first defined by the following data (*attributes*):
+# It will be illustrated through a program that manages the displacement of vehicles. A vehicle will be at first defined by the following data (*attributes*):
 #
 # - Position (x, y)
 # - Velocity (vx, vy)
@@ -29,13 +29,13 @@
 #
 # ## Defining a class
 
-# A class is defined by using the `class` keyword:
+# An object is defined by using the `class` keyword:
 #     
 # ```
 # class Vehicle(object):
 # ```
 #
-# The class must contain a constructor (`__init__` function), which wil define how a new object will be created. For instance, regarding our vehicle, the class will look like this:
+# The class must contain a constructor (`__init__` function), which wil define how a new object will be created (instanciation). For instance, regarding our vehicle, the class will look like this:
 
 # creation d'une classe vehicule
 class Vehicle(object):
@@ -116,19 +116,21 @@ class Vehicle(object):
         self.vx = self.vy = self.x = self.y = 0
         self.name = name
      
-    # deplacement  du vehicule en fonction de dt (en seconde)
+    # moving vehicle using speed and time steps
     def move(self, dt):
         self.x = self.x + self.vx * dt
         self.y = self.y + self.vy * dt
 
-    # incrementation de la vitesse du vehicule
+    # update speed
     def change_speed(self, dvx, dvy):
         self.vx += dvx
         self.vy += dvy
     
+    # returns speed
     def speed(self):
         return self.vx, self.vy
     
+    # returns position
     def pos(self):
         return self.x, self.y
         
@@ -140,13 +142,17 @@ veh1.move(10)
 print(veh1.pos(), veh1.speed())
 # -
 
-# Since custom objects are mutables, they can be stored in a list and changed by doing a for loop.
+# Since custom objects are mutables, they can be stored in a list and updated using a `for` loop, as follows:
 
 # +
 veh1 = Vehicle('corsa')
 veh1.change_speed(1, 2)
+
 veh2 = Vehicle('nissan')
 veh2.change_speed(-1, -2)
+
+print(veh1.pos())
+print(veh2.pos())
 
 vehicles = [veh1, veh2]
 for v in vehicles:
@@ -200,7 +206,7 @@ print(veh1)
 
 # ### `__call__` method
 #
-# The `__call__` method can be used to make the obect callable.
+# The `__call__` method can be used to make the obect callable (`object(...)`). For instance, let's replace the `move` method by a `__call__` method:
 
 # +
 # creation d'une classe vehicule
@@ -232,7 +238,7 @@ print(veh1)
 
 # ### The `__getitem__` method
 #
-# The `__getitem__` is used to make the objectsubscriptable.
+# The `__getitem__` is used to make the object subscriptable (`object[key]`).
 
 # +
 # creation d'une classe vehicule
@@ -254,19 +260,22 @@ class Vehicle(object):
         output = {'name': self.name, 'pos': [self.x, self.y], 'speed':[self.vx, self.vy]}
         if isinstance(key, str):
             return(output[key.lower()])
-        elif isinstance(key, (tuple, slice)):
-            return(output['name'])
             
 veh1 = Vehicle('corsa')
+# -
+
 print(veh1['name'])
+
 print(veh1['pos'])
+
 print(veh1['speed'])
+
 print(veh1[:])  # key provided as a slice
-print(veh1[:, :])  # key provided as a tuple of slice
+
+print(veh1[2:10:-1, :])  # key provided as a tuple of slice
+
 print(veh1['arg1', 'arg2'])  # key provided as a tuple of strs
 
-
-# -
 
 # ## Encapsulation: getter and setters
 #
@@ -305,16 +314,16 @@ veh1 = Vehicle('corsa')
 veh1.vx = '20'  # user can change the value of vx!
 # veh1(10) # this crashes
 
-# Therefore, it is important to keep the control on the data. This is what is called **encapsulation**. 
+# Therefore, it is important to keep the control on the data, and to prevent the users to access them. This is what is called **encapsulation**. 
 #
 # It is achieved by defining setter and getter functions, using the built-in `@property` and `@setter` decorators. 
+# The `setter` will be called any time assigment is performed, while `getter` is called elsewhere.
+#
 # Let's look at how it works for the `vx` attribute.
 
-# +
 class Vehicle(object):
 
     def __init__(self, name):
-        print('Constructor')
         self.vx = self.vy = self.x = self.y = 0
         self.name = name
                 
@@ -324,7 +333,7 @@ class Vehicle(object):
 
     @property
     def vx(self):
-        print('getter')
+        print('getter', self.__vx)
         return self.__vx
 
     @vx.setter
@@ -335,18 +344,23 @@ class Vehicle(object):
         else:
             print('VX must be numeric. Unchanged')
 
+
 veh1 = Vehicle('corsa')  # calls setter (value = 0)
-veh1.vx = 10  # calls setter (provided as int -> converted into float)
+
+# At initialization, the `setter` is called with input values equals tp 0
+
 print(veh1)  # __str__ calls getter
+
 veh1.vx = '20'  # calls setter (provided as str, print error message)
-print(veh1)  # calls getters
+veh1.vx
 
+veh1.vx = 10  # calls setter (provided as int -> converted into float)
+veh1.vx
 
-# -
 
 # There are several things to note:
-# - The `vx` attribute has been replace by a private attribute `__vx`
-# - **The getter and setter must have the same name**, which corresponds to the name of the variable as we want to access it.
+# - The `vx` attribute has been replaced by a private attribute `__vx`
+# - **The getter and setter must have the same name**, which corresponds to the name of the variable as we want to access.
 # - Getters are preceded by the `@property` decorator
 # - Setters are preceded by the `@X.setter` decorator, with `X` the property to set.
 #
@@ -354,7 +368,7 @@ print(veh1)  # calls getters
 
 # ## Inheritance
 #
-# Imagine you want to separates vehicles into three categories: boats, cars, planes. These vehicles have common attributes (horizontal position for instance), but have some differences listed below.
+# Imagine you want to separate vehicles into three categories: boats, cars, planes. These vehicles have common attributes (horizontal position for instance), but have some differences listed below.
 #
 # | Vehicle         |  Over land | Over sea | 3D               |
 # |-----------------|------------|----------|------------------|
@@ -362,10 +376,12 @@ print(veh1)  # calls getters
 # | Cars            | True       | False    | False
 # | Planes          | True       | True     | True
 #
-# In order to easily defines these three vehicles, it is possible to use inheritance. A mother class can be defined to manage common attributes, while child class will contain specific attributes and methods.
+# In order to easily define these three vehicles, it is possible to use inheritance. A mother class can be defined to manage the common attributes and methods, while child class will contain specific ones.
 #
 # The `super` keyword refers to the parent class. It can be used to call some mother's class method, in order
 # to avoid copy and pastes.
+#
+# Let's define the mother class, called `Vehicle`.
 
 class Vehicle(object):
     
@@ -382,7 +398,7 @@ class Vehicle(object):
         return str([self.x, self.y])
 
 
-# To create a `Boat` and a `Car` class that inherits from `Vehicle`:
+# Now, let's create a `Boat` and a `Car` class that inherits from `Vehicle`:
 
 # +
 class Boat(Vehicle):
@@ -391,10 +407,10 @@ class Boat(Vehicle):
         super().__init__(x, y) # calls mother class constructor
     
     def inWater():
-        return False
-    
-    def inSea():
         return True
+    
+    def inLand():
+        return False
     
 class Car(Vehicle):
     
@@ -402,10 +418,10 @@ class Car(Vehicle):
         super().__init__(x, y)
     
     def inWater():
-        return True
-    
-    def inSea():
         return False
+    
+    def inLand():
+        return True
 
 
 # -
@@ -434,6 +450,8 @@ class Plane(Vehicle):
     def __str__(self):
         return str([self.x, self.y, self.z])  # overwrites __str__ method.
 
+
+# In the constructor, the `x` and `y` positions are set using the mother class constructor. Same thing in the `__call__` method: the horizontal positions are updated using the mother `__call__` function. 
 
 # +
 veh1 = Boat(1, 2)
