@@ -93,7 +93,7 @@ print(x)
 
 # removes the element with the value 16 2 (i.e. the 3rd element)
 # returns the value of the removed element
-x.remove(16)
+removed = x.remove(16)
 print(x)
 # -
 
@@ -134,14 +134,17 @@ x = [5, 6, 15, 7, 2, 15]
 x.reverse()
 print(x)
 
+# **When manipulating list, here is a common error:**
+
 # example of bad syntax
 x = [5, 6, 15, 7, 2, 15]
 x = x.reverse()
 print(x)
-# Why does it return None? Because the reverse() method returns
-# the reverts the input list, but returns nothing.
-# so in here, you attribute to a new object x the output of 
-# the reverse method, which is None
+
+#  Why does it return `None`? Because the `reverse()` method reverts the input list **in place**, but returns nothing.
+#  So in the above, the output of 
+#  the reverse method is assigned to `x`, which is `None`
+
 help([].reverse)
 
 # Sorting elements (in place)
@@ -191,3 +194,5 @@ print(x[::4]) # getting all the elements with a stride of 2
 print(x[3:-2:2]) 
 print(x[slice(3, -2, 2)])
 help(slice)
+
+

@@ -47,12 +47,17 @@ data = dict.fromkeys(['key0', 'key1', 3], 'new val')
 print(data)
 
 # #### Accessing elements
+#
+# Accessing elements is done by using the `get` method:
 
 # Getting and replacing dict. elements
 data = {'dataint':10 , 'datstr':'This is a dictionnary'}
 print(data.get('datstr')) # retrieve a value from the key
 print(data.get('toto'))  # returns None if toto is not a key
 print(data.get('toto', 0))  # returns 0 if toto is not a key
+
+# It can also be done using a `dict[key]` syntax. However, this way is not safe since the programs stops if a key is not found:
+
 print(data['datstr'])
 #data['toto'] # fails!
 
@@ -60,7 +65,12 @@ data['datlist'] = [0, 1, 2] # add a new element to the dict (key=datlist)
 data['datstr'] = 'new string'  # overwrites a given value (key=datstr)
 print(data)
 
+# #### Adding elements
+#
+# Adding elements can be achieved by using the `setdefault` method. If the key already exists, nothing is done and the function returns the old value. If the key does not exist, the dictionary is updated and the associated value is returned.
+
 # +
+print(data)
 # datstr is found, value not changed
 # returns the value of the new key
 added = data.setdefault('datstr', 'final string')
@@ -69,6 +79,7 @@ print(added)  # no change in the datstr element
 # datstrbis not found, value is set 
 added = data.setdefault('datstrbis', 'final string')
 print(added)
+print(data)
 # -
 
 # check whether dict contains a given key
@@ -97,7 +108,7 @@ for it in data.items():
 for k, v in data.items():
     print('key, val = ', k, v)
     
-# same as
+# same as above
 for k, v in zip(data.keys(), data.values()):
     print('key, val = ', k, v)
 # -
@@ -113,7 +124,6 @@ print(data)
 data = {'dataint':10 , 'datstr':'This is a dictionnary'}
 removed = data.pop("datstr")
 print(removed)
-print(data)
 
 # #### Concatenation
 
@@ -122,9 +132,7 @@ data = {'dataint':10 , 'datstr':'This is a dictionnary'} # not empty one
 data2 = {'dataint':14,' datflt':0.5}
 # add the elements of dict data2 into dict data
 # note that the dataint of data has been replaced by the dataint of data2
-data.update(data2) 
-print(data)
-print(data2)
+data.update(data2)
 
 data.update(toto='toto var')  # equivalent to data.update({'toto':'toto_var'})
 

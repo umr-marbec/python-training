@@ -21,7 +21,7 @@
 #
 # *Pip* only installs Python packages. The user needs to manually install the required external tools (compilers, C libraries, etc.).
 #
-# *Conda* installs everything that is needed (compiler, libraries) and has the ability to create isolated environments, which may contains different versions of the packages.
+# *Conda* installs everything that is needed (compiler, libraries) and has the ability to create isolated environments, which may contain different versions of the packages.
 #
 # <div class="alert alert-success">
 #   <strong>Pip vs. Conda!</strong> For further details about the difference between Pip and Conda, visit    
@@ -113,7 +113,7 @@ import numpy
 import matplotlib as mp
 # -
 
-# In this case, the objects of the imported modules are stored into defined **namespaces**, which prevent from conflicts among object names. 
+# In this case, the objects of the imported modules are stored into defined **namespaces**, which prevent conflicts among object names. 
 
 # ### Calling functions
 #

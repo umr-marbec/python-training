@@ -38,9 +38,11 @@ print(type(x))
 
 # ### Variables as objects
 #
-# Python is object oriented. Therefore, each assigned variable is an object. Informations about the objects are accessible via:
+# Python is object oriented. Therefore, each assigned variable is an object. Informations about the objects are accessible via the `type` function:
 
 type(x)  # class of the object
+
+# The list of attributes and methods associated with the object are accessible via the `dir` function.
 
 dir(x)  # list of methods/attributes
 
@@ -52,7 +54,6 @@ dir(x)  # list of methods/attributes
 
 import numpy as np
 x = np.array([0, 1, 2, 3, 4, 5, 6])
-print(type(x))
 print(x.dtype)
 print(x.ndim)
 print(x.shape)
@@ -70,13 +71,13 @@ s = x.std()
 print(m)
 print(s)
 
-# To get some help about a method, use the `help` function:
+# To get some help about a method or a function, use the `help` function:
 
 help(x.mean)
 
 # #### Method vs. function
 #
-# It should be noted that object's method are not called in the same way as module's functions. For instance, there is two ways to compute the mean of a numpy array.
+# It should be noted that object's method are not called in the same way as module's functions. For instance, there are two ways to compute the mean of a numpy array.
 
 m1 = x.mean()  # using mean method of the x object
 m2 = np.mean(x)  # using the numpy.mean function

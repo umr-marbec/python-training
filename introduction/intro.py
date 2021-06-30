@@ -33,7 +33,7 @@
 # - Open source and community development
 # - Easy to learn
 # - User-friendly data structures (lists, dictionaries, etc.)
-# - Portable and Interactive
+# - Interactive (`ipython`, `notebook`)
 # - Portable across Operating Systems
 #
 # Source: [geeksforgeeks.org](https://www.geeksforgeeks.org/python-language-advantages-applications/).
