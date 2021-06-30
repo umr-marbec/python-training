@@ -21,8 +21,12 @@
 # Remove R files
 .Rhistory
 
-**.ipynb_checkpoints
+**/.ipynb_checkpoints
+**/dask-worker-space
+_build
 
 # gimp files
 **xcf
 link.sh
+
+**/pacific_mask.nc
