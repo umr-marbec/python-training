@@ -13,15 +13,15 @@
 #     name: python3
 # ---
 
-# ## Dictionaries
+# # Dictionaries
 #
-# ### Definition
+# ## Definition
 #
 # A dictionary can be viewed as an *unordered* list of elements (called *values*),  which are *not necessarily of the same type* and are accessible via a unique label, which must be an immutable object (called *keys*).
 #
 # <img src="figs/tikz_dict.png" alt="Dictionaries" text-align=center width=400>
 #
-# ### Usage
+# ## Usage
 #
 # Dictionaries are used:
 #
@@ -30,11 +30,11 @@
 # - Class objects are associated with a dictionary (```__dict__``` attribute)
 # - To manipulate some objects (```pandas.DataFrame```, ```xarray.Dataset```)
 #
-# ### Manipulation 
+# ## Manipulation 
 #
 # To have more about dictionaries, visit [python.org](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
 #
-# #### Creating dictionaries
+# ### Creating dictionaries
 
 # Creating dictionary
 data = {} # empty dictionary
@@ -46,7 +46,7 @@ print(len(data))  # number of elements
 data = dict.fromkeys(['key0', 'key1', 3], 'new val')
 print(data)
 
-# #### Accessing elements
+# ### Accessing elements
 #
 # Accessing elements is done by using the `get` method:
 
@@ -65,7 +65,7 @@ data['datlist'] = [0, 1, 2] # add a new element to the dict (key=datlist)
 data['datstr'] = 'new string'  # overwrites a given value (key=datstr)
 print(data)
 
-# #### Adding elements
+# ### Adding elements
 #
 # Adding elements can be achieved by using the `setdefault` method. If the key already exists, nothing is done and the function returns the old value. If the key does not exist, the dictionary is updated and the associated value is returned.
 
@@ -113,7 +113,7 @@ for k, v in zip(data.keys(), data.values()):
     print('key, val = ', k, v)
 # -
 
-# #### Removing elements
+# ### Removing elements
 
 # removing all the content of a dict.
 data.clear()  # Removes all the elements
@@ -125,7 +125,7 @@ data = {'dataint':10 , 'datstr':'This is a dictionnary'}
 removed = data.pop("datstr")
 print(removed)
 
-# #### Concatenation
+# ### Concatenation
 
 # Concatenate dictionnaries
 data = {'dataint':10 , 'datstr':'This is a dictionnary'} # not empty one
