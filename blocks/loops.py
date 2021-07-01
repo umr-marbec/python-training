@@ -47,7 +47,7 @@ for p in range(0, len(x)):
     print('index ', p, 'value', x[p])  # p: index of the element
 # -
 
-But the iteration can also be performed on the elements:
+# But the iteration can also be performed on the elements:
 
 # loop using the list elements (works for iterables, such as list, tuples)
 for v in x:
