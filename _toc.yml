@@ -54,5 +54,6 @@
 - file: misc.md
   sections:
     - file: misc/nemo.ipynb
+    - file: misc/interpol.ipynb
     - file: misc/eof_analysis.ipynb
     - file: misc/dask_examples.ipynb
