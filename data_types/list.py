@@ -13,9 +13,9 @@
 #     name: python3
 # ---
 
-# ## Lists
+# # Lists
 #
-# ### Definition
+# ## Definition
 #
 # A list is an *ordered* sequence of elements, which are *not necessarily of the same type* and are accessible via a unique *index* (integer), which is the element's position within the list.
 #
@@ -26,7 +26,7 @@
 # </div>
 #
 #
-# ### Usage
+# ## Usage
 #    
 # Lists are used ([python.org](https://docs.python.org/fr/3/tutorial/datastructures.html)):
 #     
@@ -37,11 +37,11 @@
 # - Might be used as *stacks* (last-in, first-out). Not optimized for first-in, first-out.
 # - To handle function arguments (```*args``` arguments)
 #
-# ### Manipulation
+# ## Manipulation
 #
 # To have more about lists, visit [python.org](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)
 
-# #### List creation
+# ### List creation
 
 # Creates a list
 x = []  # empty list
@@ -49,7 +49,7 @@ print(x)
 x = [1]  # list with 1 in it
 print(x)
 
-# #### Adding elements
+# ### Adding elements
 
 # Append method: adds an element to an existing list
 x.append([1, 2, 3, 4]) # append -> add list in list
@@ -78,7 +78,7 @@ print(x + y)
 print(2*x)
 print(2*y)
 
-# #### Removing elements
+# ### Removing elements
 
 # +
 # init a list ranging from 15 to 19(!)
@@ -97,7 +97,7 @@ removed = x.remove(16)
 print(x)
 # -
 
-# #### List copy
+# ### List copy
 
 # +
 # WARNING WITH THE COPY ASSIGNMENT OF MUTABLE!!!!
@@ -122,7 +122,7 @@ print(x)
 print(y)
 # -
 
-# #### Count, reverse, sort
+# ### Count, reverse, sort
 
 # Counting the number of occurrences of an object
 x = [5, 6, 15, 7, 2, 15]
@@ -152,7 +152,7 @@ x = [5, 6, 15, 7, 2, 15]
 x.sort()  # sort elements (in place)
 print(x)
 
-# #### Elements checking
+# ### Elements checking
 
 # Check if element is in the list
 is2 = (2 in x)
@@ -163,7 +163,7 @@ print(ind7)
 print(x[ind7])
 # ind1000 = x.index(1000)  # error because 1000 not in list
 
-# #### List indexing
+# ### List indexing
 
 # +
 # List indexing is a delicate part....
