@@ -13,9 +13,9 @@
 #     name: python3
 # ---
 
-# ## Numerics
+# # Numerics
 #
-# ### Comparisons
+# ## Comparisons
 #
 # The following expressions can be used to compare numerical values (source: [python3](https://docs.python.org/3/library/stdtypes.html))
 #
@@ -31,7 +31,7 @@
 # | ```a <= b```      | a less equal b
 # | ```a < b```       | a less b
 #
-# ### Operations
+# ## Operations
 #
 # Binary operations are listed below (source: [python3](https://docs.python.org/3/library/stdtypes.html))
 #
