@@ -54,7 +54,6 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 
 ### Graphics  (Matplotlib(https://matplotlib.org/))
 
-- Axes management (plots/axes.py)
 - XY (plots/xy.py)
 - Contours (plots/contours.py)
 - Geometrical shapes (plots/geometrical_shapes.py)
@@ -62,6 +61,7 @@ Launch `Spyder` and open any of the `.py` file. Then run code selections or the 
 - Quivers (plots/quivers.py)
 - Scatter plots (plots/scatters.py)
 - Text and maths (plots/text.py)
+- Axes management (plots/axes.py)
 - Configutation (plots/pyplot_settings.py)
 
 ### Object oriented programming
