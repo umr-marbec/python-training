@@ -13,7 +13,7 @@
 #     name: python3
 # ---
 
-# ## Code blocks
+# # Code blocks
 #
 # In Python, **conditional statements, functions and loops** are defined within **code blocks**, which have in common:
 #
@@ -38,13 +38,13 @@
 # Use 4 spaces instead.
 # </div>
 #
-# ## Conditional statements
+# # Conditional statements
 #
-# ### Definition
+# ## Definition
 #
 # Conditional statements allow to perform predifined actions depending on certain conditions. 
 #     
-# ###  Defining conditional statements
+# ##  Defining conditional statements
 #
 # The general structure of a conditional statement is:
 #

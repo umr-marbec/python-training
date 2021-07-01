@@ -13,15 +13,15 @@
 #     name: python3
 # ---
 
-# ## Loops
+# # Loops
 #
-# ### Definition
+# ## Definition
 #
 # Loops should be used when a set of actions must be repeated a certain number of times (for instance on each element of a list).
 #
 # There is mainly two ways to perform a loop: by using a ```for``` statement, or by using a ```while``` statement.
 #
-# ### Loops in Python
+# ## Loops in Python
 #
 # In Python, the general structure of a loop is:
 #     
@@ -34,7 +34,6 @@
 # <div class="alert alert-info">
 #     You can always replace a <i>for</i> loop by a <i>while</i> loop, and conversely. 
 # </div>
-#
 
 # You can loop over an iterable using the index, by using the `range` method:
 
@@ -57,7 +56,7 @@ for v in x:
 for v in x[::-1]:
     print(v)  # temp: element itself
 
-# ### Pairwise loops
+# ## Pairwise loops
 # There is the possiblity to loop simultaneously over different elements using the `zip` method:
 
 x = range(1, 10)[::-1]
@@ -93,7 +92,7 @@ while (p >= 0):
     p -= 1 # iteration of counter 
 # -
 
-# ### Imbricated loops
+# ## Imbricated loops
 #
 # Imbricated loops are achieved by indenting the code as many times as necessary
 
@@ -102,7 +101,7 @@ for i in range(0, 2):
         for k in range(0, 1):
             print('i', i, 'j', j, 'k', k)
 
-# ### Loop comprehension
+# ## Loop comprehension
 #
 # Python allows writting loops in a very synthetic way, which is called *loop comprehension.* For instance, the following loop:
 
@@ -133,7 +132,7 @@ z = [temp for temp in x if temp not in y]
 print(z)
 # -
 
-# ### Loop controls: break and continue
+# ## Loop controls: break and continue
 #
 # `break` allows to leave a `loop` when a condition is met:
 
