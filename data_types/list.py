@@ -42,6 +42,8 @@
 # To have more about lists, visit [python.org](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists)
 
 # ### List creation
+#
+# The creation of a list is done by using `[]`
 
 # Creates a list
 x = []  # empty list
@@ -50,16 +52,20 @@ x = [1]  # list with 1 in it
 print(x)
 
 # ### Adding elements
+#
+# Two methods are available for adding ellements to a list. First, the `append` method, which adds an element to a list:
 
-# Append method: adds an element to an existing list
+x = [1]
 x.append([1, 2, 3, 4]) # append -> add list in list
 x.append('String')
 print(x)
 print(len(x))
 print(x[1])
 
-# Extend method: adds the elements of a list to an existing list
-# (list concatenation). Compare x (append) and y (extend)
+# The `x` list now contains 3 elements, one `int`, one `list` and one `string`.
+#
+# The `extend` method, on the other hand, adds *the elements* of an object to a list. Let's repeat the above operations but using replacing `append` by `extend.
+
 y = [1]
 y.extend([1, 2, 3, 4]) # extend -> add list elements in a list
 y.extend('String') # !!! Strings are considered as a list of char!
@@ -67,22 +73,26 @@ print(y)
 print(len(y))
 print(y[1])
 
-# List concatenation can also be done with the "+" symbol
-# the sum of list is equivalent to extend
-# you can also multiply a list by an integer to repeat the list
-####### No numerical operations with lists
+# The `y` list now contains `int` and `char` elements. The elements of the first list (`1, 2, 3, 4`) have been added. And the characters of the `string` variable as well (in this case, `string` behaves like a list of `char`). `extend` can thus be used for list concatenation.
+#
+# Another way for concatnating lists is by using `+` or `*` symbol.
+
 x = [0, 1, 2]
 y = [3, 4, 5]
-z = x + y
 print(x + y)
 print(2*x)
 print(2*y)
 
+# **As you see, `+` and `*` should not be used for mathematical operations on `list`!**
+
 # ### Removing elements
+#
+# There is two methods to remove elements from a `list`. First, `pop` removes the element whose index is given as argument (if no arguments, the last element is removed). The function returns the value of the removed element.
 
 # +
 # init a list ranging from 15 to 19(!)
 x = list(range(15, 20))  
+print(x)
 
 # removes the element at index 2 (i.e. the 3rd element)
 # returns the value of the removed element
@@ -90,21 +100,18 @@ removed_val = x.pop(2)
 removed_last = x.pop()
 print(removed_val, removed_last) 
 print(x)
-
-# removes the element with the value 16 2 (i.e. the 3rd element)
-# returns the value of the removed element
-removed = x.remove(16)
-print(x)
 # -
 
-# ### List copy
+# The `remove` method removes the element within the list that math the *value* provided as argument. If several elements have the same value, the first occurence is removed. This method does not return anything, contrary to `pop`.
 
-# +
-# WARNING WITH THE COPY ASSIGNMENT OF MUTABLE!!!!
-# # copy assignment copy references (i.e. memory adresses), not values
-# changing the content of a mutable does not change it's memory address
-# therefore changing x changes y (and conversely) 
-# since they both refer to the same object
+x = [16, 17, 16, 20]
+x.remove(16)
+x
+
+# ### List copy
+#
+# The copy of mutable objects, like `list`, must be done carefully. Let's look at the following code:
+
 x = [1, 2, 3, 4, 5]
 y = x
 print(id(x), id(y))  # same memory address
@@ -113,6 +120,12 @@ y[3] = 1000
 print(x)
 print(y)
 
+# In the 2nd line, a copy of x is (presumably) made and assigned to `y`. However, when looking at the memory address of the two objects using `id`, they are the same. Consequently, a modification of one (here `x`) modifies the values of the `other`.
+#  
+# This is because assigment of mutable copy references (i.e. memory adresses), not values (as for immutable objects). 
+#
+# The right way to copy a mutable object is by using the `copy` method:
+
 x = [1, 2, 3, 4, 5]
 y = x.copy()  # make a deep copy of x and store it in an object y
 print(id(x), id(y))  # different memory addresses
@@ -120,21 +133,25 @@ x[1] = 30
 y[3] = 1000
 print(x)
 print(y)
-# -
+
+# In this case, the `x` and `y` objects are completely different objects and are therefore independent.
 
 # ### Count, reverse, sort
+#
+# Some methods allow to investigate and manipulate lists.
+#
+# To count the number occurrences of an element:
 
-# Counting the number of occurrences of an object
 x = [5, 6, 15, 7, 2, 15]
 print(x.count(15))
 
-# Reverse the list (in place)
-# This is done **in place**
+# To reverse a list:
+
 x = [5, 6, 15, 7, 2, 15]
 x.reverse()
 print(x)
 
-# **When manipulating list, here is a common error:**
+# Note that the `reserve` occurs **in place**. When manipulating list, the common error is to assign the output of the `reverse` function:
 
 # example of bad syntax
 x = [5, 6, 15, 7, 2, 15]
@@ -147,16 +164,22 @@ print(x)
 
 help([].reverse)
 
+# Sorting elements is done in the same way
+
 # Sorting elements (in place)
 x = [5, 6, 15, 7, 2, 15]
 x.sort()  # sort elements (in place)
 print(x)
 
-# ### Elements checking
+# ### Check for existence
+#
+# To check if an element is in a list, you can use the `in` function:
 
 # Check if element is in the list
 is2 = (2 in x)
 print(is2)
+
+# To get the index of an element (first occurrence), use the `index` method.
 
 ind7 = x.index(7)  # finds index of 7 element
 print(ind7)
@@ -164,35 +187,40 @@ print(x[ind7])
 # ind1000 = x.index(1000)  # error because 1000 not in list
 
 # ### List indexing
+#
+# The elements can be accessed using their index within the list. Some examples are shown below.
 
-# +
 # List indexing is a delicate part....
 # In python, index starts at 0
 # But you can access them with negative indexes
-x =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-# k = 0  1  2  3  4  5  6  7  8  9
+x =  [0, 1,  2,  3,  4,  5,  6,  7,  8,  9]
+x[0] # getting first elements
 
-print(x)
-print(x[0]) # getting first elements
-print(x[2:5]) # getting elements from index 2 to index 4(!)
+x[2:5] # getting elements from index 2 to index 4(!)
 
-print(x[-1]) # getting last element
-print(x[-5:-3]) # getting the elements from 5th to last to 4th(!) to last
+x[-1] # getting last element
 
-print(x[6:]) # getting all the elements starting from index 6
-print(x[:3]) # getting all elements from 0 to index 2(!)
+x[-5:-3] # getting the elements from 5th to last to 4th(!) to last
+
+x[6:] # getting all the elements starting from index 6
+
+x[:3] # getting all elements from 0 to index 2(!)
 
 # getting elements starting from index 2 
 # ending to index -2 with a stride of 2
-print(x[2:-2:2]) 
-print(x[2:-2:1]) 
+x[2:-2:2] 
 
-print(x[::4]) # getting all the elements with a stride of 2
-# -
+x[::4] # getting all the elements with a stride of 4
 
-# note: you can also use the slice function to access list indexes
-print(x[3:-2:2]) 
-print(x[slice(3, -2, 2)])
-help(slice)
+# Note that the `start:end:stride` syntax can be replaced by `slice(start, end, stride)`.
 
+start = 0
+end = 6
+stride = 2
+x[start:end:stride]
 
+x[slice(start,end,stride)]
+
+x[slice(5)]  # equivalent to slice(None, 5, None)
+
+x[slice(3, 7)] # equivalent to slice(3, 7, None)
