@@ -25,7 +25,6 @@
 
 - file: plots.md
   sections:
-    - file: plots/axes.ipynb
     - file: plots/xy.ipynb
     - file: plots/contours.ipynb
     - file: plots/geometrical_shapes.ipynb
