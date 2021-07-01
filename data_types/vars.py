@@ -15,7 +15,7 @@
 
 # # Variables
 #
-# ### Variable assignments
+# ## Variable assignments
 #
 # Python is a *dynamical binding* and typing language, contrary to C/C++, Java and Fortran, who are *static binding* (source: [pythonconquerstheuniverse](https://pythonconquerstheuniverse.wordpress.com/2009/10/03/static-vs-dynamic-typing-of-programming-languages/))
 #
@@ -36,7 +36,7 @@ print(type(x))
 x = 'string'  # string
 print(type(x))
 
-# ### Variables as objects
+# ## Variables as objects
 #
 # Python is object oriented. Therefore, each assigned variable is an object. Informations about the objects are accessible via the `type` function:
 
@@ -46,7 +46,7 @@ type(x)  # class of the object
 
 dir(x)  # list of methods/attributes
 
-# #### Object's attribute
+# ### Object's attribute
 #
 # An object's attribute is a data which is associated with the object.
 #
@@ -58,7 +58,7 @@ print(x.dtype)
 print(x.ndim)
 print(x.shape)
 
-# #### Object's method
+# ### Object's method
 #
 # Methods are functions that are associated with an object, which use and eventually modify the object's attributes.
 #
@@ -75,7 +75,7 @@ print(s)
 
 help(x.mean)
 
-# #### Method vs. function
+# ### Method vs. function
 #
 # It should be noted that object's method are not called in the same way as module's functions. For instance, there are two ways to compute the mean of a numpy array.
 
@@ -87,7 +87,7 @@ print(m1, m2)
 #     <strong>Note: </strong> In this case, the numpy function simply calls the object's method.
 #  </div>
 
-# ### Transtyping
+# ## Transtyping
 
 # To convert an object to another type:
 
