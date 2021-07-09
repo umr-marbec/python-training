@@ -473,7 +473,7 @@ print(z.shape)
 # Filled values are generally defined as `numpy.nan` values.
 
 # numpy nans
-x = np.arange(1, 10).astype(np.float)
+x = np.arange(1, 10).astype(float)
 print(x)
 x[0] = np.nan
 print(x)
@@ -489,11 +489,11 @@ np.nonzero(x != x) # Mathematical definition of NaN
 # **Warning: `NaNs` can only be used with Float arrays (not integer arrays)**
 
 # +
-x = np.arange(1, 10).astype(np.double)
+x = np.arange(1, 10).astype(float)
 x[0] = np.nan
 print(x)
 
-x = np.arange(1, 10).astype(np.int)
+x = np.arange(1, 10).astype(int)
 #x[0] = np.nan
 # -
 
@@ -511,7 +511,7 @@ print(np.nanstd(x))
 # ### Masked array
 
 # numpy.ma (masked arrays)
-x = np.arange(1, 10).astype(np.int)
+x = np.arange(1, 10).astype(int)
 print(type(x))
 
 # To convert an array into a masked array, the following methods can be used:
@@ -535,7 +535,7 @@ print(np.std(x))
 # It is strongly advised to use the `np.ma.getmask` method rather than using the `mask` attribute. Indeed, the latter will return a `bool` instead of an array of `bool` if no data is missing. 
 
 # warning for masked_arrays
-x = np.arange(10, 15).astype(np.float)
+x = np.arange(10, 15).astype(float)
 x = np.ma.masked_where(np.isnan(x), x)
 print(x)
 print(x.mask)
