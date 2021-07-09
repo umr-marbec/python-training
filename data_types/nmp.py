@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -26,98 +26,17 @@
 # - Manipulate arrays (changing shape, tiling)
 # - Manipulate missing values
 # - Perform optimized numerical operations (pointwise or matrix) via broadcasting (no loops)
-#
-# ## Multi-arrays in computer memory
-#
-# Computer memory is inherently linear, i.e. multi-dimensional arrays are stored in memory as one-dimensional arrays. This can be done in two ways:
-#
-# - Row-major order: C/C++, *Python*
-# - Column-major order: Fortran, Matlab, R, Julia
-#
-# **Row-major order:**
-#
-# <img src="figs/corder.svg" alt="Dictionaries" text-align=center width=200>
-#  
-# **Column-major order:** 
-#
-# <img src="figs/forder.svg" alt="Dictionaries" text-align=center width=200>
-#
-#
-# ## Consequences for loops
-#
-# Imbricated loops should be consistent with the memory ordering:
-#
-# **Row-order (Python)**
-#
-# ```
-# import numpy as np
-# x = np.empty((5, 10))
-# for i in range(5):  # inner loop: 1st dim
-#     for j in range(10):  # outer loop: last dim
-#         print(x[i, j])
-# ```
-#
-# **Column-order (Julia)**
-#
-# ```
-# x = zeros(Int8, 5, 10)
-# for j = 1:10   # inner loop: last dim
-#     for i = 1:5  # outer loop: 1st dim
-#         println(x[i, j])
-#     end
-# end
-# ```
-#
-# Sources: [Wikipedia](https://en.wikipedia.org/wiki/Row-_and_column-major_order),  [thegreenplace](https://eli.thegreenplace.net/2015/memory-layout-of-multi-dimensional-arrays/)
-#
-# Let's see with a quick example, using the following array
-
-# +
-import numpy as np
-
-shape = (50, 60, 70, 40)
-N = np.prod(shape)
-x = np.reshape(np.arange(N), shape).astype(float)
-x.shape
-# -
-
-# %%time
-total = 0
-for i in range(shape[0] - 1):
-    for j in range(shape[1] - 1):
-        for k in range(shape[2] - 1):
-            for l in range(shape[3] - 1):
-                total += 0.5 * (x[i, j, k, l] + x[i+1, j+1, k+1, l+1])
-total /= N
-print(total)
-
-# %%time
-total = 0
-for l in range(shape[3]-1):
-    for k in range(shape[2]-1):
-        for j in range(shape[1]-1):
-            for i in range(shape[0]-1):
-                total += 0.5 * (x[i, j, k, l] + x[i+1, j+1, k+1, l+1])
-total /= N
-print(total)
-
-# The last loop is slower than the first one because the loop order is not consistent with the C-order used in Python.
-#
-# Note: The `ndenumerate` method alows to loop in an array without risk.
-
-cpt = 0
-for k, v in np.ndenumerate(x):
-    if(cpt == 15):
-        break
-    print(k, x[k])
-    cpt += 1
 
 # ## Array manipulation
 
 # ### Array initialisation
 
+# +
+import numpy as np 
+
 x = np.arange(0, 10, 1) # equivalent to Matlab 0:1:9
 print(x)
+# -
 
 x = np.linspace(10, 20, 41) # 10 to 20 with 41 values
 print(x)
@@ -125,16 +44,16 @@ print(x)
 x = np.array([1, 2, 3, 4, 5]) # initialisation from list 
 print(x)
 
-x = np.ones((2, 3, 8), dtype=np.int) # init with 1 integers
+x = np.ones((2, 3, 8), dtype=int) # init with 1 integers
 print(x)
 
 x = np.zeros((2, 3, 8)) # init with 0 floats 
 print(x)
 
-x = np.empty((2, 3, 8), dtype=np.float) # init with random floats 
+x = np.empty((2, 3, 8), dtype=float) # init with random floats 
 print(x)
 
-x = np.full((2, 3, 8), 10.10)  # fill array with 10.10
+x = np.full((2, 3, 8), 10.10)  # fill array with 10.1
 print(x)
 
 # ### Changing data type
@@ -152,7 +71,7 @@ print(x.dtype) # type of the content
 # ### Indexing
 
 # +
-x = np.ones((2, 3, 8), dtype=np.float)
+x = np.ones((2, 3, 8), dtype=float)
 
 # indexing: same indexing as for lists for any array dimensions
 print(x[:, :, 0].shape)
@@ -335,33 +254,157 @@ z = np.concatenate((x, y), axis=1)
 print(z.shape)
 # -
 
-# ### Operations
+# ## Operations using arrays 
+#
+# ### Multi-arrays in computer memory
+#
+# Computer memory is inherently linear, i.e. multi-dimensional arrays are stored in memory as one-dimensional arrays. This can be done in two ways:
+#
+# - Row-major order: C/C++, *Python*
+# - Column-major order: Fortran, Matlab, R, Julia
+#
+# **Row-major order:**
+#
+# <img src="figs/corder.svg" alt="Dictionaries" text-align=center width=200>
+#  
+# **Column-major order:** 
+#
+# <img src="figs/forder.svg" alt="Dictionaries" text-align=center width=200>
+#
+# ### Loops
+#
+# This has implications when writting loops. Indeed, imbricated loops should be consistent with the memory ordering:
+#
+# **Row-order (Python)**
+#
+# ```
+# import numpy as np
+# x = np.empty((5, 10))
+# for i in range(5):  # inner loop: 1st dim
+#     for j in range(10):  # outer loop: last dim
+#         print(x[i, j])
+# ```
+#
+# **Column-order (Julia)**
+#
+# ```
+# x = zeros(Int8, 5, 10)
+# for j = 1:10   # inner loop: last dim
+#     for i = 1:5  # outer loop: 1st dim
+#         println(x[i, j])
+#     end
+# end
+# ```
+#
+# Sources: [Wikipedia](https://en.wikipedia.org/wiki/Row-_and_column-major_order),  [thegreenplace](https://eli.thegreenplace.net/2015/memory-layout-of-multi-dimensional-arrays/)
+#
+# Let's see with a quick example, using the following array
+
+# +
+import numpy as np
+
+shape = (30, 40, 50, 800)
+x = np.random.rand(shape[0], shape[1], shape[2], shape[3]).astype(float)
+x.shape
+# -
+
+# %%time
+total = 0
+N = 0
+for i in range(shape[0]):
+    for j in range(shape[1]):
+        for k in range(shape[2]):
+            for l in range(shape[3]):
+                total += x[i, j, k, l]
+                N += 1
+total /= N
+total
+
+# %%time
+total = 0
+N = 0
+for l in range(shape[3]):
+    for k in range(shape[2]):
+        for j in range(shape[1]):
+            for i in range(shape[0]):
+                total += x[i, j, k, l]
+                N += 1
+total /= N
+total
+
+# The last loop is slower than the first one because the loop order is not consistent with the C-order used in Python.
+#
+# Note: The `np.ndenumerate` method alows to loop in an array without risk.
+
+cpt = 0
+for k, v in np.ndenumerate(x):
+    if(cpt == 15):
+        break
+    print(k, x[k])
+    cpt += 1
+
+# The `np.nditer` allows to so similar things:
+
+cpt = 0
+for v in np.nditer(x):
+    if(cpt == 15):
+        break
+    print(v)
+    cpt += 1
+
+# **Note that the use of `nditer` is read-only. To modify the input array:**
+
+cpt = 0
+with np.nditer(x, op_flags=['readwrite']) as it:
+    for v in it:
+        if(cpt == 15):
+            break
+        v[...] = 2 * v
+        cpt += 1
+
+cpt = 0
+for v in np.nditer(x):
+    if(cpt == 15):
+        break
+    print(v)
+    cpt += 1
+
+# For more details about iteration, visit [arrays.nditer](https://numpy.org/doc/stable/reference/arrays.nditer.html).
+#
+# Since the loops are not efficient in Python, it is better not to use them! Therefore, use vectorized functions.
+
+# %%time
+tot = x.mean()
+tot
+
+# ### Arhtimetical operations
 #
 # In Python, standard operations are performed pointwise (contrary to Matlab for instance). To do matrix operations, you need to call specific methods (`numpy.matmul` for instance).
 
 # maths: pointwise operations
-x = np.array([1, 2, 3, 4, 5]).astype(np.float)
-y = np.array([6, 7, 8, 9, 10]).astype(np.float)
-print(x*y)
-print(y/x)
-print(y//x)
-print(y%x)
+x = np.array([1, 2, 3, 4, 5]).astype(float)
+y = np.array([6, 7, 8, 9, 10]).astype(float)
+print(x * y)
+print(y / x)
+print(y // x)
+print(y % x)
 print(x**y)
 
-# +
 x[2] = 0.
 x[3] = -1.
+x
 
-z = y/x
-print(z)
+z = y / x
+z
+
 z = np.divide(y, x, where=(x!=0), out=np.full(x.shape, np.nan, dtype=x.dtype))  # no more warning message
-print(z)
-# -
+z
 
 w = np.log10(x)
-print(w)
-w = np.log10(x, where=(x>0), out=np.full(x.shape, -999, dtype=x.dtype))
-print(w)
+w
+
+w = np.log10(x, where=(x > 0), out=np.full(x.shape, np.nan, dtype=x.dtype))
+w
 
 # ### Mathematical operations (mean, etc.)
 
@@ -394,7 +437,6 @@ print(xmean.shape)
 #
 # In order to avoid loops, it is strongly advised to use broadcasting rules (cf. [docs.scipy](https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html))
 
-# broadcasting (https://docs.scipy.org/doc/numpy/user/basics.broadcasting.html)
 x = np.reshape(np.arange(24), (2, 3, 4))
 
 xmean = np.mean(x, axis=0)  # mean over the first dimension
