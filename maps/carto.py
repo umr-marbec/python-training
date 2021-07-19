@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -70,8 +70,22 @@ ax.add_feature(cfeature.OCEAN, color='SteelBlue')
 plt.show()
 # -
 
+# There is the possibility to control the resolution of the features you by using the `with_scale` argument. Note also that the axes limit can be specified by using the `set_extent` method:
+
+# +
+latc = -18 + 56/60.+ 15/(60 * 60)
+lonc = 148 + 5/60 + 45/(60*60)
+
+fig = plt.figure()
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([lonc - 5, lonc + 5, latc - 5, latc + 5], ccrs.PlateCarree())
+ax.add_feature(cfeature.LAND.with_scale('110m'), facecolor='k')
+ax.add_feature(cfeature.COASTLINE.with_scale('110m'), color='red')
+plt.show()
+# -
+
 # It is also possible to use data from [naturalearthdata](https://www.naturalearthdata.com/) by using the 
-# `cartopy.feature.NaturalEarthFeature` interface:
+# `cartopy.feature.NaturalEarthFeature` interface. For instance, one can add coral reefs as follows:
 
 # +
 # Create a feature for reefs image
@@ -99,14 +113,22 @@ lonc = 148 + 5/60 + 45/(60*60)
 
 fig = plt.figure()
 ax = plt.axes(projection=ccrs.PlateCarree())
-ax.set_xlim(lonc - 5, lonc + 5)
-ax.set_ylim(latc - 5, latc + 5)
+ax.set_extent([lonc - 5, lonc + 5, latc - 5, latc + 5], ccrs.PlateCarree())
 ax.add_feature(l50m)
 ax.add_feature(o50m)
 ax.add_feature(reefs)
 ax.coastlines(resolution='50m')
 plt.show()
 # -
+
+# There is also the possibility to use [GSHSS](https://www.ngdc.noaa.gov/mgg/shorelines/gshhs.html) features:
+
+fig = plt.figure()
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_xlim(lonc - 5, lonc + 5)
+ax.set_ylim(latc - 5, latc + 5)
+ax.add_feature(cfeature.GSHHSFeature(scale='low', levels=[1], facecolor='gray', edgecolor='k'))
+plt.show()
 
 # ## Plotting data
 #
