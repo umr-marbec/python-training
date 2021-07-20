@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.10.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -50,11 +50,110 @@ ax.stock_img()
 plt.show()
 # -
 
+# ## Specifying map limits
+#
+# Map limits can be specified using the `set_extent` method. It takes as argument the limits of the maps and eventually a `crs` object, specifying the coordinate system used to specify the limits.
+
+fig = plt.figure()
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([-80, 20, 20, 90])
+ax.stock_img()
+ax.coastlines()
+
+# In the above, the use of `ccrs.PlateCarree()` allows to specify map limits as geographical coordinates.
+
+# ## Changing map boundary
+#
+# There is the possibility to change the map bounding box. This is especially usefull if you want to use the Masked Lambert Conformal projection. First, let's have a look at the `LCC` projection:
+
+# +
+lonw = -80
+lone = 40
+lats = 10
+latn = 75
+
+lon0 = 0.5 * (lone + lonw)
+lat0 = 0.5 * (lats + latn)
+
+plt.figure()
+proj = ccrs.LambertConformal(central_longitude=lon0)
+ax = plt.axes(projection=proj)
+ax.set_extent([lonw, lone, lats, latn], ccrs.PlateCarree())
+ax.stock_img()
+ax.coastlines()
+# -
+
+# In order to mask it, the boundary polygon needs to be defined in geographical coordinates as a `Path` object:
+
+# +
+import matplotlib.path as mpath
+import numpy as np
+
+N = 100
+
+x0 = np.linspace(lonw, lone, N)
+y0 = np.full((N), lats)
+
+y1 = np.linspace(lats, latn, N)
+x1 = np.full((N), lone)
+
+x2 = np.linspace(lonw, lone, N)[::-1]
+y2 = np.full((N), latn)
+
+y3 = np.linspace(lats, latn, N)[::-1]
+x3 = np.full((N), lonw)
+
+x = np.concatenate([x0, x1, x2, x3])
+y = np.concatenate([y0, y1, y2, y3])
+path = mpath.Path(np.array([x, y]).T)
+# -
+
+# Now, the map boundary can be specified:
+
+# +
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+import matplotlib.ticker as mticker
+
+plt.figure()
+proj = ccrs.LambertConformal(central_longitude=lon0)
+ax = plt.axes(projection=proj)
+ax.set_extent([x.min(), x.max(), y.min(), y.max()], ccrs.PlateCarree())
+ax.set_boundary(path, transform=ccrs.PlateCarree())
+ax.stock_img()
+ax.coastlines()
+# -
+
+# **The features must be added after the new boundaries have been set**
+
+# ## Switching from one system to another
+#
+# In order to navigate between coordinates systems:
+
+# +
+proj1 = ccrs.PlateCarree()
+proj2 = ccrs.Mollweide()
+
+N = 100
+lone = np.linspace(-180, 180, N)
+late = np.full(N, 0)
+
+xe, ye = proj2.transform_points(proj1, lone, late)
+
+ax = plt.axes(projection=proj2)
+ax.coastlines()
+ax.plot(lone, late, transform=proj1)
+ax.stock_img()
+# -
+
 # ## Adding map features
 #
 # In order to add features to the map (land color, ocean colors, etc.), use the [cartopy.feature](https://scitools.org.uk/cartopy/docs/v0.14/matplotlib/feature_interface.html) interface.
 #
 # Features should be added to the current axes by using the `add_feature` method.
+#
+# ### Using predefined features
+#
+# Some features, such as lands ans oceans, coastlines, country borders and lakes are avaiblable. For instance, land mask is accessed as `cfeature.LAND`.
 
 # +
 import cartopy.crs as ccrs
@@ -63,14 +162,14 @@ import matplotlib.pyplot as plt
 
 fig = plt.figure()
 ax = plt.axes(projection=ccrs.Mollweide())
-ax.add_feature(cfeature.LAND)
-ax.add_feature(cfeature.COASTLINE)
+ax.add_feature(cfeature.LAND, facecolor=cfeature.COLORS['land'])
+ax.add_feature(cfeature.COASTLINE, edgecolor='k')
 ax.add_feature(cfeature.BORDERS)
 ax.add_feature(cfeature.OCEAN, color='SteelBlue')
 plt.show()
 # -
 
-# There is the possibility to control the resolution of the features you by using the `with_scale` argument. Note also that the axes limit can be specified by using the `set_extent` method:
+# There is the possibility to control the resolution of the default features you by using the `with_scale` argument.
 
 # +
 latc = -18 + 56/60.+ 15/(60 * 60)
@@ -79,12 +178,14 @@ lonc = 148 + 5/60 + 45/(60*60)
 fig = plt.figure()
 ax = plt.axes(projection=ccrs.PlateCarree())
 ax.set_extent([lonc - 5, lonc + 5, latc - 5, latc + 5], ccrs.PlateCarree())
-ax.add_feature(cfeature.LAND.with_scale('110m'), facecolor='k')
-ax.add_feature(cfeature.COASTLINE.with_scale('110m'), color='red')
+ax.add_feature(cfeature.LAND.with_scale('110m'), facecolor=cfeature.COLORS['land'])
+ax.add_feature(cfeature.COASTLINE.with_scale('110m'), edgecolor='k')
 plt.show()
 # -
 
-# It is also possible to use data from [naturalearthdata](https://www.naturalearthdata.com/) by using the 
+# ### Using Natural Earth Data data
+#
+# It is also possible to use include other features from [naturalearthdata](https://www.naturalearthdata.com/) by using the 
 # `cartopy.feature.NaturalEarthFeature` interface. For instance, one can add coral reefs as follows:
 
 # +
@@ -97,29 +198,20 @@ reefs = cfeature.NaturalEarthFeature(
     facecolor='FireBrick'
 )
 
-# Download high resolution land and ocean features
-l50m = cfeature.NaturalEarthFeature(
-    'physical', 'land', '50m',
-    edgecolor='face',
-    facecolor=cfeature.COLORS['land'])
-
-o50m = cfeature.NaturalEarthFeature(
-    'physical', 'ocean', '50m',
-    edgecolor='face',
-    facecolor='SteelBlue')
-
 latc = -18 + 56/60.+ 15/(60 * 60)
 lonc = 148 + 5/60 + 45/(60*60)
 
 fig = plt.figure()
 ax = plt.axes(projection=ccrs.PlateCarree())
 ax.set_extent([lonc - 5, lonc + 5, latc - 5, latc + 5], ccrs.PlateCarree())
-ax.add_feature(l50m)
-ax.add_feature(o50m)
+ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.OCEAN)
 ax.add_feature(reefs)
 ax.coastlines(resolution='50m')
 plt.show()
 # -
+
+# ### Using GSHSS features
 
 # There is also the possibility to use [GSHSS](https://www.ngdc.noaa.gov/mgg/shorelines/gshhs.html) features:
 
@@ -127,8 +219,36 @@ fig = plt.figure()
 ax = plt.axes(projection=ccrs.PlateCarree())
 ax.set_xlim(lonc - 5, lonc + 5)
 ax.set_ylim(latc - 5, latc + 5)
-ax.add_feature(cfeature.GSHHSFeature(scale='low', levels=[1], facecolor='gray', edgecolor='k'))
+ax.add_feature(cfeature.GSHHSFeature(scale='intermediate', levels=[1], facecolor='gray', edgecolor='k'))
 plt.show()
+
+# ## Labeling
+#
+# Informations about how to add grid labels are provided here: https://scitools.org.uk/cartopy/docs/v0.13/matplotlib/gridliner.html
+#
+# Here is a small example on how to do it.
+
+# +
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+import matplotlib.ticker as mticker
+
+# definition of grid params
+gridparams = {'crs': ccrs.PlateCarree(central_longitude=0), 
+              'draw_labels':True, 'linewidth':0.5, 
+              'color':'gray', 'alpha':0.5, 'linestyle':'--'}
+
+fig = plt.figure()
+ax = plt.gca(projection=ccrs.PlateCarree())
+ax.add_feature(cfeature.LAND)
+ax.add_feature(cfeature.COASTLINE)
+gl = ax.gridlines(**gridparams)
+gl.xlabels_top = False
+gl.ylabels_right = False
+gl.xformatter = LONGITUDE_FORMATTER
+gl.yformatter = LATITUDE_FORMATTER
+gl.xlocator = mticker.FixedLocator(np.arange(-180, 180 + 40, 40))
+gl.ylocator = mticker.FixedLocator(np.arange(-90, 90 + 20, 20))
+# -
 
 # ## Plotting data
 #
@@ -197,34 +317,6 @@ cb.set_ticks(np.arange(0, 60, 10))
 ax.coastlines()  # add coastlines
 ax.add_feature(cfeature.LAND)
 plt.show()
-# -
-
-# ## Labeling
-#
-# Informations about how to add grid labels are provided here: https://scitools.org.uk/cartopy/docs/v0.13/matplotlib/gridliner.html
-#
-# Here is a small example on how to do it.
-
-# +
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-import matplotlib.ticker as mticker
-
-# definition of grid params
-gridparams = {'crs': ccrs.PlateCarree(central_longitude=0), 
-              'draw_labels':True, 'linewidth':0.5, 
-              'color':'gray', 'alpha':0.5, 'linestyle':'--'}
-
-fig = plt.figure()
-ax = plt.gca(projection=ccrs.PlateCarree())
-ax.add_feature(cfeature.LAND)
-ax.add_feature(cfeature.COASTLINE)
-gl = ax.gridlines(**gridparams)
-gl.xlabels_top = False
-gl.ylabels_right = False
-gl.xformatter = LONGITUDE_FORMATTER
-gl.yformatter = LATITUDE_FORMATTER
-gl.xlocator = mticker.FixedLocator(np.arange(-180, 180 + 40, 40))
-gl.ylocator = mticker.FixedLocator(np.arange(-90, 90 + 20, 20))
 # -
 
 # ## Paneling
