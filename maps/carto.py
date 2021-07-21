@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -34,6 +34,7 @@
 
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
+plt.rcParams['text.usetex'] = False
 
 fig = plt.figure()
 ax = plt.axes(projection=ccrs.Mollweide())
@@ -110,10 +111,6 @@ path = mpath.Path(np.array([x, y]).T)
 
 # Now, the map boundary can be specified:
 
-# +
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-import matplotlib.ticker as mticker
-
 plt.figure()
 proj = ccrs.LambertConformal(central_longitude=lon0)
 ax = plt.axes(projection=proj)
@@ -121,13 +118,18 @@ ax.set_extent([x.min(), x.max(), y.min(), y.max()], ccrs.PlateCarree())
 ax.set_boundary(path, transform=ccrs.PlateCarree())
 ax.stock_img()
 ax.coastlines()
-# -
 
 # **The features must be added after the new boundaries have been set**
 
 # ## Switching from one system to another
 #
-# In order to navigate between coordinates systems:
+# The `transform_points` method can be used to navigate between coordinates systems. It is called as follow:
+#
+# ```
+# destCRS.transform_points(sourceCrs, longitudes, latitudes)
+# ```
+#
+# For instance, to convert longitudes/latitudes into Mollweide map coordinates:
 
 # +
 proj1 = ccrs.PlateCarree()
@@ -135,15 +137,17 @@ proj2 = ccrs.Mollweide()
 
 N = 100
 lone = np.linspace(-180, 180, N)
-late = np.full(N, 0)
+late = np.full((N), 0)
 
-xe, ye = proj2.transform_points(proj1, lone, late)
+convert = proj2.transform_points(proj1, lone, late)
+xe = convert[:, 0]
+ye = convert[:, 1]
+ze = convert[:, 2]
 
-ax = plt.axes(projection=proj2)
-ax.coastlines()
-ax.plot(lone, late, transform=proj1)
-ax.stock_img()
+xe
 # -
+
+# Note that the `transform_vectors` can be used to convert vectors from one CRS to another.
 
 # ## Adding map features
 #
@@ -270,7 +274,7 @@ v = np.ma.masked_where(np.abs(v) > 999, v)
 vel = np.sqrt(u*u + v*v, where=(np.ma.getmaskarray(u) == False))
 # -
 
-# ## Lines
+# ### Lines
 #
 # In order to draw lines that follow geodetic distance, set the `transform` argument as equal to `ccrs.Geodetic()`.
 
