@@ -6,9 +6,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.4
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -25,6 +25,7 @@
 import xarray as xr
 import numpy as np
 import matplotlib.pyplot as plt
+plt.rcParams['text.usetex'] = False
 
 data = xr.open_dataset('data/mesh_mask_eORCA1_v2.2.nc')
 data = data.isel(z=0, t=0)
@@ -139,6 +140,9 @@ plt.figure()
 plt.plot(pcs[0], label='pc1')
 plt.plot(pcs[1], label='pc2')
 leg = plt.legend()
+plt.gca().set_ylim(-3, 3)
+plt.gca().set_xlim(0, len(pcs[0]) - 1) 
+plt.savefig('ts1')
 
 # ## EOF computation (xarray mode)
 #
@@ -149,17 +153,28 @@ from eofs.xarray import Eof
 # Since it uses named labels, the `time_counter` dimension must first be renamed in `time`:
 
 anoms = anoms.rename({'time_counter': 'time'})
+anoms
+
+# To make sure it works, coordinate variables need to be removed.
+
+anoms = anoms.drop_vars(['nav_lat', 'nav_lon', 'time_centered', 'month'])
+anoms
+
 solver = Eof(anoms, weights=weights)
 
-# +
 neofs = 2
 covmaps = solver.eofsAsCovariance(neofs=neofs)
+covmaps
 
 plt.figure()
 cs = covmaps.isel(mode=0).plot()
 cs.set_clim(-1, 1)
-# -
 
 pcs = solver.pcs(pcscaling=1, npcs=neofs)
+pcs
+
 plt.figure()
 l = pcs.plot.line(x='time')
+plt.savefig('ts2')
+
+
