@@ -6,9 +6,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.4
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -51,7 +51,7 @@ data
 #
 # When this is done, the interpolator object can be created as follows:
 
-regridder = xe.Regridder(data, dsout, 'bilinear', ignore_degenerate=True, reuse_weights=True, periodic=True)
+regridder = xe.Regridder(data, dsout, 'bilinear', ignore_degenerate=True, reuse_weights=False, periodic=True, filename='weights.nc')
 regridder
 
 # Note that the `ignore_degenerate` argument is necessary for handling the ORCA grid.
@@ -79,5 +79,3 @@ cs.set_clim(-2, 30)
 toplot = dataout.isel(time_counter=0, olevel=0).data
 cs = plt.pcolormesh(dataout['lon'], dataout['lat'], toplot[1:, 1:], cmap=plt.cm.jet)
 cs.set_clim(-2, 30)
-
-
