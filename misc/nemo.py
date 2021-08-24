@@ -6,9 +6,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.4
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -48,7 +48,7 @@ bathy = np.ma.masked_where(bathy == 0, bathy)
 # If we first try to use the `pcolormesh` as we learned, here is what comes out:
 
 fig = plt.figure()
-ax = plt.gca(projection=ccrs.PlateCarree())
+ax = plt.axes(projection=ccrs.PlateCarree())
 cs = ax.pcolormesh(lon, lat, bathy, transform=ccrs.PlateCarree())
 ax.add_feature(cfeature.LAND, zorder=50)
 ax.add_feature(cfeature.COASTLINE, zorder=51)
@@ -82,3 +82,5 @@ cs = ax.pcolormesh(lonf, latf, bathy[1:, 1:], transform=ccrs.PlateCarree(), shad
 ax.add_feature(cfeature.LAND)
 ax.add_feature(cfeature.COASTLINE)
 cb = plt.colorbar(cs, shrink=0.5)
+
+
