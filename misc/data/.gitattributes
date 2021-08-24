@@ -1,0 +1,2 @@
+surface_thetao.nc filter=lfs diff=lfs merge=lfs -text
+mesh_mask_eORCA1_v2.2.nc filter=lfs diff=lfs merge=lfs -text

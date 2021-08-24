@@ -13,6 +13,8 @@
 **.npz
 **todo**
 **__pycache__**
+**/weights.nc
+
 
 **outfile.txt**
 **example.nc**
