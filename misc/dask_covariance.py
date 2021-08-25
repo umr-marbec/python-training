@@ -134,7 +134,7 @@ def gufunc_cov(x, y):
     for s in range(nx):
         for i in range(ny):
             temp = x[s, i]
-            output[s, i, :] = sig.correlate(temp, y)
+            output[s, i, :] = sig.correlate(temp, y) / ntime
     return output
 
 
@@ -166,7 +166,7 @@ with Profiler() as prof, ResourceProfiler(dt=0.25) as rprof, CacheProfiler() as 
 
 # We see that the calculation time is less than the original one. We can now visualize the resource usage:
 
-visualize([prof, rprof, cprof])
+visualize([prof, rprof, cprof], show=False)
 
 # Finally, we can verify that both calculations (Numpy vs. Dask) returns the same results. First, `NaN` values are replaced by 0 in both results.
 
