@@ -32,7 +32,6 @@ _build
 link.sh
 
 **/pacific_mask.nc
-compile.sh
 
 **/*LogFile
 **/bilinear*
