@@ -8,7 +8,7 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.10.3
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -150,7 +150,7 @@ for i, ax in enumerate(axgr):
     print(i, ax)
     cs = ax.pcolormesh(zz * (i + 1))
     cb = cbar_axes[i].colorbar(cs)
-    cb.set_label_text('label')
+    cb.set_label('label')
 # -
 
 # Note that `xticklabels` appear only on the bottom panels, while `yticklabels` only appear on the left panels.
