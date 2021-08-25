@@ -15,7 +15,6 @@
 
 from dask.diagnostics import Profiler, ResourceProfiler, CacheProfiler, visualize
 import xarray as xr
-from dask.diagnostics import visualize
 import matplotlib.pyplot as plt
 
 data = xr.open_dataset('data/surface_thetao.nc')
