@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.4
+#       jupytext_version: 1.10.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -108,6 +108,15 @@ data = data['thetao']
 data = data.isel(olevel=0)
 data
 
+# Now we compute the monthly anomalies:
+
+dataclim = data.groupby('time_counter.month').mean(dim='time_counter')
+dataclim
+
+data = data.groupby('time_counter.month') - dataclim
+data = data.chunk({'time_counter': -1, 'y': 150, 'y': 150})
+data
+
 # %%time 
 calc = xarray_detrend(data, dim='time_counter').compute()
 
@@ -117,6 +126,22 @@ from dask.diagnostics import ProgressBar
 with ProgressBar():
     calc = xarray_detrend(data, dim='time_counter').compute()
 calc
+
+# Now let's check if trend seems ok. First, we extract the detrended time-series on a specific location
+
+coords = dict(x=90, y=165)
+calcts = calc.isel(**coords)  # detrendet time series
+calcts
+
+# Then, we extract the raw anomalies on the same location
+
+datats = data.isel(**coords)
+
+Now, we can plot the raw anomalies and the associated trend:
+
+plt.plot(datats, label='anomalies')
+plt.plot(datats - calcts, label='trend')
+plt.legend()
 
 # ## Use on HPCs
 #
