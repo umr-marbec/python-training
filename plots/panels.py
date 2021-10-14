@@ -8,7 +8,7 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.10.3
 #   kernelspec:
-#     display_name: Python 3 (ipykernel)
+#     display_name: Python 3
 #     language: python
 #     name: python3
 # ---
@@ -170,7 +170,7 @@ cbar_axes = axgr.cbar_axes
 for i, ax in enumerate(axgr):
     cs = ax.pcolormesh(zz)
     cb = cbar_axes[i].colorbar(cs)
-    cb.set_label_text('label')
+    cb.set_label('label')
 # -
 
 # Same thing for time series:
@@ -193,6 +193,3 @@ for i, ax in enumerate(axgr):
     ax.set_xticks(np.arange(0, 4*np.pi, np.pi))
     ax.set_xticklabels(['0', r'$\pi$', r'$2\pi$', r'$3\pi$', ])
     ax.grid(True)
-# -
-
-
