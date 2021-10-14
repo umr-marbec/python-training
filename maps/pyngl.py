@@ -67,7 +67,7 @@ import xarray as xr
 import numpy as np
 
 # load the NetCDF file, using the PyNio engine
-data = xr.open_dataset('../io/data/UV500storm.nc', 'r', engine='pynio')
+data = xr.open_dataset('../io/data/UV500storm.nc', engine='pynio')
 data = data.isel(timestep=0)
 
 lon = data['lon'].values
