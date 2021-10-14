@@ -8,7 +8,7 @@
 #       format_version: '1.5'
 #       jupytext_version: 1.10.3
 #   kernelspec:
-#     display_name: Python 3 (ipykernel)
+#     display_name: Python 3
 #     language: python
 #     name: python3
 # ---
@@ -137,7 +137,7 @@ calcts
 
 datats = data.isel(**coords)
 
-Now, we can plot the raw anomalies and the associated trend:
+# Now, we can plot the raw anomalies and the associated trend:
 
 plt.plot(datats, label='anomalies')
 plt.plot(datats - calcts, label='trend')
