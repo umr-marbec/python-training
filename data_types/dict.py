@@ -35,16 +35,21 @@
 # To have more about dictionaries, visit [python.org](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)
 #
 # ### Creating dictionaries
+#
+# Creating dictionaries is done by using `{}`. To create an empty one:
 
-# Creating dictionary
 data = {} # empty dictionary
-data = {'dataint':10 , 'datstr':'This is a dictionnary'} # not empty one
-print(data)
-print(len(data))  # number of elements
+data
 
-# create a dictionary providing a list of keys and a value for all keys
+# To create one with values:
+
+data = {'dataint':10 , 'datstr':'This is a dictionnary'} 
+data
+
+# You can also initialize a dictionary by giving the same value to all keys using the `fromkeys` method:
+
 data = dict.fromkeys(['key0', 'key1', 3], 'new val')
-print(data)
+data
 
 # ### Accessing elements
 #
@@ -52,92 +57,108 @@ print(data)
 
 # Getting and replacing dict. elements
 data = {'dataint':10 , 'datstr':'This is a dictionnary'}
-print(data.get('datstr')) # retrieve a value from the key
-print(data.get('toto'))  # returns None if toto is not a key
-print(data.get('toto', 0))  # returns 0 if toto is not a key
+data.get('datstr')
 
-# It can also be done using a `dict[key]` syntax. However, this way is not safe since the programs stops if a key is not found:
+# If the key does not exist, nothing is returned:
 
-print(data['datstr'])
-#data['toto'] # fails!
+data.get('toto')
+
+# except if you provide an additional argument, which is the return value if key is not found
+
+data.get('toto', 0)
+
+# To get a dictionary element can also be done using a `dict[key]` syntax. However, this way is not safe since the programs stops if a key is not found:
+
+data['datstr']
+# data['toto'] # fails!
+
+# ### Changing/adding values
+
+# To add or overwrite a value in a dict:
 
 data['datlist'] = [0, 1, 2] # add a new element to the dict (key=datlist)
+data
+
 data['datstr'] = 'new string'  # overwrites a given value (key=datstr)
-print(data)
+data
 
-# ### Adding elements
-#
-# Adding elements can be achieved by using the `setdefault` method. If the key already exists, nothing is done and the function returns the old value. If the key does not exist, the dictionary is updated and the associated value is returned.
+# In the above, the existing key is overwritten. In order to prevent overwritting, adding elements can be achieved by using the `setdefault` method. If the key already exists, nothing is done and the function returns the old value. If the key does not exist, the dictionary is updated and the associated value is returned.
 
-# +
-print(data)
-# datstr is found, value not changed
-# returns the value of the new key
+# If we create a dictionary:
+
+data = {'dataint':10 , 'datstr':'This is a dictionnary'}
+
+# If we try to overwrite an existing key of the dict:
+
 added = data.setdefault('datstr', 'final string')
-print(added)  # no change in the datstr element
+added, data
+
+# In this case, the dictionary is not updated and the function returns the value that was on the dictionary.
+#
+# If now we try to add a new key to the dict:
 
 # datstrbis not found, value is set 
 added = data.setdefault('datstrbis', 'final string')
-print(added)
-print(data)
-# -
+added, data
+
+# In this case, the value provided in the argument is returned and the dictionary is updated.
+#
+# To check if a key is in a dictionary, use the `in` statement:
 
 # check whether dict contains a given key
-iskey = ('datstr' in data)
+iskey = 'datstr' in data
 istoto = ('toto' in data)
 print(iskey)
 print(istoto)
 
-# Getting keys and values
-data = {'dataint':10 , 'datstr':'This is a dictionnary'}
-keys = list(data.keys())  # list the keys
-vals = list(data.values())  # list the values
-items = list(data.items())
-print(keys)
-print(vals)
-print(items)
-# Note: in Python3, these methods do not return list anymore but iterators
-# however, they can be converted to list easily using type conversion
+# To recover the list of keys:
 
-# +
-# loop over key,value pairs
-for it in data.items():
-    print(it)
-    
-# loop over key,value pairs
-for k, v in data.items():
-    print('key, val = ', k, v)
-    
-# same as above
-for k, v in zip(data.keys(), data.values()):
-    print('key, val = ', k, v)
-# -
+data.keys()
+
+# To recover the list of values:
+
+data.values()
+
+# To recover the key/values couples as a tuple:
+
+data.items()
 
 # ### Removing elements
 
-# removing all the content of a dict.
-data.clear()  # Removes all the elements
-len(data)
-print(data)
-
-# Removing an element from key and return the removed values
 data = {'dataint':10 , 'datstr':'This is a dictionnary'}
-removed = data.pop("datstr")
-print(removed)
+
+To empty a dictionary:
+
+data.clear()  # Removes all the elements
+data
+
+# To remove an element based on the value of the key, use the `pop` method (it returns the removed value):
+
+data = {'dataint':10 , 'datstr':'This is a dictionnary'}
+removed = data.pop("dataint")
+removed, data
 
 # ### Concatenation
 
-# Concatenate dictionnaries
-data = {'dataint':10 , 'datstr':'This is a dictionnary'} # not empty one
+# Concatenation is done by using the `update` method. If we have two dictionaries:
+
+data = {'dataint':10 , 'datstr':'This is a dictionnary'} 
 data2 = {'dataint':14,' datflt':0.5}
-# add the elements of dict data2 into dict data
-# note that the dataint of data has been replaced by the dataint of data2
+
+# To send `data2` into `data`:
+
 data.update(data2)
+data
 
-data.update(toto='toto var')  # equivalent to data.update({'toto':'toto_var'})
+# Note that in this case, the `dataint` value of the destination dict has been overwritten by the value of the source dict. You can also use the following syntax:
 
-# Putting all the content of the data dict into the globals() dictionary
-# which defines all the global variables
-# In the variable explorer, you should see all the elements
+data.update(keytoto='toto', keylala='lala')  # equivalent to data.update({'toto':'toto_var'})
+data
+
+data
+
+# A usage of `update` can be to include all the variables defined in a dictionary accessible into the global working environment, defined in the `globals()` dictionary. For instance, to use `dataint`, which is defined in the `data` dict, we send the content of `data` into `globals()`:
+
 globals().update(data)
-print(dataint)
+
+dataint
