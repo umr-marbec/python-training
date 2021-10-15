@@ -43,13 +43,15 @@
 
 # ### List creation
 #
-# The creation of a list is done by using `[]`
+# The creation of a list is done by using `[]`. To create an empty list:
 
-# Creates a list
 x = []  # empty list
-print(x)
-x = [1]  # list with 1 in it
-print(x)
+x
+
+# To create a list with elements:
+
+x = [1, 'string', map]
+x
 
 # ### Adding elements
 #
@@ -58,20 +60,22 @@ print(x)
 x = [1]
 x.append([1, 2, 3, 4]) # append -> add list in list
 x.append('String')
-print(x)
-print(len(x))
-print(x[1])
+x
+
+# To get the length of a list:
+
+len(x)
 
 # The `x` list now contains 3 elements, one `int`, one `list` and one `string`.
 #
-# The `extend` method, on the other hand, adds *the elements* of an object to a list. Let's repeat the above operations but using replacing `append` by `extend.
+# The `extend` method, on the other hand, adds **the elements** of an object to a list. Let's repeat the above operations but using replacing `append` by `extend.
 
 y = [1]
 y.extend([1, 2, 3, 4]) # extend -> add list elements in a list
 y.extend('String') # !!! Strings are considered as a list of char!
-print(y)
-print(len(y))
-print(y[1])
+y
+
+len(y)
 
 # The `y` list now contains `int` and `char` elements. The elements of the first list (`1, 2, 3, 4`) have been added. And the characters of the `string` variable as well (in this case, `string` behaves like a list of `char`). `extend` can thus be used for list concatenation.
 #
@@ -79,9 +83,11 @@ print(y[1])
 
 x = [0, 1, 2]
 y = [3, 4, 5]
-print(x + y)
-print(2*x)
-print(2*y)
+x + y
+
+2 * x
+
+2 * y
 
 # **As you see, `+` and `*` should not be used for mathematical operations on `list`!**
 
@@ -89,50 +95,54 @@ print(2*y)
 #
 # There is two methods to remove elements from a `list`. First, `pop` removes the element whose index is given as argument (if no arguments, the last element is removed). The function returns the value of the removed element.
 
-# +
-# init a list ranging from 15 to 19(!)
-x = list(range(15, 20))  
-print(x)
+x = [15, 16, 17, 18, 19]
+x
 
-# removes the element at index 2 (i.e. the 3rd element)
-# returns the value of the removed element
 removed_val = x.pop(2) 
-removed_last = x.pop()
-print(removed_val, removed_last) 
-print(x)
-# -
+removed_val, x
 
-# The `remove` method removes the element within the list that math the *value* provided as argument. If several elements have the same value, the first occurence is removed. This method does not return anything, contrary to `pop`.
+removed_last = x.pop()
+removed_last, x
+
+# The `remove` method removes the *first* element within the list that match the *value* provided as argument. This method does not return anything, contrary to `pop`.
 
 x = [16, 17, 16, 20]
+x
+
 x.remove(16)
 x
 
+# If the value is not found, the `remove` function raises an error.
+
 # ### List copy
 #
-# The copy of mutable objects, like `list`, must be done carefully. Let's look at the following code:
+# The copy of mutable objects, like `list`, must be done carefully. First, let's create one list `x`:
 
 x = [1, 2, 3, 4, 5]
+
+# To copy the `x` list inside a new variable `y`, one natural thing to do would be:
+
 y = x
-print(id(x), id(y))  # same memory address
+
+# However, looking at memory addresses using the `id` command shows that both variable share the same memory address.
+
+id(x), id(y)
+
+# Therefore, if you modify `x`, modifications will also be visible on `y`, and conversely:
+
 x[1] = 30
 y[3] = 1000
-print(x)
-print(y)
+x, y
 
-# In the 2nd line, a copy of x is (presumably) made and assigned to `y`. However, when looking at the memory address of the two objects using `id`, they are the same. Consequently, a modification of one (here `x`) modifies the values of the `other`.
-#  
-# This is because assigment of mutable copy references (i.e. memory adresses), not values (as for immutable objects). 
+# This is because assigment of mutable objects copy the references (i.e. memory adresses), not the values (as for immutable objects). 
 #
 # The right way to copy a mutable object is by using the `copy` method:
 
 x = [1, 2, 3, 4, 5]
 y = x.copy()  # make a deep copy of x and store it in an object y
-print(id(x), id(y))  # different memory addresses
 x[1] = 30 
 y[3] = 1000
-print(x)
-print(y)
+x, y
 
 # In this case, the `x` and `y` objects are completely different objects and are therefore independent.
 
@@ -143,58 +153,45 @@ print(y)
 # To count the number occurrences of an element:
 
 x = [5, 6, 15, 7, 2, 15]
-print(x.count(15))
+x.count(15)
 
 # To reverse a list:
 
-x = [5, 6, 15, 7, 2, 15]
 x.reverse()
-print(x)
+x
 
-# Note that the `reserve` occurs **in place**. When manipulating list, the common error is to assign the output of the `reverse` function:
+# Note that the `reserve` function works **in place** and returns nothing. Therefore, the following code is wrong:
 
-# example of bad syntax
+x = (x.reverse())
+x
+
+# Here, the call to `x.reverse()` on the right hand-side effectively reverses the `x` list. But the output of the `reverses()` function (which is `None`) is assigned to a new `x` variable, which overwrites the `x` list.
+
+# Sorting elements is done in the same way (also in place)
+
 x = [5, 6, 15, 7, 2, 15]
-x = x.reverse()
-print(x)
-
-#  Why does it return `None`? Because the `reverse()` method reverts the input list **in place**, but returns nothing.
-#  So in the above, the output of 
-#  the reverse method is assigned to `x`, which is `None`
-
-help([].reverse)
-
-# Sorting elements is done in the same way
-
-# Sorting elements (in place)
-x = [5, 6, 15, 7, 2, 15]
-x.sort()  # sort elements (in place)
-print(x)
+x.sort()
+x
 
 # ### Check for existence
 #
 # To check if an element is in a list, you can use the `in` function:
 
-# Check if element is in the list
-is2 = (2 in x)
-print(is2)
+(2 in x)
 
-# To get the index of an element (first occurrence), use the `index` method.
+# To get the index of an element (first occurrence), use the `index` method. For instance, to get the index of element `7`:
 
-ind7 = x.index(7)  # finds index of 7 element
-print(ind7)
-print(x[ind7])
-# ind1000 = x.index(1000)  # error because 1000 not in list
+ind7 = x.index(7)
+ind7
 
 # ### List indexing
 #
-# The elements can be accessed using their index within the list. Some examples are shown below.
+# The elements can be accessed using their index within the list. **In Python, indexes start at 0.** Some examples are shown below with the following `x` list:
 
-# List indexing is a delicate part....
-# In python, index starts at 0
-# But you can access them with negative indexes
 x =  [0, 1,  2,  3,  4,  5,  6,  7,  8,  9]
-x[0] # getting first elements
+x
+
+x[0] 
 
 x[2:5] # getting elements from index 2 to index 4(!)
 
@@ -208,7 +205,7 @@ x[:3] # getting all elements from 0 to index 2(!)
 
 # getting elements starting from index 2 
 # ending to index -2 with a stride of 2
-x[2:-2:2] 
+x[8:2:-1] 
 
 x[::4] # getting all the elements with a stride of 4
 
@@ -219,7 +216,7 @@ end = 6
 stride = 2
 x[start:end:stride]
 
-x[slice(start,end,stride)]
+x[slice(start, end,stride)]
 
 x[slice(5)]  # equivalent to slice(None, 5, None)
 
