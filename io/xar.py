@@ -28,17 +28,17 @@ import xarray as xr
 import numpy as np
 
 data = xr.open_dataset('data/UV500storm.nc')
-print(data)
+data
 # -
 
 # ### Reading multiple files
 #
-# Often, a variable is stored in multiple NetCDF files (one file per year for instance). The `xarray.open_mfdataset` allows to open all the files in one row and to concatenate them along *record* dimension (`UNLIMITED` dimension, which is usually time) and the data coordinates.
+# Often, a variable is stored in multiple NetCDF files (one file per year for instance). The `xarray.open_mfdataset` allows to open all the files at one and to concatenate them along *record* dimension (`UNLIMITED` dimension, which is usually time) and spatial dimensions.
 #
 # Below, the four `ISAS13` files are opened at once and are automatically concanated along the record dimension, hence leading to a dataset with 4 time steps.
 
 data = xr.open_mfdataset("data/*ISAS*nc", combine='by_coords')
-print(data)
+data
 
 # Furthermore, complex models are often paralellized using the [Message Passing Interface (MPI)](https://fr.wikipedia.org/wiki/Message_Passing_Interface), in which each processor manages a subdomain. If each processor saves output in its sub-region, there will be as many output files as there are processors.
 # `xarray` allows to reconstruct the global file by concatenating the subregional files according to their coordinates.
@@ -48,59 +48,48 @@ print(data)
 # </div>
 
 data = xr.open_mfdataset("data/GYRE_OOPE*", combine='by_coords', engine='netcdf4')
-print(data)
+data['OOPE']
 
 # In the 2 previous examples, `chunksize` variable attribute appeared. This is due to the fact that opening multiple datasets automatically generates `dask` arrays, which are ready for parallel computing. These are discussed in a specific section
 
 # ### Accessing dimensions, variables, attributes
 
 data = xr.open_dataset("data/UV500storm.nc")
-print(data)
+data
 
 # #### Dimensions
 #
-# Recovering dimensions is dony by accessing the `dims` attribute of the dataset, which returns a `dictionary`, the `keys` of which are the dataset dimension names.
+# Recovering dimensions is dony by accessing the `dims` attribute of the dataset, which returns a `dictionary`, the `keys` of which are the dataset dimension names and the values are the number of elements along the dimension.
 
-# +
-# Recovering the number of values along a dimension
-for k, v in data.dims.items():
-    print('dim', k, 'n=', v)
-    
+data.dims
+
 data.dims['lat']
-# -
 
 # #### Variables
 #
 # Variables can be accessed by using the `data_vars` attribute, which returns a `dictionary`,  the `keys` of which are the dataset variable names.
 
-# +
-var = data.data_vars
-for k, v in var.items():
-    print('var', k, 'shape', v.shape)   
+data.data_vars
 
 data.data_vars['u']
-# -
 
-# Note that data variables can also be accessed by using variable name as the key to the dataset object as follows:
+# Note that data variables can also be accessed by using variable name as the key to the dataset object, as follows:
 
 data['v']
 
-# In this case, the `data_vars` attribute is not used. 
-#
-# In the above, the variable is extracted into a 
-# [xarray.DataArray](http://xarray.pydata.org/en/stable/data-structures.html#dataarray) object.
+# Note that variables are returned as `xarray.DataArray`.
 
 # To recover the variable as a `numpy` array, the `values` attribute can be used. In this case, missing values are set to `NaN`.
 
 v = data['v']
 v = v.values
-v.mean()
+v
 
 # In order to obtain a masked array instead, use the `to_masked_array()` method:
 
 v = data['v']
 v = v.to_masked_array()
-v.mean()
+v
 
 # #### Time management
 #
@@ -128,32 +117,27 @@ data['time.dayofyear']
 data = xr.open_mfdataset("data/*ISAS*", combine='by_coords', decode_times=False)
 data['time']
 
+# **In this case, years, months, etc. cannot be extracted**
+
 # #### Attributes
 #
-# To get variable attributes, use the `attrs` attribute, which exists for DataSet and DataArray objects. It returns a `dictionaray` containing the attribute names and values.
+# To get variable attributes, use the `attrs` attribute, which exists for `xarray.Dataset` (global attributes) and `xarray.DataArray` objects (variable's attributes). It returns a `dictionary` containing the attribute names and values.
 
-# +
-# Recovering global (file) attributes
-for k, v in data.attrs.items():
-    print('attr', k, 'val', v)
-    
-data.attrs['history']
+data.attrs
 
-# +
+data.attrs['NCO']
+
 time = data['time']
-# Recovering variable attributes
-for k, v in time.attrs.items():
-    print('attr', k, 'val', v)
+time.attrs
 
 time.attrs['units']
-# -
 
 # ## Indexing
 #
 # As in `pandas`, there is 2 ways to extract part of a dataset. Let's consider the ISAS dataset, which contains 152 vertical levels unevenly from 0 to 2000m. 
 
 data = xr.open_mfdataset('data/*ISAS*', combine='by_coords')
-print(data['depth'])
+data
 
 # ### Extracting using indexes
 #
@@ -163,7 +147,9 @@ print(data['depth'])
 #     <strong>Note</strong> It is the xarray counterpart of the Pandas iloc method
 # </div>        
 
-data.isel(time=slice(0, 2), depth=range(0, 10))
+data.isel(depth=range(10), time=0)
+
+data.isel(time=slice(0, 2), depth=slice(0, 10))
 
 data['TEMP'].isel(time=slice(0, 2), depth=range(0, 10))
 
@@ -175,37 +161,42 @@ data['TEMP'].isel(time=slice(0, 2), depth=range(0, 10))
 #     <strong>Note</strong> It is the xarray counterpart of the Pandas loc method
 # </div>     
 
-data.sel(time=slice('2012-01-15', '2012-02-15'), depth=slice(100, 500))
+data.sel(time=slice('2012-01-15', '2012-02-15'))
+
+zmin = 100
+zmax = 1000
+data.sel(time=slice('2012-01-15', '2012-02-15'), depth=slice(zmin, zmax))
 
 # ### Plotting
 #
-# As for `pandas`, `xarray` comes with plotting functions.
-
-# +
-import matplotlib.pyplot as plt
+# As for `pandas`, `xarray` comes with plotting functions. The plot depends on the dimension of the fields:
+#
+# - 1D: curve
+# - 2D: pcolormesh
+# - 3D, 4D, ... : histogram
 
 data = xr.open_dataset('data/UV500storm.nc')
-data = data.isel(timestep=0)  # extract first time step
+data
 
-plt.figure()
-data['u'].plot()  # draws map
+l = data['u'].isel(timestep=0).plot()
 
-data = data.sel(lon=-100)  # extracts lon=-100
-plt.figure()
-data['u'].plot()  # draw curves
-plt.show()
-# -
+l = data['u'].isel(timestep=0, lat=15).plot()
 
 # ## Mathematical operations
 #
 # As for `pandas`, `xarray` comes with mathematical operations.
 
 data = xr.open_mfdataset('data/*ISAS*', combine='by_coords')
+
+# To compute the mean over the entire dataset:
+
 data.mean()
 
-data.mean(dim=('time', 'depth'))
+# To compute the mean along time dimension:
 
 data.mean(dim='time')
+
+# Mean over the depth dimension:
 
 data.mean(dim='depth')
 
@@ -217,11 +208,11 @@ data.mean(dim='depth')
 #
 # To force the computation, the `compute` and/or `load` methods must be used. Let's compare the outputs below:
 
-data.mean(dim='time')
+data['TEMP'].mean(dim='time')
 
-data.mean(dim='time').load()
+data['TEMP'].mean(dim='time').compute()
 
-# In the first output, no values are displayed in the `TEMP` variable. The `mean` has not been computed yet. In the second output, the effective mean values are shown because computation has been forced using `compute`.
+# In the first output, no values are displayed. The `mean` has not been computed yet. In the second output, the effective mean values are shown because computation has been forced using `compute`.
 
 # ## Group-by operations
 #
@@ -236,22 +227,33 @@ data.groupby('time.season').mean(dim='time')
 # Defining discrete binning (for depth intervals for instance) is done by using the 
 # [groupby_bins](http://xarray.pydata.org/en/stable/generated/xarray.Dataset.groupby_bins.html#xarray.Dataset.groupby_bins) method.
 
-# +
 depth_bins = np.arange(0, 1000 + 250, 250)
-zmean = data.groupby_bins('depth', depth_bins).mean(dim='depth')
-print(zmean)
-bins = zmean['depth_bins'].values
-zmean = zmean.rename({'depth_bins' : 'zmean'})
-print(zmean)
+depth_bins
 
-plt.figure()
-zmean['TEMP'].plot()
-plt.show()
-# -
+zmean = data.groupby_bins('depth', depth_bins).mean(dim='depth')
+zmean
+
+import matplotlib.pyplot as plt
+plt.rcParams['text.usetex'] = False
+cs = zmean['TEMP'].plot()
+
+# Let's reload the ISAS dataset
+
+data = xr.open_mfdataset('data/*ISAS*', combine='by_coords').isel(time=0)
+data
+
+# There is the possibility to compute rolling means along the depth dimensions as follows:
+
+datar = data.rolling({'depth': 31}, center=True).mean(dim='depth')
+datar
+
+data['TEMP'].plot(label='original')
+datar['TEMP'].plot(label='rolling', marker='o', linestyle='none')
+plt.legend()
 
 # ## Creating NetCDF
 #
-# An easy way to write a NetCDF is to create a `DataSet` object.
+# An easy way to write a NetCDF is to create a `DataSet` object. First, let'sdefine some dummy variables:
 
 # +
 import numpy as np
@@ -271,7 +273,11 @@ time = np.arange(ntime)
 date = cftime.num2date(time, 'days since 1900-01-01 00:00:00')
 # -
 
-# First, init an empty `Dataset` object by calling the [xarray.Dataset](http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html)method.
+date
+
+data.shape
+
+# First, init an empty `Dataset` object by calling the [xarray.Dataset](http://xarray.pydata.org/en/stable/generated/xarray.Dataset.html) method.
 
 ds = xr.Dataset()
 
@@ -285,7 +291,7 @@ ds['y'] = (['y'], y)
 ds['time'] = (['time'], date)
 ds
 
-# Then, add the dataset and variable attributes as follows:
+# Then, add global and variable attributes to the dataset as follows:
 
 # +
 import os
@@ -296,6 +302,7 @@ ds.attrs['script'] = os.getcwd()
 ds.attrs['date'] = str(datetime.today())
 
 ds['data'].attrs['description'] = 'Random draft'
+ds
 # -
 
 # Finally, create the NetCDF file by using the [to_netcdf](http://xarray.pydata.org/en/stable/generated/xarray.Dataset.to_netcdf.html) method.
