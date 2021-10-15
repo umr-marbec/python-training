@@ -24,16 +24,24 @@
 #
 # ## Install
 #
-# To install PyNGL, it is strongly recommended to set-up a virtual environment, as described on the [Download](https://www.pyngl.ucar.edu/Download/) section.
+# To install PyNGL, it is strongly recommended to set-up a virtual environment, as described on the [Download](https://www.pyngl.ucar.edu/Download/) section:
+#
+# ```
+# conda create --name pyngl
+# conda activate pyngl
+# conda install pyngl
+# conda install pynio
+# conda install xarray
+# ```
 #
 # To use Jupyter Notebook with this environment, type in a terminal:
 #
-# `
+# ```
 # conda activate pyngl
 # conda install ipython ipykernel
 # ipython kernel install --name "pyngl" --user
 # jupyter notebook &
-# `
+# ```
 #
 # (source: [Medium.com](https://medium.com/@nrk25693/how-to-add-your-conda-environment-to-your-jupyter-notebook-in-just-4-steps-abeab8b8d084))
 #
@@ -109,6 +117,8 @@ Ngl.draw(m)
 
 # add a page to the pdf output
 Ngl.frame(wks)
+
+#Ngl.end()
 # -
 
 # <img src="figs/pyngl_examples.000001.png" width="50%">
@@ -196,7 +206,6 @@ res.sfYArray = lat
 res.cnFillOn             = True # no filled contour
 res.cnLinesOn            = False # contour lines
 res.cnLineLabelsOn = False
-res.cnInfoLabelsOn = False # add the contour info
 res.cnLineThicknessF =   4 # contour lines thickness
 res.cnLevelSelectionMode = "ExplicitLevels" # plotted levels are set explicitely
 res.cnFillMode = "CellFill"
