@@ -20,7 +20,6 @@
 # - The block definition must end with `:`
 # - The code inside the block must be *indented to the right*
 # - When leaving the block, the code  *must be indented to the left*
-# - Variables defined within a block are visible only within the block
 #
 # **There is no begin/end statements, everything is handled by the indent**
 #
@@ -58,9 +57,9 @@
 # ```
 
 # +
-x = 10
-y = 10
-z = 10
+x = -10
+y = -11
+z = -12
 
 # Care with the indent
 if ((x==y) & (x==z)):
@@ -97,31 +96,13 @@ print('a in list') if 'a' in x else print('a not in list')
 print('z in list') if 'z' in x else print('z not in list')
 if('a' in x): print('match')
 
-# As reminded in the above, a variable defined within a block is only visible within the block:
-
-# +
-
-x = 10
-y = 20
-if(x == y): 
-    z = 20
-else:
-    w = 10
-# print(z) # would crash if x != y
-# print(w) # would crash if x == y
-# -
-
 # For imbricated conditions, the code need to be indented one extra time. **Again, carefull with the indent.**
 
 x = y = -10
-x = 10
-y = -12
 if(x == y):
     # starts a new block with new conditional testing
     if(x > 0):
         print('x == y and positive')
     else:
         print('x == y and negative')
-else:
-    print('x and y are different')
 
