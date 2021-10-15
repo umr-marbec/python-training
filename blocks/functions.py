@@ -295,3 +295,33 @@ print(doubler(10))
 # quadrupler
 quadrupler = mulgenerator(4)
 print(quadrupler(10)) 
+# -
+
+# ## Loading your libraries
+#
+# If you want to load your own function, stored in a `mylib.py` file, you first need to add your library directory to the `PYTHONPATH`. At the beginning of your script, add:
+#
+# ```
+# import sys
+# sys.path.append('/add/other/directory/')
+# import mylib
+# ```
+#
+# **When the PYTHONPATH is modified this way, it is only valid for the current Python script.**
+#
+# In order to change the Python default paths, you need to create a `PYTHONPATH` environment variable. With Mac Os X/Linux, edit your `.bashrc` or `.cshrc` file and add:
+#
+# ```
+# # bashrc
+# export PYTHONPATH=${PYTHONPATH}:/add/other/directory
+# # cshrc
+# setenv PYTHONPATH /add/other/directory:${PYTHONPATH}
+# ```
+#
+# In Windows, see for instance [oracle.com](https://docs.oracle.com/en/database/oracle/r-enterprise/1.5.1/oread/creating-and-modifying-environment-variables-on-windows.html#GUID-DD6F9982-60D5-48F6-8270-A27EC53807D0)
+#
+# Then, in your Python script, you can use your function as follows:
+#
+# ```
+# mylib.function1
+# ```
