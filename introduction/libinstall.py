@@ -56,7 +56,7 @@
 # conda install netCDF4 xarray
 # ```
 #
-# ### Conda virtual environments
+# #### Conda virtual environments
 #
 # To create virtual environments (for instance for spatial representation), type in a terminal:
 #
@@ -88,6 +88,31 @@
 #     <strong>Default environment!</strong> The default environment is named <i>base</i>
 # </div>
 #
+# #### Export environment
+#
+# Conda allows to export an environment into a text file as follows:
+#
+# ```
+# conda env export > env.yaml
+# ```
+#
+# #### Import environment
+#
+# You can also import an environment as follows:
+#
+# ```
+# conda env create -f env.yaml
+# ```
+#
+# #### Connect environments to Jupyter
+#
+# You can also allow Jupyter to access your environments as follows:
+#
+# ```
+# conda activate pyngl
+# conda install ipython ipykernel
+# ipython kernel install --name "pyngl" --user
+# ```
 #
 # ### Install from source
 #
@@ -103,7 +128,7 @@
 #
 # ## Loading  libraries
 #    
-# Libraries are loaded by using the `import` statement. It can be done as follows:
+# Libraries are loaded by using the `import` statement (generally at the beginning of the scripts) as follows:
 
 # +
 # loading the numpy library
@@ -123,8 +148,9 @@ import matplotlib as mp
 #
 # For instance:
 
-print(numpy.mean([0, 1, 2], keepdims=True)) # 2 arguments provided
-print(mp.is_interactive())  # no argument
+numpy.mean([0, 1, 2], keepdims=True)
+
+mp.is_interactive()
 
 # To get some help about a function, use the `help` function:
 
@@ -134,55 +160,26 @@ help(mp.is_interactive)
 #
 # Libraries can also be loaded as follows:
 
-# +
-# loading the DataFrame function of the pandas lib.
 from pandas import DataFrame
-print(DataFrame) # no pandas.DataFrame in this case
 
-# loading all the objects of the stats module
+# Here, we import the `DataFrame` from the `pandas` module.
+
 from scipy.stats import *
-print(randint)
-# -
 
-# In this case, part or all the content of the modules is stored in the current namespace.
-#
+# Here, we import all the content of the `scipy.stats` module into the current namespace.
+
 # <div class="alert alert-danger">
 #     <strong>Warning!</strong> I strongly recommend to <strong>never</strong> use this way of importing modules, since they may be in conflict with other objects.
 # </div>
 
-# +
 import numpy as np
 x = np.array([1e4, 1e6])
+x
 
 from numpy import *
-print(log10(x))
-from math import *
-# print(log10(x))  will fail
-# -
+log10(x)
 
-# Here, the `numpy.log10` method has been overwritten by the `math.log10` one.
-#
-# ### Loading your libraries
-#
-# If you want to load your own function, stored in a `mylib.py` file, you first need to add your library directory to the `PYTHONPATH`. At the beginning of your script, add:
-#
-# ```
-# import sys
-# sys.path.append('/add/other/directory/')
-# import mylib
-# ```
-#
-# **When the PYTHONPATH is modified this way, it is only valid for the current Python script.**
-#
-# In order to change the Python default paths, you need to create a `PYTHONPATH` environment variable. With Mac Os X/Linux, edit your `.bashrc` or `.cshrc` file and add:
-#
-# ```
-# # bashrc
-# export PYTHONPATH=${PYTHONPATH}:/add/other/directory
-# # cshrc
-# setenv PYTHONPATH /add/other/directory:${PYTHONPATH}
-# ```
-#
-# In Windows, see for instance [oracle.com](https://docs.oracle.com/en/database/oracle/r-enterprise/1.5.1/oread/creating-and-modifying-environment-variables-on-windows.html#GUID-DD6F9982-60D5-48F6-8270-A27EC53807D0)
-#
-#
+from math import *
+# log10(x[0])) 
+
+# Here, the `numpy.log10` method has been overwritten by the `math.log10` one, which works on `float` objects, not on `arrays`.
