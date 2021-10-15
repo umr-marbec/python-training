@@ -29,12 +29,14 @@
 #
 # Therefore, one variable name can be reused for different objects. Variable assignment is done with the ```=``` sign:
 
-x = 1  # int
-print(type(x))
+x = 1
+type(x)
+
 x = 2.3  # float
-print(type(x))
+type(x)
+
 x = 'string'  # string
-print(type(x))
+type(x)
 
 # ## Variables as objects
 #
@@ -54,9 +56,12 @@ dir(x)  # list of methods/attributes
 
 import numpy as np
 x = np.array([0, 1, 2, 3, 4, 5, 6])
-print(x.dtype)
-print(x.ndim)
-print(x.shape)
+
+x.dtype
+
+x.ndim
+
+x.shape
 
 # ### Object's method
 #
@@ -64,12 +69,11 @@ print(x.shape)
 #
 # To call an object's method, the general syntax is `object.method(arg1, arg2, ...)`. For instance, to compute the mean of the `numpy.array` defined in the above:
 
-# stores the output of the mean and std methods
-# in new objects
-m = x.mean()
+m = x.mean(keepdims=True)
+m
+
 s = x.std()
-print(m)
-print(s)
+s
 
 # To get some help about a method or a function, use the `help` function:
 
@@ -77,11 +81,15 @@ help(x.mean)
 
 # ### Method vs. function
 #
-# It should be noted that object's method are not called in the same way as module's functions. For instance, there are two ways to compute the mean of a numpy array.
+# It should be noted that object's method are not called in the same way as module's functions. For instance, there are two ways to compute the mean of a numpy array. 
+#
+# It can be done by using the `mean` *method* of the `x` object:
 
-m1 = x.mean()  # using mean method of the x object
-m2 = np.mean(x)  # using the numpy.mean function
-print(m1, m2)
+x.mean()  
+
+# Or by using the `mean` *function* of the `numpy` module applied on the `x` object:
+
+np.mean(x)
 
 # <div class='alert alert-info'>
 #     <strong>Note: </strong> In this case, the numpy function simply calls the object's method.
@@ -93,12 +101,11 @@ print(m1, m2)
 
 # convert string to a list
 xlist = list(x)
-print(xlist)
-# xlist.mean() crashes since xlist is no more an array
+type(xlist)
 
 # ## Testing object's class
 #
-# A usefull method is the `isinstance` one, which allows to determine whether an object if of a given class.
+# A usefull method is the `isinstance` one, which allows to determine whether an object if of a given list of class.
 
 x = [0, 1, 2]
 print(isinstance(x, (tuple)))
@@ -107,14 +114,12 @@ print(isinstance(x, (list, tuple)))
 # ## Object's types: mutable and immutable
 #
 # There are of **two** main caterogies of objects: (source: [geeksforgeeks](https://www.geeksforgeeks.org/mutable-vs-immutable-objects-in-python/)): 
-# - *Mutable objects*: Can change their state and contents: **list, dict, set and custom objects** (*numpy.arrays* for instance)
-# - *Immutable objects*: Can't change their state and contents: **int, float, bool, string, unicode, tuple**}
+# - *Mutable objects*: Can change their contents: **list, dict, set and custom objects** (*numpy.arrays* for instance)
+# - *Immutable objects*: Can't change their contents: **int, float, bool, string, unicode, tuple**}
 #
 # For instance, the following statement will raise an error:
 
-# +
-# x = 'string'
+x = 'string'
 # x[0] = 1
-# -
 
 # since string are immutable, although they are close to a list object.
