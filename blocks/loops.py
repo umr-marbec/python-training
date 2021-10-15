@@ -35,62 +35,66 @@
 #     You can always replace a <i>for</i> loop by a <i>while</i> loop, and conversely. 
 # </div>
 
-# You can loop over an iterable using the index, by using the `range` method:
+# First, let's create a list, which is an iterable
 
-# +
 # creates a list
-x = range(21, 31)
+x = ['a', 'b', 'c', 'd', 'e']
+x
+
+# You can loop over a list by using its `index` as follows:
 
 # loop using the list index
 for p in range(0, len(x)):
-    print('index ', p, 'value', x[p])  # p: index of the element
-# -
+    print('iterable ', p, 'element', x[p])
 
-# But the iteration can also be performed on the elements:
+# Here, the iteration is done on an integer (`p`), which is an integer.
+
+# But the iteration can also be performed on the elements themselves:
 
 # loop using the list elements (works for iterables, such as list, tuples)
 for v in x:
-    print(v)  # temp: element itself
-
-# loop using the list elements (works for iterables, such as list, tuples)
-for v in x[::-1]:
-    print(v)  # temp: element itself
+    print('iterable ', v)  # temp: element itself
 
 # ## Pairwise loops
-# There is the possiblity to loop simultaneously over different elements using the `zip` method:
+# There is the possiblity to loop simultaneously over different elements using the `zip` method, which returns a `tuple` of pairs.
 
-x = range(1, 10)[::-1]
-y = range(11, 20)
+x = ['a', 'b', 'c', 'd']
+x
+
+y = ['w', 'x', 'y', 'z']
+y
+
+list(zip(x, y))
+
 for i, j in zip(x, y):
     print(i, j)
-# x[0], y[0]
-# x[1], y[1]
-# x[2], y[2] ...
 
 # The `zip` method method will stop when the end of one of the iterable has been reached.
 
-# pairwise loops: stops when reaches one list end.
-x = range(1, 3)[::-1]
-y = range(11, 20)
-for i, j in zip(x, y):
-    print(i, j)
+z = ['alpha', 'beta']
 
-# Any for `loop` can be converted into a `while` loop, and conversely:
+for val in zip(x, y, z):
+    print(val)
+
+# Any for `loop` can be converted into a `while` loop, and conversely. For instance, to navigate on a list:
 
 # +
 # any for loop can be converted into while loop, and conversely
-x = range(1, 10)
+x = ['a', 'b', 'c', 'd']
+
 
 p = 0
 while p < len(x):
     print('index ', p, 'value', x[p])  # p: index of the element
     p += 1 # iteration of counter
-        
+# -
+
+# To navigate in a list starting by the end:
+
 p = len(x) - 1
 while (p >= 0):
     print('index ', p, 'value', x[p])  # p: index of the element
     p -= 1 # iteration of counter 
-# -
 
 # ## Imbricated loops
 #
@@ -111,26 +115,23 @@ for x in [1, 2, 3]:
     for y in [3, 1, 4]: 
         if x != y:
             combs2.append((x, y))
-print(combs2)
+combs2
 
 # can be written as follows:
 
-# Loop comprehension: loops writen in one single line
 combs1 = [(x, y) for x in [1, 2, 3] for y in [3, 1, 4] if x != y] 
-print(combs1)
+combs1
 
-# Another example is shown below:
+# If you have 2 lists, `x` and `y`:
 
-# +
-x = range(1, 10) 
+x = list(range(1, 10))
 y = [3, 5, 6] 
+list(x)
 
-# loop over the elements of x and add them to the output list
-# if they are not in y
-# 3, 5, 6 are not
-z = [temp for temp in x if temp not in y] 
-print(z)
-# -
+# If you want to extract the element of `x` which are not contained in `y`:
+
+z = [a for a in x if a not in y] 
+z
 
 # ## Loop controls: break and continue
 #
