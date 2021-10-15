@@ -36,3 +36,4 @@ link.sh
 **/*LogFile
 **/bilinear*
 misc/*png
+clean.sh
