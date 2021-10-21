@@ -127,7 +127,7 @@ data.items()
 
 data = {'dataint':10 , 'datstr':'This is a dictionnary'}
 
-To empty a dictionary:
+# To empty a dictionary:
 
 data.clear()  # Removes all the elements
 data
