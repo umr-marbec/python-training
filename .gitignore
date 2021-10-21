@@ -37,3 +37,6 @@ link.sh
 **/bilinear*
 misc/*png
 clean.sh
+
+**/ipbes_regions_subregions_shape*
+**/IPBES_Regions_Subregions2*

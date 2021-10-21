@@ -14,6 +14,24 @@
 # ---
 
 # # Reading shapefiles
+#
+# ## Downloading the file
+#
+# First, we will download a sample shape file:
+
+# +
+import wget
+import zipfile
+import os.path
+
+if  not os.path.isfile('data/IPBES_Regions_Subregions2.shp'):
+    url = 'https://zenodo.org/record/3928281/files/ipbes_regions_subregions_shape_1.1.zip'
+    wget.download(url, 'data/ipbes_regions_subregions_shape_1.1.zip')
+    with zipfile.ZipFile("data/ipbes_regions_subregions_shape_1.1.zip","r") as zip_ref:
+        zip_ref.extractall("data")
+# -
+
+# ## Reading the shapefile
 
 import shapefile as pyshp
 import numpy as np
@@ -54,7 +72,7 @@ cmap = plt.cm.jet
 nshapes = len(shapes)
 nshapes / (nshapes - 1)
 
-for i in range(4, 5):
+for i in range(0, nshapes):
     
     print('@@@@@@@@@@@@@ shape ', i, '/', nshapes)
     
@@ -66,8 +84,6 @@ for i in range(4, 5):
     # get the number of parts
     parts = list(single.parts)
     nparts = len(parts)
-    
-    #print(parts)
     
     # get the colour
     color = cmap(i / (nshapes - 1))
