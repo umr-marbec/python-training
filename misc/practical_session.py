@@ -50,7 +50,7 @@
 # +
 import xarray as xr
 
-mesh = xr.open_dataset('misc/data/mesh_mask_eORCA1_v2.2.nc')
+mesh = xr.open_dataset('data/mesh_mask_eORCA1_v2.2.nc')
 mesh
 # -
 
@@ -76,7 +76,7 @@ surface
 
 # - Load the `python-training/misc/data/surface_thato.nc` file using `open_dataset`.
 
-data = xr.open_dataset('misc/data/surface_thetao.nc')
+data = xr.open_dataset('data/surface_thetao.nc')
 data
 
 # - Extract the SST (`thetao` variable) at the surface (`olevel=0`)
