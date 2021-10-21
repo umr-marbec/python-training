@@ -64,62 +64,54 @@ fields
 records = data.records()
 singlerec = records[4]
 singlerec
+i = 0
+for a in records:
+    count = a[2]
+    if(count == 'France'):
+        break
+    i += 1
 
 # +
 ax = plt.axes(projection=ccrs.PlateCarree())
+
 cmap = plt.cm.jet
 
-nshapes = len(shapes)
-nshapes / (nshapes - 1)
+# get the shapes and extract the points
+single = shapes[i]
+points = np.array(single.points)
+npoints = len(points)
 
-for i in range(0, nshapes):
-    
-    print('@@@@@@@@@@@@@ shape ', i, '/', nshapes)
-    
-    # get the shapes and extract the points
-    single = shapes[i]
-    points = np.array(single.points)
-    npoints = len(points)
-    
-    # get the number of parts
-    parts = list(single.parts)
-    nparts = len(parts)
-    
-    # get the colour
-    color = cmap(i / (nshapes - 1))
-    
-    #plt.plot(points[:, 0], points[:, 1], marker='.', linestyle='none', color=color, markersize=0.1, transform=ccrs.PlateCarree())
-    
-    # get the record
-    singlerec = records[i]
-    xmin, xmax = points[:, 0].min(), points[:, 0].max()
-    ymin, ymax = points[:, 1].min(), points[:, 1].max()
-    
-    if nparts == 1:
-        plt.plot(points[:, 0], points[:, 1])
-    else:
-        #if(nparts > 10):
-        #    continue
-        # if parts does not start with 0:
-        # we add 0 at the beginning of the list
-        if parts[0] != 0:
-            parts = [0] + parts
-        # if parts does not end with npoints 
-        # it is added at the end.
-        if parts[-1] != npoints:
-            parts = parts + [npoints]
-        nparts = len(parts) - 1
-        for p in range(nparts):
-            start = parts[p]
-            end = parts[p + 1]
-            iii = range(start, end)
-            #test = list(iii)
-            #print(test[0], test[-1])
-            plt.plot(points[iii, 0], points[iii, 1], color=color, transform=ccrs.PlateCarree(), linewidth=0.5)
-l = ax.add_feature(cfeature.LAND)
-l = ax.add_feature(cfeature.COASTLINE)
-ax.set_global()
+# get the number of parts
+parts = list(single.parts)
+nparts = len(parts)
+
+# get the record
+singlerec = records[i]
+xmin, xmax = points[:, 0].min(), points[:, 0].max()
+ymin, ymax = points[:, 1].min(), points[:, 1].max()
+
+if nparts == 1:
+    plt.plot(points[:, 0], points[:, 1])
+else:
+    # if parts does not start with 0:
+    # we add 0 at the beginning of the list
+    if parts[0] != 0:
+        parts = [0] + parts
+    # if parts does not end with npoints 
+    # it is added at the end.
+    if parts[-1] != npoints:
+        parts = parts + [npoints]
+    nparts = len(parts) - 1
+    for p in range(nparts):
+        # get the colour
+        color = cmap(p / (nparts - 1))
+        start = parts[p]
+        end = parts[p + 1]
+        iii = range(start, end)
+        plt.plot(points[iii, 0], points[iii, 1], color=color, transform=ccrs.PlateCarree(), linewidth=2)
+#l = ax.add_feature(cfeature.LAND)
+#l = ax.add_feature(cfeature.COASTLINE)
+ax.set_extent([xmin, xmax, ymin, ymax])
 plt.show()
 # -
-
 
