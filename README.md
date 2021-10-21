@@ -6,31 +6,38 @@ Nicolas Barrier, IRD, UMR Marbec ([www.nicolasbarrier.fr/](https://www.nicolasba
 
 ## How to use class materials
 
-### With notebooks
+Download and install [Anaconda](https://www.anaconda.com/products/individual) for **Python 3**.
 
-Download and install [Anaconda](https://www.anaconda.com/products/individual) for **Python 3.7**.
-
-When done, open a Terminal and type: 
+Create a Conda environment as follows:
 
 ```
-conda install jupytext
+conda create --name python-training
+conda activate python-training
 ```
 
-**Be sure that the `conda` exectuable is visible by your Shell!**
-
-Download the Notebooks (clone the file or download the zip archive). Then, open
-any of the `.py` file using the `jupyter notebook`. For instance, to open the class about object programming, type in a terminal:
+When done, open a Terminal and install the libraries:
 
 ```
-cd oop
-jupyter notebook oop.py &
+conda install -c conda-forge -y netCDF4
+conda install -c conda-forge -y xarray
+conda install -c conda-forge -y dask
+conda install -c conda-forge -y pandas
+conda install -c conda-forge -y jupytext
+conda install -c conda-forge -y jupyter
+conda install -c conda-forge -y cartopy
+conda install -c conda-forge -y shapefile
+conda install -c conda-forge -y eofs
+conda install -c conda-forge -y nc-time-axis
+conda install -c conda-forge -y python-graphviz
 ```
 
-Then annotate the file at will.
+Now, navigate to the folder containing the training sessions and type:
 
-### With Spyder
+```
+jupyter notebook &
+```
 
-Launch `Spyder` and open any of the `.py` file. Then run code selections or the entire code.
+Then open/run/annotate the file at will.
 
 ## Program
 
