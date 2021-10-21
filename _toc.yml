@@ -42,11 +42,12 @@ sections:
   sections:
   - file: maps/carto.ipynb
   - file: maps/pyngl.ipynb
-- file: misc.md
-  sections:
-  - file: misc/nemo.ipynb
-  - file: misc/interpol.ipynb
-  - file: misc/eof_analysis.ipynb
-  - file: misc/dask_examples.ipynb
-  - file: misc/mean_sst_dask.ipynb
-    #  - file: misc/dask_covariance.ipynb
+#- file: misc.md
+#  sections:
+#  - file: misc/nemo.ipynb
+#  - file: misc/interpol.ipynb
+#  - file: misc/eof_analysis.ipynb
+#  - file: misc/dask_examples.ipynb
+#  - file: misc/mean_sst_dask.ipynb
+#  - file: misc/dask_covariance.ipynb
+#  - file: misc/shapefiles.ipynb
