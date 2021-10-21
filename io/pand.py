@@ -95,8 +95,8 @@ dataex
 #
 # To extract the data arrays, use the `values` attributes.
 
+array = data.values
 array.shape
-array
 
 # ## Plotting
 #
