@@ -11,6 +11,10 @@ do
 
         # execute notebooks
         jupyter nbconvert --execute --to notebook $fout
+
+        final_file=`echo $fout | sed "s/ipynb/nbconvert.ipynb/"`
+        mv $final_file $fout
+
     done
     cd ..
 done
