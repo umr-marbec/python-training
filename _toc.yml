@@ -1,60 +1,52 @@
-# Table of content
-# Learn more at https://jupyterbook.org/customize/toc.html
-
-- file: README.md
+format: jb-article
+root: README.md
+sections:
 - file: introduction.md
   sections:
-    - file: introduction/intro.ipynb
-    - file: introduction/start.ipynb
-    - file: introduction/libinstall.ipynb
-
+  - file: introduction/intro.ipynb
+  - file: introduction/start.ipynb
+  - file: introduction/libinstall.ipynb
 - file: data_types.md
   sections:
-    - file: data_types/vars.ipynb
-    - file: data_types/numerics.ipynb
-    - file: data_types/list.ipynb
-    - file: data_types/dict.ipynb
-    - file: data_types/strings.ipynb
-    - file: data_types/nmp.ipynb
-
+  - file: data_types/vars.ipynb
+  - file: data_types/numerics.ipynb
+  - file: data_types/list.ipynb
+  - file: data_types/dict.ipynb
+  - file: data_types/strings.ipynb
+  - file: data_types/nmp.ipynb
 - file: blocks.md
   sections:
-    - file: blocks/ifsta.ipynb
-    - file: blocks/loops.ipynb
-    - file: blocks/functions.ipynb
-
+  - file: blocks/ifsta.ipynb
+  - file: blocks/loops.ipynb
+  - file: blocks/functions.ipynb
 - file: plots.md
   sections:
-    - file: plots/xy.ipynb
-    - file: plots/contours.ipynb
-    - file: plots/geometrical_shapes.ipynb
-    - file: plots/panels.ipynb
-    - file: plots/quivers.ipynb
-    - file: plots/scatters.ipynb
-    - file: plots/text.ipynb
-    - file: plots/axes.ipynb
-    - file: plots/pyplot_settings.ipynb
-
+  - file: plots/xy.ipynb
+  - file: plots/contours.ipynb
+  - file: plots/geometrical_shapes.ipynb
+  - file: plots/panels.ipynb
+  - file: plots/quivers.ipynb
+  - file: plots/scatters.ipynb
+  - file: plots/text.ipynb
+  - file: plots/axes.ipynb
+  - file: plots/pyplot_settings.ipynb
 - file: oop.md
   sections:
-    - file: oop/oop.ipynb
-
+  - file: oop/oop.ipynb
 - file: io.md
   sections:
-    - file: io/text.ipynb
-    - file: io/pand.ipynb
-    - file: io/xar.ipynb
-
+  - file: io/text.ipynb
+  - file: io/pand.ipynb
+  - file: io/xar.ipynb
 - file: maps.md
   sections:
-    - file: maps/carto.ipynb
-    - file: maps/pyngl.ipynb
-
+  - file: maps/carto.ipynb
+  - file: maps/pyngl.ipynb
 - file: misc.md
   sections:
-    - file: misc/nemo.ipynb
-    - file: misc/interpol.ipynb
-    - file: misc/eof_analysis.ipynb
-    - file: misc/dask_examples.ipynb
-    - file: misc/mean_sst_dask.ipynb
-    - file: misc/dask_covariance.ipynb
+  - file: misc/nemo.ipynb
+  - file: misc/interpol.ipynb
+  - file: misc/eof_analysis.ipynb
+  - file: misc/dask_examples.ipynb
+  - file: misc/mean_sst_dask.ipynb
+    #  - file: misc/dask_covariance.ipynb
