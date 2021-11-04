@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.5
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -226,16 +226,29 @@ plt.clabel(cl)
 ax.coastlines()  # add coastlines
 plt.show()
 
-# ## Quivers
+# ### Quivers
 
 # +
-import matplotlib
-
 fig = plt.figure(figsize=(10, 10))
 
 ax = plt.axes(projection=ccrs.Mollweide())
 cs = plt.quiver(lon, lat, u, v, vel, cmap=plt.cm.jet, transform=ccrs.PlateCarree())
 cb = plt.colorbar(cs, shrink=0.5)
+
+ax.coastlines()  # add coastlines
+ax.add_feature(cfeature.LAND)
+# -
+
+# Drawing quiver plots in Cartopy is facilitated by the `regrid_shape` option, which allows to control the final display of your quiver plot.
+
+# +
+fig = plt.figure(figsize=(10, 10))
+
+ax = plt.axes(projection=ccrs.Mollweide())
+cs = plt.quiver(lon, lat, u, v, vel, cmap=plt.cm.jet, transform=ccrs.PlateCarree(), regrid_shape=(5, 5), scale=1000, target_extent=target_extent)
+cb = plt.colorbar(cs, shrink=0.5)
+#ax.set_extent([lon.min(), lon.max(), lat.min(), lat.max()], crs=ccrs.PlateCarree())
+
 
 ax.coastlines()  # add coastlines
 ax.add_feature(cfeature.LAND)
