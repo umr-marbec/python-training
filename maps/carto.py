@@ -171,8 +171,8 @@ ax = plt.axes(projection=ccrs.PlateCarree())
 ax.add_feature(cfeature.LAND, zorder=1)
 ax.add_feature(cfeature.COASTLINE, zorder=2)
 gl = ax.gridlines(**gridparams, zorder=0) 
-gl.xlabels_top = False
-gl.ylabels_right = False
+gl.top_labels = False
+gl.right_labels = False
 gl.xlocator = mticker.FixedLocator(np.arange(-180, 180 + 40, 40))
 gl.ylocator = mticker.FixedLocator(np.arange(-90, 90 + 20, 20))
 gl.xformatter = LONGITUDE_FORMATTER
@@ -234,21 +234,21 @@ fig = plt.figure(figsize=(10, 10))
 ax = plt.axes(projection=ccrs.Mollweide())
 cs = plt.quiver(lon, lat, u, v, vel, cmap=plt.cm.jet, transform=ccrs.PlateCarree())
 cb = plt.colorbar(cs, shrink=0.5)
+plt.quiverkey(cs, 0.9, 0.1, 50, '50 m/s')
 
 ax.coastlines()  # add coastlines
 ax.add_feature(cfeature.LAND)
 # -
 
-# Drawing quiver plots in Cartopy is facilitated by the `regrid_shape` option, which allows to control the final display of your quiver plot.
+# Drawing quiver plots in Cartopy is facilitated by the `regrid_shape` option, which allows to interpolate data onto a regular grid, which is usefull when data are dense.
 
 # +
 fig = plt.figure(figsize=(10, 10))
 
 ax = plt.axes(projection=ccrs.Mollweide())
-cs = plt.quiver(lon, lat, u, v, vel, cmap=plt.cm.jet, transform=ccrs.PlateCarree(), regrid_shape=(5, 5), scale=1000, target_extent=target_extent)
+cs = plt.quiver(lon, lat, u, v, vel, cmap=plt.cm.jet, transform=ccrs.PlateCarree(), regrid_shape=(100, 100), scale=1000)
 cb = plt.colorbar(cs, shrink=0.5)
-#ax.set_extent([lon.min(), lon.max(), lat.min(), lat.max()], crs=ccrs.PlateCarree())
-
+ax.set_extent([lon.min(), lon.max(), lat.min(), lat.max()], crs=ccrs.PlateCarree())
 
 ax.coastlines()  # add coastlines
 ax.add_feature(cfeature.LAND)
