@@ -81,4 +81,3 @@ Then open/run/annotate the file at will.
 
 ### Maps
 - Cartopy (maps/carto.py)
-- PyNGL (maps/pyngl.py)

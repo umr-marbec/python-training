@@ -1,0 +1,9 @@
+jupyter-book
+xarray
+dask
+pandas
+netcdf4
+numpy
+scipy
+cartopy
+matplotlib

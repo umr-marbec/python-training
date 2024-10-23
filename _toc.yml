@@ -41,7 +41,6 @@ sections:
 - file: maps.md
   sections:
   - file: maps/carto.ipynb
-  - file: maps/pyngl.ipynb
 - file: misc.md
   sections:
   - file: misc/nemo.ipynb

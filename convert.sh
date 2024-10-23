@@ -4,6 +4,10 @@ do
     for f in *py
     do
         echo $f
+        if [ $f = "pyngl.py" ]; then
+            echo "============================== PyNGL not processed"
+            continue
+        fi
 
         # Convert .py to ipynb
         jupytext --to notebook $f
